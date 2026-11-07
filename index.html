@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Sihao Chen Shop</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Hand-carved rubber stamps, linocut bookmarks and prints by Sihao Chen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a printmaker's bench. Paper page, pink carving-rubber blocks hold each product, prices stamped in red ink. */
+:root {
+  --paper: #FAF9F6;
+  --ink: #161514;
+  --ink-soft: #5B5752;
+  --rubber: #F3D3CF;
+  --rubber-deep: #E7B6B0;
+  --red: #C42F27;
+  --teal: #13707E;
+  --line: #E2DDD6;
+  --display: "Bowlby One", "Arial Black", Impact, sans-serif;
+  --body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #151413; --ink: #F3F0EB; --ink-soft: #ABA59D; --rubber: #3A2725; --rubber-deep: #563632;
+  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #151413; --ink: #F3F0EB; --ink-soft: #ABA59D; --rubber: #3A2725; --rubber-deep: #563632;
+  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--paper); color: var(--ink); font: 400 17px/1.55 var(--body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: inherit }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.02; text-wrap: balance; margin: 0 }
+.label { font: 500 12px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft) }
+
+/* header */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper) }
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line) }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px }
+.logo { font-family: var(--display); font-size: 20px; text-decoration: none; letter-spacing: .01em }
+nav { display: flex; gap: 18px; flex-wrap: wrap; font-weight: 700; font-size: 15px }
+nav a { text-decoration: none }
+nav a:hover { color: var(--red) }
+
+/* hero */
+.hero { padding-block: 48px 40px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center }
+.hero h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -.01em }
+.hero h1 .cut { color: var(--red) }
+.hero p { max-width: 34ch; font-size: 19px; margin: 20px 0 28px }
+.hero-img { position: relative }
+.hero-img img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 4px; display: block }
+.hero-img .stamp { position: absolute; left: -14px; bottom: 22px }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 700 16px var(--body); padding: 14px 22px; border-radius: 999px; text-decoration: none; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer }
+.btn:hover { background: var(--red); border-color: var(--red); color: #fff }
+.btn.ghost { background: transparent; color: var(--ink) }
+.btn.ghost:hover { border-color: var(--red); color: var(--red); background: transparent }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap }
+
+/* red ink stamp used for prices / badges */
+.stamp { display: inline-block; font: 400 15px/1 var(--display); color: var(--red); border: 2.5px solid var(--red); padding: 8px 12px 7px; border-radius: 3px; transform: rotate(-4deg); background: color-mix(in srgb, var(--paper) 82%, transparent); letter-spacing: .02em }
+
+/* sections */
+section { padding-block: 56px; border-top: 1px solid var(--line) }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px }
+.sec-head h2 { font-size: clamp(34px, 5vw, 54px) }
+.sec-head p { margin: 0; max-width: 42ch; color: var(--ink-soft) }
+
+/* products */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 24px }
+.card { background: var(--rubber); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 14px; min-width: 0 }
+.card .ph { position: relative; aspect-ratio: 1/1; border-radius: 3px; overflow: hidden; background: var(--rubber-deep) }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; display: block }
+.card .ph .tag { position: absolute; top: 12px; left: 12px; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 7px 9px; border-radius: 2px }
+.card .ph.empty { display: grid; place-items: center; text-align: center; padding: 24px; font: 500 13px/1.5 var(--mono); color: var(--ink-soft) }
+.card h3 { font-size: 26px }
+.card .desc { margin: 0; font-size: 16px }
+.specs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font: 400 13px/1.45 var(--mono); color: var(--ink-soft) }
+.specs li::before { content: "— " }
+.buy { margin-top: auto; display: grid; gap: 10px }
+.opt { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 10px; border-top: 1px dashed var(--rubber-deep) }
+.opt .name { font-weight: 700 }
+.opt .note { display: block; font: 400 12px var(--mono); color: var(--ink-soft) }
+.opt .price { font: 400 22px var(--display); color: var(--red); font-variant-numeric: tabular-nums; white-space: nowrap }
+.card .btn { width: 100% }
+
+/* custom */
+.custom { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start }
+.table-wrap { overflow-x: auto }
+table { width: 100%; border-collapse: collapse; font-size: 16px }
+th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft) }
+td.p { font: 400 18px var(--display); color: var(--red); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums }
+td small { display: block; color: var(--ink-soft); font-size: 14px }
+.steps { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 16px; counter-reset: s }
+.steps li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; counter-increment: s }
+.steps li::before { content: counter(s); font: 400 22px/44px var(--display); text-align: center; width: 44px; height: 44px; border: 2.5px solid var(--teal); color: var(--teal); border-radius: 50% }
+.steps b { display: block }
+.steps span { color: var(--ink-soft); font-size: 16px }
+
+/* work + about */
+.work { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center }
+.work img { width: 100%; border-radius: 4px; display: block; aspect-ratio: 4/5; object-fit: cover }
+.about p { max-width: 60ch }
+.contact { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px }
+.email { font: 500 16px var(--mono); user-select: all; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px }
+.faq { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px 32px; margin-top: 8px }
+.faq h3 { font: 700 17px var(--body); margin-bottom: 6px }
+.faq p { margin: 0; color: var(--ink-soft); font-size: 16px }
+footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font: 400 13px var(--mono); color: var(--ink-soft) }
+
+@media (max-width: 760px) {
+  .hero, .custom, .work { grid-template-columns: 1fr }
+  .hero { padding-block: 28px 32px; gap: 28px }
+  nav { gap: 14px; font-size: 14px }
+  nav .hide-sm { display: none }
+  section { padding-block: 44px }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, nav a { transition: background .15s, color .15s, border-color .15s }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">SIHAO CHEN</a>
+    <nav aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#custom">Custom</a>
+      <a href="#work" class="hide-sm">Work</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="label">Hand-carved in small batches</p>
+      <h1>Stamps &amp; prints, <span class="cut">carved by hand.</span></h1>
+      <p>Rubber stamps, two-block linocut bookmarks and printed postcards. Every piece is carved, inked and pulled by me.</p>
+      <div class="cta-row">
+        <a class="btn" href="#shop">Shop the first batch</a>
+        <a class="btn ghost" href="#custom">Custom stamps</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="img/finger-stamp.jpg" alt="Hand-carved middle finger mini stamp held in a palm, with a red print of it on a kraft sticker behind">
+      <span class="stamp">Batch 001</span>
+    </div>
+  </div>
+
+  <section id="shop">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Shop</h2>
+        <p>Small batches. When a batch sells out, the next one gets carved. Free US shipping on every order.</p>
+      </div>
+      <div class="grid" id="products"></div>
+    </div>
+  </section>
+
+  <section id="custom">
+    <div class="wrap custom">
+      <div>
+        <div class="sec-head"><h2>Custom stamps</h2></div>
+        <p>Your pet, your face, your logo, your weird idea. I draw it, carve it, and send you a test print before it ships.</p>
+        <ol class="steps">
+          <li><div><b>Send a photo or idea</b><span>DM me on Instagram with what you want and which size.</span></div></li>
+          <li><div><b>Approve the sketch</b><span>I send a drawing. One round of changes is included.</span></div></li>
+          <li><div><b>I carve it</b><span>Usually 1–2 weeks, depending on the queue.</span></div></li>
+          <li><div><b>It ships to you</b><span>With a test print, so you see exactly what it stamps.</span></div></li>
+        </ol>
+        <a class="btn" href="https://ig.me/m/ci278ci" target="_blank" rel="noopener">DM @ci278ci to order</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stamp</th><th style="text-align:right">Price</th></tr></thead>
+          <tbody>
+            <tr><td>Large stamp, 10 × 10 cm<small>Simple outline</small></td><td class="p">$85</td></tr>
+            <tr><td>Large stamp, 10 × 10 cm<small>Medium detail</small></td><td class="p">$110</td></tr>
+            <tr><td>Large stamp, 10 × 10 cm<small>High detail, several figures</small></td><td class="p">$150</td></tr>
+            <tr><td>Bookmark stamp, 5 × 15 cm<small>One of my existing designs</small></td><td class="p">$70</td></tr>
+            <tr><td>Bookmark stamp, 5 × 15 cm<small>New design, one color</small></td><td class="p">$90–110</td></tr>
+            <tr><td>Bookmark stamp, 5 × 15 cm<small>Complex or two-block color</small></td><td class="p">$130–150</td></tr>
+            <tr><td>Designed from your photo<small>Added to any custom stamp</small></td><td class="p">+$25–40</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap work">
+      <img src="img/gnome-blocks.jpg" alt="Two carved pink rubber blocks for the gnome bookmark, one for the black key lines and one for the green color layer, with printed bookmarks behind">
+      <div>
+        <p class="label">Process</p>
+        <h2 style="font-size:clamp(32px,4.5vw,48px);margin:8px 0 16px">Two blocks, one gnome.</h2>
+        <p>The gnome bookmark is printed from two carved blocks: one for the color, one for the black lines. Each pass is lined up by hand, so no two prints come out the same.</p>
+        <p>Etchings, linocuts, ceramics and illustration are moving to this site soon. Until then the newest work is on Instagram.</p>
+        <div class="cta-row" style="margin-top:20px"><a class="btn ghost" href="https://www.instagram.com/ci278ci/" target="_blank" rel="noopener">See more on Instagram</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="sec-head"><h2>About</h2></div>
+      <p>I'm Sihao Chen, an illustrator and printmaker. I carve rubber stamps and linoleum blocks, pull etchings, and make ceramics. Most of what I make starts as a joke or a meme and ends up very carefully carved.</p>
+      <div class="contact">
+        <span class="email" id="email">sihaochen599@gmail.com</span>
+        <button class="btn ghost" id="copy" type="button">Copy email</button>
+        <a class="btn ghost" href="https://www.instagram.com/ci278ci/" target="_blank" rel="noopener">@ci278ci</a>
+      </div>
+      <div style="margin-top:44px">
+        <p class="label" style="margin-bottom:16px">Good to know</p>
+        <div class="faq">
+          <div><h3>Shipping</h3><p>Free shipping in the US. Orders ship within 3–5 business days in a padded mailer.</p></div>
+          <div><h3>Handmade means a little different</h3><p>Ink coverage and color vary from print to print. That's the hand-printing showing.</p></div>
+          <div><h3>Ink pad colors</h3><p>Mini kits come with a random ink color. Part of the fun is opening it.</p></div>
+          <div><h3>Questions</h3><p>DM me on Instagram or email me. I reply within a couple of days.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="wrap"><footer><span>© 2026 Sihao Chen · Hand-carved in the USA</span><span>sihaochen.com</span></footer></div>
+
+<script>
+/* ===== PRODUCTS =====
+   To start selling: paste each Stripe payment link into "link".
+   While "link" is empty, the button sends buyers to Instagram DMs instead. */
+const products = [
+  {
+    name: "Middle Finger Mini Stamp Kit",
+    img: "img/finger-stamp.jpg",
+    alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
+    tag: "First batch of 20",
+    desc: "A tiny hand-carved stamp for when words are not enough.",
+    specs: ["Hand-carved stamp, about 2.5 cm", "Mini ink pad, random color", "5 blank kraft stickers"],
+    options: [{ name: "Mini kit", note: "Free US shipping", price: 18, link: "https://buy.stripe.com/8x2eVc3UB0K53bQ7neds400" }]
+  },
+  {
+    name: "AAAAA Stamp",
+    img: "img/bean-stamp.jpg",
+    alt: "Hand-carved screaming face stamp next to its teal print",
+    tag: "Limited run",
+    desc: "The scream that lives in all of us, carved by hand. Looks great on letters, notebooks and receipts.",
+    specs: ["Hand-carved stamp, about 5 cm tall", "Ships with a test print"],
+    options: [
+      { name: "Stamp", note: "Unmounted", price: 30, link: "https://buy.stripe.com/8x200i1MteAV5jY4b2ds401" },
+      { name: "Stamp + wood handle", note: "Easier to stamp evenly", price: 35, link: "https://buy.stripe.com/6oUeVc9eVakF8wa0YQds402" }
+    ]
+  },
+  {
+    name: "Gnome Bookmark",
+    img: "img/gnome-bookmarks.jpg",
+    alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
+    tag: "Holiday edition",
+    desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
+    specs: ["Two-block linocut, about 5 × 15 cm", "Red, red/green or green", "Order by Dec 12 for Christmas delivery"],
+    options: [
+      { name: "Single", note: "Choose your color at checkout", price: 12, link: "https://buy.stripe.com/14A5kCaiZeAV7s60YQds403" },
+      { name: "Set of three", note: "One of each color", price: 30, link: "https://buy.stripe.com/bJecN43UBdwRdQu22Uds404" }
+    ]
+  },
+  {
+    name: "Printed Postcards",
+    img: "",
+    tag: "Coming soon",
+    desc: "Hand-printed postcards. My linocut or etching on the front, my own postcard back printed on the reverse.",
+    specs: ["Printed by hand on both sides", "Sets of four available"],
+    options: [
+      { name: "Linocut postcard", note: "Single", price: 8, link: "" },
+      { name: "Etching postcard", note: "Single", price: 12, link: "" },
+      { name: "Set of four", note: "Mixed designs", price: 30, link: "" }
+    ]
+  }
+];
+
+const DM = "https://ig.me/m/ci278ci";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+document.getElementById("products").innerHTML = products.map(p => {
+  const ready = p.options.some(o => o.link);
+  const photo = p.img
+    ? `<img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy">`
+    : `<span>Photos coming soon</span>`;
+  const opts = p.options.map(o => `
+      <div class="opt"><div><span class="name">${esc(o.name)}</span><span class="note">${esc(o.note)}</span></div><span class="price">$${o.price}</span></div>
+      ${o.link ? `<a class="btn" href="${esc(o.link)}" target="_blank" rel="noopener">Buy ${esc(o.name.toLowerCase())}</a>` : ""}`).join("");
+  return `<article class="card">
+    <div class="ph${p.img ? "" : " empty"}">${photo}<span class="tag">${esc(p.tag)}</span></div>
+    <h3>${esc(p.name)}</h3>
+    <p class="desc">${esc(p.desc)}</p>
+    <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+    <div class="buy">${opts}
+      ${ready ? "" : `<a class="btn" href="${DM}" target="_blank" rel="noopener">Reserve by DM</a>`}
+    </div>
+  </article>`;
+}).join("");
+
+document.getElementById("copy").addEventListener("click", e => {
+  const btn = e.currentTarget, text = document.getElementById("email").textContent;
+  const done = () => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy email", 1600); };
+  try {
+    navigator.clipboard.writeText(text).then(done, () => { getSelection().selectAllChildren(document.getElementById("email")); });
+  } catch (_) { getSelection().selectAllChildren(document.getElementById("email")); }
+});
+</script>
+</body>
+</html>
