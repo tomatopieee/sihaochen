@@ -19,27 +19,27 @@ const SHOP = [
   {
     id: "mf", section: "linocut", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
     img: "img/finger-stamp.jpg", alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
-    specs: ["1 original hand-carved stamp, about 3 × 3 cm (1.2 × 1.2 in)", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
+    specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "mf-kit" }]
   },
   {
     id: "ah", section: "linocut", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
     img: "img/bean-stamp.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
-    specs: ["1 original hand-carved stamp, about 5 cm (2 in) tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
+    specs: ["1 original hand-carved stamp, about 2 in (5 cm) tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "ahhhhh" }]
   },
   {
     id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
     img: "img/snake-postcards.jpg", alt: "Eight hand-printed snake postcards, white lines on black",
     desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
-    specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 10 × 15 cm (4 × 6 in)"],
+    specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 6 in (10 × 15 cm), standard postcard size"],
     variants: [{ label: "Single", sku: "snake-pc" }]
   },
   {
     id: "giant", section: "linocut", title: "Giant Postcards", tag: "Postcard",
     img: "img/giants-prints.jpg", alt: "Hand-printed giant face postcards laid out in rows",
-    desc: "Five giant faces, each carved and printed by hand. Square format.",
-    specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 10 × 10 cm (4 × 4 in), square", "Square postcards need a $1.27 stamp to mail in the US"],
+    desc: "Five giant faces, each carved and printed by hand.",
+    specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 4.5 in (10 × 11.5 cm)", "Mail it in an envelope to keep the print safe"],
     designImgs: { "No.1": "", "No.2": "", "No.3": "", "No.4": "", "No.5": "" },
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
@@ -47,7 +47,7 @@ const SHOP = [
     id: "gnome", section: "linocut", title: "Gnome Bookmark", tag: "Bookmark",
     img: "img/gnome-bookmarks.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
-    specs: ["Hand-pulled two-block linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 5 × 15 cm (2 × 6 in), twine tie", "Signed with name and logo stamp on the back"],
+    specs: ["Hand-pulled two-block linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 2 × 6 in (5 × 15 cm), twine tie", "Signed with name and logo stamp on the back"],
     variants: [
       { label: "Red", sku: "gnome-single", fixed: { color: "Red" } },
       { label: "Green", sku: "gnome-single", fixed: { color: "Green" } },
@@ -414,12 +414,12 @@ function renderEtchings() {
 
 /* ===== CUSTOM PAGE: recarve existing designs ===== */
 const RECARVES = [
-  { sku: "recarve-giant-1", title: "Giant No.1", size: "10 × 10 cm (4 × 4 in)", img: "" },
-  { sku: "recarve-giant-2", title: "Giant No.2", size: "10 × 10 cm (4 × 4 in)", img: "" },
-  { sku: "recarve-giant-3", title: "Giant No.3", size: "10 × 10 cm (4 × 4 in)", img: "" },
-  { sku: "recarve-giant-4", title: "Giant No.4", size: "10 × 10 cm (4 × 4 in)", img: "" },
-  { sku: "recarve-giant-5", title: "Giant No.5", size: "10 × 10 cm (4 × 4 in)", img: "" },
-  { sku: "recarve-snake", title: "Snake (original)", size: "10 × 15 cm (4 × 6 in)", img: "" }
+  { sku: "recarve-giant-1", title: "Giant No.1", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
+  { sku: "recarve-giant-2", title: "Giant No.2", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
+  { sku: "recarve-giant-3", title: "Giant No.3", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
+  { sku: "recarve-giant-4", title: "Giant No.4", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
+  { sku: "recarve-giant-5", title: "Giant No.5", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
+  { sku: "recarve-snake", title: "Snake (original)", size: "4 × 6 in (10 × 15 cm)", img: "" }
 ];
 function renderRecarves() {
   const host = $("#recarves"); if (!host) return;
