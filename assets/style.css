@@ -232,14 +232,18 @@ footer.site .wrap { padding-block: 32px 48px; display: flex; justify-content: sp
   @keyframes slide { from { transform: translateX(24px); opacity: .6 } to { transform: none; opacity: 1 } }
 }
 
-/* shop guide */
-.guide { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px }
-.guide a { display: grid; gap: 2px; padding: 16px; border: 2px solid var(--ink); border-radius: 6px; text-decoration: none; min-width: 0 }
-.guide a b { font: 400 22px/1.1 var(--display) }
-.guide a span { font: 500 12px var(--mono); color: var(--ink-soft) }
+/* shop top: compact so the first product shows on phones */
+.shop-top { padding-block: 16px 8px }
+.mini-band { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--ink); color: var(--paper); border-radius: 6px; padding: 10px 14px; text-decoration: none; font-size: 15px }
+.mini-band b { font: 400 16px/1.2 var(--display) }
+.mini-band span { font: 500 13px var(--mono); opacity: .85 }
+.mini-band:hover { background: var(--red) }
+.shop-title { font-size: clamp(30px, 5vw, 46px); margin: 16px 0 10px }
+.guide { display: flex; gap: 8px; flex-wrap: wrap }
+.guide a { font: 700 14px var(--body); padding: 7px 14px; border: 2px solid var(--ink); border-radius: 999px; text-decoration: none }
 .guide a:hover { background: var(--ink); color: var(--paper) }
-.guide a:hover span { color: var(--paper) }
-@media (max-width: 560px) { .guide { grid-template-columns: 1fr } }
+.ship-line { margin: 10px 0 0; font: 500 12px/1.4 var(--mono); color: var(--ink-soft) }
+section.first { border-top: 0; padding-top: 8px }
 section[id] { scroll-margin-top: 80px }
 
 /* portfolio */
