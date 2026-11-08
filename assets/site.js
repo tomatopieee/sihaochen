@@ -17,13 +17,13 @@ const CART_KEY = "sc_cart_v1";
 const VERSION_IMGS = { "Signed Print": "img/signed-backs.jpg", "Postcard": "" };
 const SHOP = [
   {
-    id: "mf", section: "others", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
+    id: "mf", section: "linocut", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
     img: "img/finger-stamp.jpg", alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
     specs: ["1 original hand-carved stamp, about 3 × 3 cm", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "mf-kit" }]
   },
   {
-    id: "ah", section: "others", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
+    id: "ah", section: "linocut", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
     img: "img/bean-stamp.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
     specs: ["1 original hand-carved stamp, about 5 cm tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "ahhhhh" }]
@@ -131,7 +131,7 @@ function cartTotals(cart = readCart()) {
 
 /* ===== CHROME: banner, header, footer, drawer ===== */
 function buildChrome() {
-  const links = [["index.html", "Portfolio", ["portfolio"]], ["shop/index.html", "Shop", ["shop", "etchings"]], ["originals/index.html", "Originals", ["originals"]], ["custom/index.html", "Custom", ["custom"]]];
+  const links = [["index.html", "Portfolio", ["portfolio"]], ["shop/index.html", "Shop", ["shop", "etchings"]], ["custom/index.html", "Custom", ["custom"]]];
   const nav = links.map(([href, label, pages]) => `<a href="${ROOT}${href}"${pages.includes(PAGE) ? ' aria-current="page"' : ""}>${label}</a>`).join("");
   document.body.insertAdjacentHTML("afterbegin", `
     <div class="banner" id="banner" hidden><div class="wrap"><b id="banner-title"></b><span id="banner-time"></span></div></div>
@@ -240,7 +240,8 @@ function tickBanner() {
 
 /* ===== SHOP PAGE ===== */
 function renderShop() {
-  for (const section of ["linocut", "others"]) {
+  renderOriginals();
+  for (const section of ["linocut"]) {
     const host = $(`#products-${section}`); if (!host) continue;
     const list = SHOP.filter(p => p.section === section);
     host.innerHTML = list.map(p => `
@@ -354,7 +355,7 @@ function renderPortfolio() {
 
 /* ===== ORIGINALS PAGE ===== */
 function renderOriginals() {
-  const host = $("#originals"); if (!host) return;
+  const host = $("#products-others"); if (!host) return;
   host.innerHTML = CAT.originals.map(o => `<div class="piece">
     ${imgTag(o.img, o.title, "pic")}
     <h3>${esc(o.title)}</h3>
