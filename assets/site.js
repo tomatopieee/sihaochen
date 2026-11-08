@@ -252,29 +252,71 @@ function tickBanner() {
 /* ===== SHOP PAGE ===== */
 function renderShop() {
   renderOriginals();
-  for (const section of ["linocut"]) {
-    const host = $(`#products-${section}`); if (!host) continue;
-    const list = SHOP.filter(p => p.section === section);
-    host.innerHTML = list.map(p => `
-      <article class="card" data-card="${p.id}">
-        <div class="ph" data-photo>${imgTag(p.img, p.alt)}<span class="tag">${esc(p.tag)}</span></div>
-        <h3>${esc(p.title)}</h3>
-        ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
-        <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
-        <div class="foot" data-foot></div>
-      </article>`).join("");
-    list.forEach(p => setupCard(p, host.querySelector(`[data-card="${p.id}"] [data-foot]`)));
-  }
+  const host = $("#products-linocut");
+  if (host) host.innerHTML = SHOP.filter(p => p.section === "linocut").map(productTile).join("");
   renderBlindStrip();
   renderEtchBlocks();
 }
+// Small tile for the 2-column grid: photo, name, price. Taps open the product page.
+function tilePrice(p) {
+  if (p.variants.length === 1) return priceHTML(p.variants[0].sku);
+  const min = Math.min(...p.variants.map(v => unitPrice(v.sku)));
+  return `<span class="price"><span class="from">from</span><span class="now">${money(min)}</span></span>`;
+}
+function productTile(p) {
+  return `<a class="pcard" href="${ROOT}product/index.html#${esc(p.id)}">
+    <div class="pimg">${imgTag(p.img, p.alt)}<span class="tag">${esc(p.tag)}</span></div>
+    <b>${esc(p.title)}</b>${tilePrice(p)}</a>`;
+}
 function renderEtchBlocks() {
   const host = $("#etch-blocks"); if (!host) return;
-  host.innerHTML = CAT.etchings.map(x => `<a class="cat" href="${ROOT}etchings/index.html#${esc(x.id)}">${imgTag(x.cover || x.prints?.[0]?.img || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>${x.prints.length ? `${x.prints.length} prints · from ${money(Math.min(...x.prints.map(p => p.price)))}` : "Scans coming soon"}</p></a>`).join("");
+  host.innerHTML = CAT.etchings.map(x => `<a class="pcard" href="${ROOT}etchings/index.html#${esc(x.id)}">
+    <div class="pimg">${imgTag(x.cover || x.prints?.[0]?.img || "", x.title)}<span class="tag">Etching</span></div>
+    <b>${esc(x.title)}</b><span class="price">${x.prints.length ? `<span class="from">from</span><span class="now">${money(Math.min(...x.prints.map(p => p.price)))}</span>` : `<span class="muted" style="font-size:13px">Scans coming soon</span>`}</span></a>`).join("");
 }
-function setupCard(p, foot) {
+
+/* ===== PRODUCT PAGE ===== */
+function renderProduct() {
+  const host = $("#product"); if (!host) return;
+  const p = SHOP.find(x => x.id === location.hash.slice(1));
+  if (!p) { host.innerHTML = `<p class="empty">This product could not be found. <a href="${ROOT}shop/index.html">Back to shop</a></p>`; return; }
+  document.title = `${p.title} · Sihao Chen`;
+  const hasVersion = p.variants.some(v => CAT.items[v.sku]?.options?.version);
+  const gallery = [p.img, ...(p.gallery || [])].filter(Boolean);
+  host.innerHTML = `<a class="back" href="${ROOT}shop/index.html">← Back to shop</a>
+    <div class="pd card">
+      <div class="pd-media">
+        <div class="ph pd-main" data-photo>${imgTag(p.img, p.alt)}</div>
+        ${gallery.length > 1 ? `<div class="pd-strip">${gallery.map((g, i) => `<button type="button" class="thumb" data-g="${i}"><img src="${esc(ROOT + g)}" alt="${esc(p.title)} photo ${i + 1}"></button>`).join("")}</div>` : ""}
+      </div>
+      <div class="pd-info">
+        <p class="label">${esc(p.tag)}</p>
+        <h1>${esc(p.title)}</h1>
+        <div class="foot" data-foot></div>
+        ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
+        <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+        <p class="note-line">Free US shipping · ships within 1 week</p>
+      </div>
+    </div>
+    ${hasVersion ? `<div class="pd-versions">
+      <h2 class="sub">Two versions, same price</h2>
+      <div class="versions">
+        <div class="version">${VERSION_IMGS["Signed Print"] ? `<img src="${esc(ROOT + VERSION_IMGS["Signed Print"])}" alt="Back of a signed print with logo stamp, name and date" loading="lazy">` : `<div class="ph-box">Photo coming</div>`}
+          <div><h3>Signed Print</h3><p>Back signed with my name, date and logo stamp. Packed in a clear sleeve. Limited stock.</p></div></div>
+        <div class="version">${VERSION_IMGS["Postcard"] ? `<img src="${esc(ROOT + VERSION_IMGS["Postcard"])}" alt="Hand-printed postcard back" loading="lazy">` : `<div class="ph-box">Photo coming<br>postcard back</div>`}
+          <div><h3>Postcard</h3><p>Hand-printed postcard back, ready to write on and mail. Signed in pencil on the front.</p></div></div>
+      </div></div>` : ""}
+    <div class="pd-more"><h2 class="sub">You may also like</h2>
+      <div class="tiles">${SHOP.filter(x => x.id !== p.id).slice(0, 4).map(productTile).join("")}</div></div>`;
+  const main = host.querySelector("[data-photo]");
+  setupCard(p, host.querySelector("[data-foot]"), main);
+  host.querySelectorAll("[data-g]").forEach(b => b.addEventListener("click", () => {
+    main.innerHTML = `<img src="${esc(ROOT + gallery[+b.dataset.g])}" alt="${esc(p.title)}">`;
+  }));
+}
+function setupCard(p, foot, photoEl) {
   const state = { v: 0, opts: {}, qty: 1 };
-  const photo = foot.closest(".card").querySelector("[data-photo]");
+  const photo = photoEl || foot.closest(".card").querySelector("[data-photo]");
   function showPhoto() {
     const ver = state.opts.version;
     const src = ver && ver in VERSION_IMGS ? VERSION_IMGS[ver] : p.img;
@@ -384,12 +426,12 @@ function renderPortfolio() {
 /* ===== ORIGINALS PAGE ===== */
 function renderOriginals() {
   const host = $("#products-others"); if (!host) return;
-  host.innerHTML = CAT.originals.map(o => `<div class="piece">
-    ${imgTag(o.img, o.title, "pic")}
-    <h3>${esc(o.title)}</h3>
-    <div class="meta">${esc(o.medium)}${o.size ? " · " + esc(o.size) : ""} · One of one</div>
-    ${o.price ? `<span class="price"><span class="now">${money(o.price)}</span></span>` : `<span class="muted">Price coming soon</span>`}
-    <div class="cta-row"><a class="btn small" href="${DM}" target="_blank" rel="noopener">Inquire on Instagram</a></div>
+  host.innerHTML = CAT.originals.map(o => `<div class="pcard">
+    <div class="pimg">${imgTag(o.img, o.title)}<span class="tag">One of one</span></div>
+    <b>${esc(o.title)}</b>
+    <span class="meta">${esc(o.medium)}${o.size ? " · " + esc(o.size) : ""}</span>
+    ${o.price ? `<span class="price"><span class="now">${money(o.price)}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`}
+    <a class="btn small ghost" href="${DM}" target="_blank" rel="noopener">Inquire</a>
   </div>`).join("");
 }
 
@@ -413,6 +455,7 @@ function wireCopy() {
   if (PAGE === "etchings") { await loadSold(); renderEtchings(); addEventListener("hashchange", () => { renderEtchings(); scrollTo(0, 0); }); }
   if (PAGE === "originals") renderOriginals();
   if (PAGE === "custom") renderRecarves();
+  if (PAGE === "product") { renderProduct(); addEventListener("hashchange", () => { renderProduct(); scrollTo(0, 0); }); }
   if (PAGE === "portfolio") { renderPortfolio(); addEventListener("hashchange", renderPortfolio); }
   let wasSale = saleState();
   if (tickBanner()) {
