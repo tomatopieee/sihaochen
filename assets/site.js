@@ -253,7 +253,7 @@ function tickBanner() {
 function renderShop() {
   renderOriginals();
   const host = $("#products-linocut");
-  if (host) host.innerHTML = SHOP.filter(p => p.section === "linocut").map(productTile).join("");
+  if (host) host.innerHTML = SHOP.filter(p => p.section === "linocut").map(productTile).join("") + customTile();
   renderBlindStrip();
   renderEtchBlocks();
 }
@@ -267,6 +267,12 @@ function productTile(p) {
   return `<a class="pcard" href="${ROOT}product/index.html#${esc(p.id)}">
     <div class="pimg">${imgTag(p.img, p.alt)}<span class="tag">${esc(p.tag)}</span></div>
     <b>${esc(p.title)}</b>${tilePrice(p)}</a>`;
+}
+// Extra tile after the products: leads to the Custom page.
+function customTile() {
+  return `<a class="pcard" href="${ROOT}custom/index.html">
+    <div class="pimg"><img src="${ROOT}img/blocks.jpg" alt="Carved pink rubber blocks" loading="lazy"><span class="tag">Custom</span></div>
+    <b>Custom or recarve a design</b><span class="price"><span class="from">from</span><span class="now">$38</span></span></a>`;
 }
 function renderEtchBlocks() {
   const host = $("#etch-blocks"); if (!host) return;
