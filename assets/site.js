@@ -32,14 +32,14 @@ const SHOP = [
     id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
     img: "img/snake-postcards.jpg", alt: "Eight hand-printed snake postcards, white lines on black",
     desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
-    specs: ["Hand-printed linocut"],
+    specs: ["Hand-printed linocut", "About 10 × 15 cm (4 × 6 in)"],
     variants: [{ label: "Single", sku: "snake-pc" }]
   },
   {
     id: "giant", section: "linocut", title: "Giant Postcards", tag: "Postcard",
     img: "img/giants-prints.jpg", alt: "Hand-printed giant face postcards laid out in rows",
     desc: "Five giant faces, each carved and printed by hand. Square format.",
-    specs: ["Hand-printed linocut", "Square postcards need a $1.27 stamp to mail in the US"],
+    specs: ["Hand-printed linocut", "About 10 × 10 cm (4 × 4 in), square", "Square postcards need a $1.27 stamp to mail in the US"],
     designImgs: { "No.1": "", "No.2": "", "No.3": "", "No.4": "", "No.5": "" },
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
@@ -90,8 +90,9 @@ function unitPrice(sku) {
 function priceHTML(sku) {
   const it = CAT.items[sku] || uniqueItem(sku);
   if (!it) return "";
-  const now = unitPrice(sku);
-  return `<span class="price">${now !== it.price ? `<s>${money(it.price)}</s>` : ""}<span class="now">${money(now)}</span></span>`;
+  const now = unitPrice(sku), base = it.compareAt || it.price;
+  const save = Math.round((base - now) * 100) / 100;
+  return `<span class="price">${now < base ? `<s>${money(base)}</s>` : ""}<span class="now">${money(now)}</span>${it.compareAt && save > 0 ? `<span class="save-tag">Save ${money(save)}</span>` : ""}</span>`;
 }
 function uniqueItem(sku) {
   for (const s of CAT?.etchings || []) for (const p of s.prints || []) if (p.sku === sku) return { name: `${s.title}, ${p.title || p.sku}`, price: p.price, sale: false, kind: "unique", img: p.img };
@@ -122,10 +123,11 @@ function cartTotals(cart = readCart()) {
   for (const l of cart) {
     const it = CAT.items[l.sku] || uniqueItem(l.sku);
     if (!it || it.kind === "blind") continue;
-    sub += unitPrice(l.sku) * l.qty; full += it.price * l.qty;
+    sub += unitPrice(l.sku) * l.qty; full += (it.compareAt || it.price) * l.qty;
   }
+  // Blind box deal is shown inside its own block, not in "You save".
   const bb = blindTotals(cart);
-  sub += bb.total; full += bb.full;
+  sub += bb.total; full += bb.total;
   return { sub: Math.round(sub * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
 }
 
@@ -167,26 +169,35 @@ function renderDrawer() {
   const body = $("#cart-body"), foot = $("#cart-foot");
   if (!body || !CAT) return;
   const cart = readCart();
+  const qtyCtl = (i, q) => `<span class="qty" style="border-width:1px;margin-top:4px"><button type="button" data-q="${i}" data-d="-1" aria-label="Less">−</button><output>${q}</output><button type="button" data-q="${i}" data-d="1" aria-label="More">+</button></span>`;
   const lines = cart.map((l, i) => {
     const it = CAT.items[l.sku] || uniqueItem(l.sku);
-    if (!it) return "";
+    if (!it || it.kind === "blind") return "";
     const opts = Object.entries(l.opts || {}).map(([k, v]) => `${OPTION_LABEL[k] || k}: ${v}`).join(" · ");
-    const each = it.kind === "blind" ? CAT.blindBox.each : unitPrice(l.sku);
     return `<div class="line">
       ${imgTag(lineImg(l.sku), it.name)}
-      <div><b>${esc(it.name)}</b>${opts ? `<small>${esc(opts)}</small>` : ""}
-        <small>${it.kind === "unique" ? "One of one" : `<span class="qty" style="border-width:1px;margin-top:4px"><button type="button" data-q="${i}" data-d="-1" aria-label="Less">−</button><output>${l.qty}</output><button type="button" data-q="${i}" data-d="1" aria-label="More">+</button></span>`}
+      <div><b>${esc(it.name)}</b>${opts ? `<small>${esc(opts)}</small>` : ""}${it.kind === "custom" ? "<small>Made to order · 1–2 weeks</small>" : ""}
+        <small>${it.kind === "unique" ? "One of one" : qtyCtl(i, l.qty)}
         <button class="rm" type="button" data-rm="${i}">Remove</button></small></div>
-      <div class="amt">${it.kind === "blind" ? "" : money(Math.round(each * l.qty * 100) / 100)}</div>
+      <div class="amt">${money(Math.round(unitPrice(l.sku) * l.qty * 100) / 100)}</div>
     </div>`;
   }).join("");
   const bb = blindTotals(cart);
+  const blindRows = cart.map((l, i) => CAT.items[l.sku]?.kind === "blind"
+    ? `<small><b>${esc(BLIND.find(b => b.sku === l.sku)?.title || l.sku)}</b> ${qtyCtl(i, l.qty)} <button class="rm" type="button" data-rm="${i}">Remove</button></small>` : "").join("");
+  const bs = CAT.blindBox.bundleSize, left = bs - (bb.n % bs);
+  const blindLine = bb.n ? `<div class="line">
+      ${imgTag("img/blind-box.jpg", "Blind box")}
+      <div><b>Blind box · ${bb.n} ${bb.n === 1 ? "item" : "items"}</b>${blindRows}
+        <small>${bb.n >= bs && left === bs ? `${bs} for $${CAT.blindBox.bundlePrice} applied` : `Add ${left} more to get ${bs} for $${CAT.blindBox.bundlePrice}`}</small></div>
+      <div class="amt">${money(bb.total)}</div>
+    </div>` : "";
   const addon = `<div class="addon">
     <h3>Add a little surprise</h3>
-    <p>Handmade blind box: $${CAT.blindBox.each} each, any ${CAT.blindBox.bundleSize} for $${CAT.blindBox.bundlePrice}. Mix stickers and mini prints.${bb.n ? ` You have ${bb.n}: ${money(bb.total)}.` : ""}</p>
+    <p>Handmade blind box: $${CAT.blindBox.each} each, any ${CAT.blindBox.bundleSize} for $${CAT.blindBox.bundlePrice}. Mix stickers and mini prints.</p>
     ${BLIND.map(b => `<div class="row"><span><b>${esc(b.title)}</b> <small class="muted">${esc(b.note)}</small></span><button class="btn small ghost" type="button" data-add-blind="${b.sku}">+ Add</button></div>`).join("")}
   </div>`;
-  body.innerHTML = (cart.length ? lines : `<p class="empty">Your cart is empty.</p>`) + addon;
+  body.innerHTML = (cart.length ? lines + blindLine : `<p class="empty">Your cart is empty.</p>`) + addon;
   const t = cartTotals(cart);
   const ready = !!CHECKOUT_URL;
   foot.innerHTML = cart.length ? `
@@ -342,6 +353,23 @@ function renderEtchings() {
   host.querySelectorAll("[data-etch]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.etch)));
 }
 
+/* ===== CUSTOM PAGE: recarve existing designs ===== */
+const RECARVES = [
+  { sku: "recarve-giant-1", title: "Giant No.1", img: "" },
+  { sku: "recarve-giant-2", title: "Giant No.2", img: "" },
+  { sku: "recarve-giant-3", title: "Giant No.3", img: "" },
+  { sku: "recarve-giant-4", title: "Giant No.4", img: "" },
+  { sku: "recarve-giant-5", title: "Giant No.5", img: "" },
+  { sku: "recarve-snake", title: "Snake (original)", img: "" }
+];
+function renderRecarves() {
+  const host = $("#recarves"); if (!host) return;
+  host.innerHTML = RECARVES.map(r => `<div class="tile">${r.img ? `<img src="${esc(ROOT + r.img)}" alt="${esc(r.title)} block" loading="lazy">` : `<div class="ph-box">Photo coming<br>${esc(r.title)}</div>`}
+    <div class="row"><b>${esc(r.title)}</b><span class="p">${money(CAT.items[r.sku].price)}</span></div>
+    <button class="btn small" type="button" data-recarve="${r.sku}">Add to cart</button></div>`).join("");
+  host.querySelectorAll("[data-recarve]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.recarve)));
+}
+
 /* ===== PORTFOLIO (home) ===== */
 function renderPortfolio() {
   const tabs = $("#pf-tabs"), grid = $("#pf"); if (!tabs || !grid || !CAT.portfolio) return;
@@ -384,6 +412,7 @@ function wireCopy() {
   if (PAGE === "shop") renderShop();
   if (PAGE === "etchings") { await loadSold(); renderEtchings(); addEventListener("hashchange", () => { renderEtchings(); scrollTo(0, 0); }); }
   if (PAGE === "originals") renderOriginals();
+  if (PAGE === "custom") renderRecarves();
   if (PAGE === "portfolio") { renderPortfolio(); addEventListener("hashchange", renderPortfolio); }
   let wasSale = saleState();
   if (tickBanner()) {

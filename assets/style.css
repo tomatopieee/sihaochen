@@ -253,3 +253,7 @@ section[id] { scroll-margin-top: 80px }
 .pf img, .pf .ph-box { width: 100%; border-radius: 4px; display: block }
 .pf .ph-box { aspect-ratio: 4/5 }
 .pf figcaption { font: 500 12px var(--mono); color: var(--ink-soft) }
+.save-tag { font: 500 12px var(--mono); background: var(--red); color: #fff; padding: 3px 7px; border-radius: 999px; align-self: center }
+.gifts { background: var(--rubber); border-radius: 6px; padding: 14px 16px; margin-top: 18px; font-size: 15px }
+.gifts b { display: block; font: 400 18px var(--display); margin-bottom: 4px }
+.wall .tile .btn { width: 100% }
