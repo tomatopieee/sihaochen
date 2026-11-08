@@ -5,6 +5,7 @@
     "end": "2026-12-11T23:59:59-05:00",
     "off": 0.15
   },
+  "shipping": { "freeOver": 20, "flat": 3 },
   "blindBox": {
     "each": 5,
     "bundleSize": 3,

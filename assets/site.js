@@ -139,7 +139,10 @@ function cartTotals(cart = readCart()) {
   // Blind box deal is shown inside its own block, not in "You save".
   const bb = blindTotals(cart);
   sub += bb.total; full += bb.total;
-  return { sub: Math.round(sub * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
+  sub = Math.round(sub * 100) / 100;
+  const sh = CAT.shipping || { freeOver: 0, flat: 0 };
+  const ship = sub > 0 && sub < sh.freeOver ? sh.flat : 0;
+  return { sub, ship, toFree: Math.round((sh.freeOver - sub) * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
 }
 
 /* ===== CHROME: banner, header, footer, drawer ===== */
@@ -213,8 +216,9 @@ function renderDrawer() {
   const ready = !!CHECKOUT_URL;
   foot.innerHTML = cart.length ? `
     ${t.save > 0 ? `<div class="sum save"><span>You save</span><span>−${money(t.save)}</span></div>` : ""}
-    <div class="sum total"><span>Total</span><span>${money(t.sub)}</span></div>
-    <div class="sum"><span>Shipping (US)</span><span>Free</span></div>
+    <div class="sum"><span>Shipping (US)</span><span>${t.ship ? money(t.ship) : "Free"}</span></div>
+    ${t.ship ? `<p class="hint" style="margin:0">Add ${money(t.toFree)} more for free US shipping</p>` : ""}
+    <div class="sum total"><span>Total</span><span>${money(t.sub + t.ship)}</span></div>
     <button class="btn" id="checkout" type="button"${ready ? "" : " disabled"}>${ready ? "Checkout" : "Checkout opens soon"}</button>
     <p class="hint" id="checkout-msg"></p>` : "";
   body.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.q; setQty(i, readCart()[i].qty + +b.dataset.d); }));
@@ -312,7 +316,7 @@ function renderProduct() {
         <div class="foot" data-foot></div>
         ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
         <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
-        <p class="note-line">Free US shipping · ships within 1 week</p>
+        <p class="note-line">Free US shipping over $20 · ships within 1 week</p>
       </div>
     </div>
     ${hasVersion ? `<div class="pd-versions">
