@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shop · Sihao Chen</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Hand-carved stamp kits, hand-printed postcards and linocut bookmarks by Sihao Chen.">
+<meta name="description" content="Hand-printed linocut postcards and bookmarks, etchings and hand-carved stamp kits by Sihao Chen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="../assets/style.css">
@@ -14,19 +14,31 @@
 <main>
   <section>
     <div class="wrap">
-      <div class="sec-head">
+      <div class="band">
+        <div><h3>Want your own stamp?</h3><p>Your drawing, your pet, your logo. Carved by hand in 1–2 weeks, from $38.</p></div>
+        <a class="btn" href="../custom/index.html">Custom stamps</a>
+      </div>
+
+      <div class="sec-head" style="margin-top:40px;margin-bottom:16px">
         <h1>Shop</h1>
         <p>Free US shipping on everything. Shop items ship within 1 week. Order by Dec 11 for Christmas delivery.</p>
       </div>
-      <div class="grid" id="products"></div>
+      <nav class="guide" aria-label="Shop sections">
+        <a href="#linocut"><b>Linocut</b><span>Postcards &amp; bookmarks</span></a>
+        <a href="#etching"><b>Etching</b><span>One-of-one prints</span></a>
+        <a href="#others"><b>Others</b><span>Stamp kits &amp; more</span></a>
+      </nav>
     </div>
   </section>
 
-  <section>
-    <div class="wrap" id="blind"></div>
+  <section id="linocut">
+    <div class="wrap">
+      <div class="sec-head"><h2>Linocut</h2><p>Carved blocks, printed by hand one at a time.</p></div>
+      <div class="grid" id="products-linocut"></div>
+    </div>
   </section>
 
-  <section>
+  <section id="versions">
     <div class="wrap">
       <h2 class="sub" style="margin-top:0">Two versions of every postcard</h2>
       <div class="versions">
@@ -39,16 +51,25 @@
           <div><h3>Postcard</h3><p>Hand-printed postcard back, ready to write on and mail. Signed in pencil on the front.</p></div>
         </div>
       </div>
-      <p class="note-line">Same price for both. Pick the version on the card above before adding to cart.</p>
+      <p class="note-line">Same price for both. Pick the version on the card before adding to cart.</p>
     </div>
   </section>
 
   <section>
+    <div class="wrap" id="blind"></div>
+  </section>
+
+  <section id="etching">
     <div class="wrap">
-      <div class="band">
-        <div><h3>Want your own stamp?</h3><p>Your drawing, your pet, your logo. Carved by hand in 1–2 weeks, from $38.</p></div>
-        <a class="btn" href="../custom/index.html">Custom stamps</a>
-      </div>
+      <div class="sec-head"><h2>Etching</h2><p>Every impression is inked, wiped and printed by hand, so no two are the same. Open a design to pick your print.</p></div>
+      <div class="series" id="etch-blocks"></div>
+    </div>
+  </section>
+
+  <section id="others">
+    <div class="wrap">
+      <div class="sec-head"><h2>Others</h2><p>Hand-carved stamp kits, ready to stamp out of the box.</p></div>
+      <div class="grid" id="products-others"></div>
     </div>
   </section>
 

@@ -13,28 +13,30 @@ const PAGE = document.body.dataset.page || "";
 const CART_KEY = "sc_cart_v1";
 
 /* ===== SHOP DISPLAY (what each card shows; prices come from catalog) ===== */
+// Photo of each postcard back, shown when the customer picks a version.
+const VERSION_IMGS = { "Signed Print": "img/signed-backs.jpg", "Postcard": "" };
 const SHOP = [
   {
-    id: "mf", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
+    id: "mf", section: "others", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
     img: "img/finger-stamp.jpg", alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
     specs: ["1 original hand-carved stamp, about 3 × 3 cm", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "mf-kit" }]
   },
   {
-    id: "ah", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
+    id: "ah", section: "others", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
     img: "img/bean-stamp.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
     specs: ["1 original hand-carved stamp, about 5 cm tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "ahhhhh" }]
   },
   {
-    id: "snake", title: "Snake Postcard", tag: "Postcard",
+    id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
     img: "img/snake-postcards.jpg", alt: "Eight hand-printed snake postcards, white lines on black",
     desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
     specs: ["Hand-printed linocut"],
     variants: [{ label: "Single", sku: "snake-pc" }]
   },
   {
-    id: "giant", title: "Giant Postcards", tag: "Postcard",
+    id: "giant", section: "linocut", title: "Giant Postcards", tag: "Postcard",
     img: "img/giants-prints.jpg", alt: "Hand-printed giant face postcards laid out in rows",
     desc: "Five giant faces, each carved and printed by hand. Square format.",
     specs: ["Hand-printed linocut", "Square postcards need a $1.27 stamp to mail in the US"],
@@ -42,14 +44,14 @@ const SHOP = [
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
   {
-    id: "gnome", title: "Gnome Bookmark", tag: "Bookmark",
+    id: "gnome", section: "linocut", title: "Gnome Bookmark", tag: "Bookmark",
     img: "img/gnome-bookmarks.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
     specs: ["Two-block linocut, about 5 × 15 cm", "Signed with name and logo stamp on the back"],
     variants: [
       { label: "Red", sku: "gnome-single", fixed: { color: "Red" } },
       { label: "Green", sku: "gnome-single", fixed: { color: "Green" } },
-      { label: "Red & green", sku: "gnome-rg" },
+      { label: "Red & green (the middle one)", sku: "gnome-rg" },
       { label: "Set of three", sku: "gnome-set" }
     ]
   }
@@ -129,8 +131,8 @@ function cartTotals(cart = readCart()) {
 
 /* ===== CHROME: banner, header, footer, drawer ===== */
 function buildChrome() {
-  const links = [["index.html", "Work"], ["shop/index.html", "Shop"], ["etchings/index.html", "Etchings"], ["originals/index.html", "Originals"], ["custom/index.html", "Custom"]];
-  const nav = links.map(([href, label]) => `<a href="${ROOT}${href}"${PAGE === (label.toLowerCase()) ? ' aria-current="page"' : ""}>${label}</a>`).join("");
+  const links = [["index.html", "Portfolio", ["portfolio"]], ["shop/index.html", "Shop", ["shop", "etchings"]], ["originals/index.html", "Originals", ["originals"]], ["custom/index.html", "Custom", ["custom"]]];
+  const nav = links.map(([href, label, pages]) => `<a href="${ROOT}${href}"${pages.includes(PAGE) ? ' aria-current="page"' : ""}>${label}</a>`).join("");
   document.body.insertAdjacentHTML("afterbegin", `
     <div class="banner" id="banner" hidden><div class="wrap"><b id="banner-title"></b><span id="banner-time"></span></div></div>
     <header class="site"><div class="wrap bar">
@@ -238,21 +240,38 @@ function tickBanner() {
 
 /* ===== SHOP PAGE ===== */
 function renderShop() {
-  const host = $("#products"); if (!host) return;
-  host.innerHTML = SHOP.map(p => `
-    <article class="card" data-card="${p.id}">
-      <div class="ph">${imgTag(p.img, p.alt)}<span class="tag">${esc(p.tag)}</span></div>
-      <h3>${esc(p.title)}</h3>
-      ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
-      <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
-      <div class="foot" data-foot></div>
-    </article>`).join("");
-  SHOP.forEach(p => setupCard(p, host.querySelector(`[data-card="${p.id}"] [data-foot]`)));
+  for (const section of ["linocut", "others"]) {
+    const host = $(`#products-${section}`); if (!host) continue;
+    const list = SHOP.filter(p => p.section === section);
+    host.innerHTML = list.map(p => `
+      <article class="card" data-card="${p.id}">
+        <div class="ph" data-photo>${imgTag(p.img, p.alt)}<span class="tag">${esc(p.tag)}</span></div>
+        <h3>${esc(p.title)}</h3>
+        ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
+        <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+        <div class="foot" data-foot></div>
+      </article>`).join("");
+    list.forEach(p => setupCard(p, host.querySelector(`[data-card="${p.id}"] [data-foot]`)));
+  }
   renderBlindStrip();
+  renderEtchBlocks();
+}
+function renderEtchBlocks() {
+  const host = $("#etch-blocks"); if (!host) return;
+  host.innerHTML = CAT.etchings.map(x => `<a class="cat" href="${ROOT}etchings/index.html#${esc(x.id)}">${imgTag(x.cover || x.prints?.[0]?.img || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>${x.prints.length ? `${x.prints.length} prints · from ${money(Math.min(...x.prints.map(p => p.price)))}` : "Scans coming soon"}</p></a>`).join("");
 }
 function setupCard(p, foot) {
   const state = { v: 0, opts: {}, qty: 1 };
+  const photo = foot.closest(".card").querySelector("[data-photo]");
+  function showPhoto() {
+    const ver = state.opts.version;
+    const src = ver && ver in VERSION_IMGS ? VERSION_IMGS[ver] : p.img;
+    const alt = ver ? `${p.title}, ${ver} back` : p.alt;
+    const label = ver && !src ? `Photo coming<br>${esc(ver)} back` : "";
+    photo.innerHTML = (src ? `<img src="${esc(ROOT + src)}" alt="${esc(alt)}">` : `<div class="ph-box">${label || "Photo coming"}</div>`) + `<span class="tag">${esc(ver || p.tag)}</span>`;
+  }
   function draw() {
+    showPhoto();
     const v = p.variants[state.v], it = CAT.items[v.sku];
     const optKeys = Object.keys(it.options || {}).filter(k => !(v.fixed && k in v.fixed));
     let html = "";
@@ -310,7 +329,7 @@ function renderEtchings() {
       <div class="series">${CAT.etchings.map(x => `<a class="cat" href="#${esc(x.id)}">${imgTag(x.prints?.[0]?.img || x.cover || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>${x.prints.length ? `${x.prints.length} prints · from ${money(Math.min(...x.prints.map(p => p.price)))}` : "Scans coming soon"}</p></a>`).join("")}</div>`;
     return;
   }
-  host.innerHTML = `<a class="back" href="#">← All etchings</a>
+  host.innerHTML = `<a class="back" href="${ROOT}shop/index.html#etching">← Back to shop</a>
     <div class="sec-head"><h1>${esc(s.title)}</h1><p>${esc(s.blurb)}</p></div>
     ${s.prints.length ? `<div class="prints">${s.prints.map(p => {
       const sold = SOLD.has(p.sku) || p.sold;
@@ -320,6 +339,17 @@ function renderEtchings() {
     }).join("")}</div>` : `<p class="muted">Scans of each print are coming soon.</p>`}
     <p class="note-line">One of one. Each print is unique and ships flat in a rigid envelope. Not part of the sale.</p>`;
   host.querySelectorAll("[data-etch]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.etch)));
+}
+
+/* ===== PORTFOLIO (home) ===== */
+function renderPortfolio() {
+  const tabs = $("#pf-tabs"), grid = $("#pf"); if (!tabs || !grid || !CAT.portfolio) return;
+  const cats = ["All", ...CAT.portfolio.categories];
+  const current = decodeURIComponent(location.hash.slice(1)) || "All";
+  const active = cats.includes(current) ? current : "All";
+  tabs.innerHTML = cats.map(c => `<a class="chip" href="#${encodeURIComponent(c)}" aria-pressed="${c === active}" style="text-decoration:none">${esc(c)}</a>`).join("");
+  const works = CAT.portfolio.works.filter(w => active === "All" || w.cat === active);
+  grid.innerHTML = works.map(w => `<figure>${w.img ? `<img src="${esc(ROOT + w.img)}" alt="${esc(w.title || w.cat)}" loading="lazy">` : `<div class="ph-box">Photo coming<br>${esc(w.cat)}</div>`}${w.title ? `<figcaption>${esc(w.title)}</figcaption>` : ""}</figure>`).join("");
 }
 
 /* ===== ORIGINALS PAGE ===== */
@@ -353,6 +383,7 @@ function wireCopy() {
   if (PAGE === "shop") renderShop();
   if (PAGE === "etchings") { await loadSold(); renderEtchings(); addEventListener("hashchange", () => { renderEtchings(); scrollTo(0, 0); }); }
   if (PAGE === "originals") renderOriginals();
+  if (PAGE === "portfolio") { renderPortfolio(); addEventListener("hashchange", renderPortfolio); }
   let wasSale = saleState();
   if (tickBanner()) {
     const t = setInterval(() => {
