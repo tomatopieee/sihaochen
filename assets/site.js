@@ -6,7 +6,7 @@
 const CHECKOUT_URL = "https://sihaochen-checkout.sihaochen599.workers.dev";
 const IG = "https://www.instagram.com/ci278ci/";
 const DM = "https://ig.me/m/ci278ci";
-const EMAIL = "sihaochen599@gmail.com";
+const EMAIL = "sihaochenart@gmail.com";
 
 const ROOT = document.body.dataset.root || "./";
 const PAGE = document.body.dataset.page || "";
