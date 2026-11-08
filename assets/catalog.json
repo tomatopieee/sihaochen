@@ -93,49 +93,49 @@
       "compareAt": 40
     },
     "bb-sticker": {
-      "name": "Blind Box: Sticker Print",
+      "name": "Blind Box: Mystery Sticker",
       "price": 5,
       "sale": false,
       "kind": "blind"
     },
     "bb-mini": {
-      "name": "Blind Box: Mini Print",
+      "name": "Blind Box: Mystery Mini Print",
       "price": 5,
       "sale": false,
       "kind": "blind"
     },
     "recarve-giant-1": {
-      "name": "Recarved stamp: Giant No.1",
+      "name": "Re-carved stamp: Giant No.1",
       "price": 100,
       "sale": false,
       "kind": "custom"
     },
     "recarve-giant-2": {
-      "name": "Recarved stamp: Giant No.2",
+      "name": "Re-carved stamp: Giant No.2",
       "price": 140,
       "sale": false,
       "kind": "custom"
     },
     "recarve-giant-3": {
-      "name": "Recarved stamp: Giant No.3",
+      "name": "Re-carved stamp: Giant No.3",
       "price": 200,
       "sale": false,
       "kind": "custom"
     },
     "recarve-giant-4": {
-      "name": "Recarved stamp: Giant No.4",
+      "name": "Re-carved stamp: Giant No.4",
       "price": 200,
       "sale": false,
       "kind": "custom"
     },
     "recarve-giant-5": {
-      "name": "Recarved stamp: Giant No.5",
+      "name": "Re-carved stamp: Giant No.5",
       "price": 200,
       "sale": false,
       "kind": "custom"
     },
     "recarve-snake": {
-      "name": "Recarved stamp: Snake (original)",
+      "name": "Re-carved stamp: Snake (original)",
       "price": 250,
       "sale": false,
       "kind": "custom"

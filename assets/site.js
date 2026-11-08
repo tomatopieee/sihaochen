@@ -32,14 +32,14 @@ const SHOP = [
     id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
     img: "img/snake-postcards.jpg", alt: "Eight hand-printed snake postcards, white lines on black",
     desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
-    specs: ["Hand-printed linocut", "About 10 × 15 cm (4 × 6 in)"],
+    specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 10 × 15 cm (4 × 6 in)"],
     variants: [{ label: "Single", sku: "snake-pc" }]
   },
   {
     id: "giant", section: "linocut", title: "Giant Postcards", tag: "Postcard",
     img: "img/giants-prints.jpg", alt: "Hand-printed giant face postcards laid out in rows",
     desc: "Five giant faces, each carved and printed by hand. Square format.",
-    specs: ["Hand-printed linocut", "About 10 × 10 cm (4 × 4 in), square", "Square postcards need a $1.27 stamp to mail in the US"],
+    specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 10 × 10 cm (4 × 4 in), square", "Square postcards need a $1.27 stamp to mail in the US"],
     designImgs: { "No.1": "", "No.2": "", "No.3": "", "No.4": "", "No.5": "" },
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
@@ -47,7 +47,7 @@ const SHOP = [
     id: "gnome", section: "linocut", title: "Gnome Bookmark", tag: "Bookmark",
     img: "img/gnome-bookmarks.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
-    specs: ["Two-block linocut, about 5 × 15 cm", "Signed with name and logo stamp on the back"],
+    specs: ["Hand-pulled two-block linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 5 × 15 cm (2 × 6 in), twine tie", "Signed with name and logo stamp on the back"],
     variants: [
       { label: "Red", sku: "gnome-single", fixed: { color: "Red" } },
       { label: "Green", sku: "gnome-single", fixed: { color: "Green" } },
@@ -57,8 +57,8 @@ const SHOP = [
   }
 ];
 const BLIND = [
-  { sku: "bb-sticker", title: "Sticker Print", note: "Hand-printed sticker" },
-  { sku: "bb-mini", title: "Mini Print", note: "Hand-printed mini print" }
+  { sku: "bb-sticker", title: "Mystery Sticker", note: "Hand-printed sticker" },
+  { sku: "bb-mini", title: "Mystery Mini Print", note: "Hand-printed mini print" }
 ];
 const OPTION_LABEL = { version: "Version", design: "Design", color: "Color" };
 
@@ -255,7 +255,7 @@ function tickBanner() {
   let s = Math.max(0, Math.floor((target - new Date()) / 1000));
   const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600); s %= 3600; const m = Math.floor(s / 60); s %= 60;
   const t = `${d}d ${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
-  $("#banner-title").textContent = `${CAT.sale.label} · ${Math.round(CAT.sale.off * 100)}% off all products`;
+  $("#banner-title").textContent = `${CAT.sale.label} · ${Math.round(CAT.sale.off * 100)}% off selected items`;
   $("#banner-time").textContent = (st === "before" ? `Starts Nov 11 · in ${t}` : `Ends Dec 11 · ${t} left`) + (PREVIEW_SALE ? " · PREVIEW" : "");
   return true;
 }
@@ -283,7 +283,7 @@ function productTile(p) {
 function customTile() {
   return `<a class="pcard" href="${ROOT}custom/index.html">
     <div class="pimg"><img src="${ROOT}img/blocks.jpg" alt="Carved pink rubber blocks" loading="lazy"><span class="tag">Custom</span></div>
-    <b>Custom or recarve a design</b><span class="price"><span class="from">from</span><span class="now">$38</span></span></a>`;
+    <b>Custom stamp / Re-carve a design</b><span class="price"><span class="from">from</span><span class="now">$38</span></span></a>`;
 }
 function renderEtchBlocks() {
   const host = $("#etch-blocks"); if (!host) return;
