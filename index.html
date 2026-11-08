@@ -6,7 +6,7 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Sihao Chen Shop</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Hand-carved rubber stamps, linocut bookmarks and prints by Sihao Chen.">
+<meta name="description" content="Hand-carved rubber stamps, hand-printed postcards and linocut bookmarks by Sihao Chen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -20,16 +20,17 @@
   --red: #C42F27;
   --teal: #13707E;
   --line: #E2DDD6;
+  --ph: #E9E5DF;
   --display: "Bowlby One", "Arial Black", Impact, sans-serif;
   --body: "Karla", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #151413; --ink: #F3F0EB; --ink-soft: #ABA59D; --rubber: #3A2725; --rubber-deep: #563632;
-  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; color-scheme: dark } }
+  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; --ph: #2A2725; color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #151413; --ink: #F3F0EB; --ink-soft: #ABA59D; --rubber: #3A2725; --rubber-deep: #563632;
-  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; color-scheme: dark }
+  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; --ph: #2A2725; color-scheme: dark }
 
 * { box-sizing: border-box }
 body { background: var(--paper); color: var(--ink); font: 400 17px/1.55 var(--body); }
@@ -38,6 +39,12 @@ a { color: inherit }
 a:focus-visible, button:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px }
 h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.02; text-wrap: balance; margin: 0 }
 .label { font: 500 12px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft) }
+
+/* sale banner */
+.banner { background: var(--red); color: #fff }
+.banner .wrap { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 6px 16px; padding-block: 10px; text-align: center }
+.banner b { font: 400 16px/1.2 var(--display); letter-spacing: .02em }
+.banner span { font: 500 14px/1.3 var(--mono); font-variant-numeric: tabular-nums }
 
 /* header */
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper) }
@@ -53,31 +60,33 @@ nav a:hover { color: var(--red) }
 .hero h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -.01em }
 .hero h1 .cut { color: var(--red) }
 .hero p { max-width: 34ch; font-size: 19px; margin: 20px 0 28px }
-.hero-img { position: relative }
 .hero-img img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 4px; display: block }
-.hero-img .stamp { position: absolute; left: -14px; bottom: 22px }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 700 16px var(--body); padding: 14px 22px; border-radius: 999px; text-decoration: none; border: 2px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer }
 .btn:hover { background: var(--red); border-color: var(--red); color: #fff }
 .btn.ghost { background: transparent; color: var(--ink) }
 .btn.ghost:hover { border-color: var(--red); color: var(--red); background: transparent }
 .cta-row { display: flex; gap: 12px; flex-wrap: wrap }
 
-/* red ink stamp used for prices / badges */
-.stamp { display: inline-block; font: 400 15px/1 var(--display); color: var(--red); border: 2.5px solid var(--red); padding: 8px 12px 7px; border-radius: 3px; transform: rotate(-4deg); background: color-mix(in srgb, var(--paper) 82%, transparent); letter-spacing: .02em }
-
 /* sections */
 section { padding-block: 56px; border-top: 1px solid var(--line) }
 .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px }
 .sec-head h2 { font-size: clamp(34px, 5vw, 54px) }
-.sec-head p { margin: 0; max-width: 42ch; color: var(--ink-soft) }
+.sec-head p { margin: 0; max-width: 46ch; color: var(--ink-soft) }
+.sub { font: 400 26px/1.1 var(--display); margin: 44px 0 18px }
+
+/* photo placeholder */
+.ph-box { display: grid; place-items: center; background: var(--ph); color: var(--ink-soft); font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: 12px }
 
 /* products */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 24px }
 .card { background: var(--rubber); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 14px; min-width: 0 }
 .card .ph { position: relative; aspect-ratio: 1/1; border-radius: 3px; overflow: hidden; background: var(--rubber-deep) }
-.card .ph img { width: 100%; height: 100%; object-fit: cover; display: block }
+.card .ph img, .card .ph .ph-box { width: 100%; height: 100%; object-fit: cover; display: block }
 .card .ph .tag { position: absolute; top: 12px; left: 12px; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 7px 9px; border-radius: 2px }
-.card .ph.empty { display: grid; place-items: center; text-align: center; padding: 24px; font: 500 13px/1.5 var(--mono); color: var(--ink-soft) }
+.thumbs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px }
+.thumbs figure { margin: 0; display: grid; gap: 4px; min-width: 0 }
+.thumbs .ph-box { aspect-ratio: 1/1; border-radius: 2px; font-size: 9px; padding: 4px }
+.thumbs figcaption { font: 500 10px var(--mono); color: var(--ink-soft); text-align: center }
 .card h3 { font-size: 26px }
 .card .desc { margin: 0; font-size: 16px }
 .specs { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font: 400 13px/1.45 var(--mono); color: var(--ink-soft) }
@@ -86,8 +95,18 @@ section { padding-block: 56px; border-top: 1px solid var(--line) }
 .opt { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 10px; border-top: 1px dashed var(--rubber-deep) }
 .opt .name { font-weight: 700 }
 .opt .note { display: block; font: 400 12px var(--mono); color: var(--ink-soft) }
-.opt .price { font: 400 22px var(--display); color: var(--red); font-variant-numeric: tabular-nums; white-space: nowrap }
+.price { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums }
+.price .now { font: 400 22px var(--display); color: var(--red) }
+.price s { display: block; font: 400 13px var(--mono); color: var(--ink-soft) }
 .card .btn { width: 100% }
+.addon-note { margin: 0; font: 500 13px/1.45 var(--mono); color: var(--ink-soft) }
+
+/* versions */
+.versions { display: grid; grid-template-columns: 1fr 1fr; gap: 24px }
+.version { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: start }
+.version img, .version .ph-box { width: 140px; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; display: block }
+.version h3 { font-size: 22px; margin-bottom: 6px }
+.version p { margin: 0; color: var(--ink-soft); font-size: 16px }
 
 /* custom */
 .custom { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start }
@@ -95,31 +114,43 @@ section { padding-block: 56px; border-top: 1px solid var(--line) }
 table { width: 100%; border-collapse: collapse; font-size: 16px }
 th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid var(--line); vertical-align: top }
 th { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft) }
-td.p { font: 400 18px var(--display); color: var(--red); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums }
+th.r, td.p { text-align: right }
+td.p { font: 400 18px var(--display); color: var(--red); white-space: nowrap; font-variant-numeric: tabular-nums }
 td small { display: block; color: var(--ink-soft); font-size: 14px }
 .steps { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 16px; counter-reset: s }
 .steps li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; counter-increment: s }
 .steps li::before { content: counter(s); font: 400 22px/44px var(--display); text-align: center; width: 44px; height: 44px; border: 2.5px solid var(--teal); color: var(--teal); border-radius: 50% }
 .steps b { display: block }
 .steps span { color: var(--ink-soft); font-size: 16px }
+.size-ref { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; margin-top: 18px; color: var(--ink-soft); font-size: 15px }
+.size-ref img { width: 96px; aspect-ratio: 1/1; object-fit: cover; border-radius: 4px; display: block }
+.wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 16px }
+.tile { display: grid; gap: 8px; min-width: 0 }
+.tile .ph-box, .tile img { aspect-ratio: 1/1; width: 100%; object-fit: cover; border-radius: 4px; display: block }
+.tile .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px }
+.tile b { font-weight: 700 }
+.tile .p { font: 400 18px var(--display); color: var(--red); font-variant-numeric: tabular-nums }
+.note-line { margin: 14px 0 0; font: 500 13px/1.5 var(--mono); color: var(--ink-soft) }
 
 /* work + about */
 .work { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center }
 .work img { width: 100%; border-radius: 4px; display: block; aspect-ratio: 4/5; object-fit: cover }
 .about p { max-width: 60ch }
 .contact { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px }
-.email { font: 500 16px var(--mono); user-select: all; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px }
+.email { font: 500 16px var(--mono); user-select: all; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; overflow-wrap: anywhere }
 .faq { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px 32px; margin-top: 8px }
 .faq h3 { font: 700 17px var(--body); margin-bottom: 6px }
 .faq p { margin: 0; color: var(--ink-soft); font-size: 16px }
 footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font: 400 13px var(--mono); color: var(--ink-soft) }
 
 @media (max-width: 760px) {
-  .hero, .custom, .work { grid-template-columns: 1fr }
+  .hero, .custom, .work, .versions { grid-template-columns: 1fr }
   .hero { padding-block: 28px 32px; gap: 28px }
   nav { gap: 14px; font-size: 14px }
   nav .hide-sm { display: none }
   section { padding-block: 44px }
+  .version { grid-template-columns: 110px 1fr }
+  .version img, .version .ph-box { width: 110px }
 }
 @media (prefers-reduced-motion: no-preference) {
   .btn, nav a { transition: background .15s, color .15s, border-color .15s }
@@ -127,6 +158,10 @@ footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: f
 </style>
 </head>
 <body>
+
+<div class="banner" id="banner" hidden>
+  <div class="wrap"><b id="banner-title">Grand Opening Sale · 15% off all products</b><span id="banner-time"></span></div>
+</div>
 
 <header>
   <div class="wrap bar">
@@ -143,17 +178,16 @@ footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: f
 <main id="top">
   <div class="wrap hero">
     <div>
-      <p class="label">Hand-carved in small batches</p>
+      <p class="label">Hand-carved · hand-printed</p>
       <h1>Stamps &amp; prints, <span class="cut">carved by hand.</span></h1>
-      <p>Rubber stamps, two-block linocut bookmarks and printed postcards. Every piece is carved, inked and pulled by me.</p>
+      <p>Rubber stamps, hand-printed postcards and linocut bookmarks. Every piece is designed, carved and printed by me.</p>
       <div class="cta-row">
-        <a class="btn" href="#shop">Shop the first batch</a>
+        <a class="btn" href="#shop">Shop now</a>
         <a class="btn ghost" href="#custom">Custom stamps</a>
       </div>
     </div>
     <div class="hero-img">
       <img src="img/finger-stamp.jpg" alt="Hand-carved middle finger mini stamp held in a palm, with a red print of it on a kraft sticker behind">
-      <span class="stamp">Batch 001</span>
     </div>
   </div>
 
@@ -161,49 +195,74 @@ footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: f
     <div class="wrap">
       <div class="sec-head">
         <h2>Shop</h2>
-        <p>Small batches. When a batch sells out, the next one gets carved. Free US shipping on every order.</p>
+        <p>Free US shipping on everything. Shop items ship within 1 week. Order by Dec 11 for Christmas delivery.</p>
       </div>
       <div class="grid" id="products"></div>
+
+      <h3 class="sub">Two versions of every print</h3>
+      <div class="versions">
+        <div class="version">
+          <img src="img/signed-backs.jpg" alt="Back of signed prints with red logo stamp, name and date, packed in clear sleeves">
+          <div><h3>Signed Print</h3><p>Back signed with my name, date and logo stamp. Packed in a clear sleeve. Limited stock.</p></div>
+        </div>
+        <div class="version">
+          <div class="ph-box">Photo coming<br>postcard back</div>
+          <div><h3>Postcard</h3><p>Hand-printed postcard back, ready to write on and mail. Signed in pencil on the front.</p></div>
+        </div>
+      </div>
+      <p class="note-line">Same price for both. Choose your version at checkout. Square postcards need a $1.27 stamp to mail in the US.</p>
     </div>
   </section>
 
   <section id="custom">
-    <div class="wrap custom">
-      <div>
-        <div class="sec-head"><h2>Custom stamps</h2></div>
-        <p>Your pet, your face, your logo, your weird idea. I draw it, carve it, and send you a test print before it ships.</p>
-        <ol class="steps">
-          <li><div><b>Send a photo or idea</b><span>DM me on Instagram with what you want and which size.</span></div></li>
-          <li><div><b>Approve the sketch</b><span>I send a drawing. One round of changes is included.</span></div></li>
-          <li><div><b>I carve it</b><span>Usually 1–2 weeks, depending on the queue.</span></div></li>
-          <li><div><b>It ships to you</b><span>With a test print, so you see exactly what it stamps.</span></div></li>
-        </ol>
-        <a class="btn" href="https://ig.me/m/ci278ci" target="_blank" rel="noopener">DM @ci278ci to order</a>
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Custom stamps</h2>
+        <p>Made to order in 1–2 weeks. Order by Instagram DM. Custom orders are not discounted.</p>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Stamp</th><th style="text-align:right">Price</th></tr></thead>
-          <tbody>
-            <tr><td>Large stamp, 10 × 10 cm<small>Simple outline</small></td><td class="p">$85</td></tr>
-            <tr><td>Large stamp, 10 × 10 cm<small>Medium detail</small></td><td class="p">$110</td></tr>
-            <tr><td>Large stamp, 10 × 10 cm<small>High detail, several figures</small></td><td class="p">$150</td></tr>
-            <tr><td>Bookmark stamp, 5 × 15 cm<small>One of my existing designs</small></td><td class="p">$70</td></tr>
-            <tr><td>Bookmark stamp, 5 × 15 cm<small>New design, one color</small></td><td class="p">$90–110</td></tr>
-            <tr><td>Bookmark stamp, 5 × 15 cm<small>Complex or two-block color</small></td><td class="p">$130–150</td></tr>
-            <tr><td>Designed from your photo<small>Added to any custom stamp</small></td><td class="p">+$25–40</td></tr>
-          </tbody>
-        </table>
+      <div class="custom">
+        <div>
+          <h3 class="sub" style="margin-top:0">New design</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Size</th><th class="r">From your line art</th><th class="r">From your photo</th></tr></thead>
+              <tbody>
+                <tr><td>3 × 3 cm<small>Mini, like the middle finger stamp</small></td><td class="p">$38</td><td class="p">$53</td></tr>
+                <tr><td>5 × 5 cm<small>Small</small></td><td class="p">$45</td><td class="p">$65</td></tr>
+                <tr><td>10 × 10 cm<small>Large, price depends on detail</small></td><td class="p">$110–140</td><td class="p">$145–175</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="size-ref">
+            <img src="img/finger-stamp.jpg" alt="The 3 by 3 cm middle finger stamp in a palm, for size reference">
+            <span>3 × 3 cm is about the size of the middle finger stamp. Pets, faces, logos, characters, your own drawing.</span>
+          </div>
+        </div>
+        <div>
+          <h3 class="sub" style="margin-top:0">How it works</h3>
+          <ol class="steps">
+            <li><div><b>Send your line art or photo</b><span>DM me on Instagram with your idea and the size you want.</span></div></li>
+            <li><div><b>Approve the sketch</b><span>I send a drawing. One round of changes is included.</span></div></li>
+            <li><div><b>I carve it</b><span>1–2 weeks, depending on the queue.</span></div></li>
+            <li><div><b>It ships to you</b><span>With a test print, so you see exactly what it stamps.</span></div></li>
+          </ol>
+          <a class="btn" href="https://ig.me/m/ci278ci" target="_blank" rel="noopener">DM @ci278ci to order</a>
+        </div>
       </div>
+
+      <h3 class="sub">Recarve one of my designs</h3>
+      <p style="margin:0 0 18px;color:var(--ink-soft);max-width:60ch">I carve a new block of an existing design, just for you. About 10 × 10 cm. Made to order in 1–2 weeks.</p>
+      <div class="wall" id="wall"></div>
     </div>
   </section>
 
   <section id="work">
     <div class="wrap work">
-      <img src="img/gnome-blocks.jpg" alt="Two carved pink rubber blocks for the gnome bookmark, one for the black key lines and one for the green color layer, with printed bookmarks behind">
+      <img src="img/blocks.jpg" alt="Six carved pink rubber blocks: five giant faces and a coiled snake">
       <div>
         <p class="label">Process</p>
-        <h2 style="font-size:clamp(32px,4.5vw,48px);margin:8px 0 16px">Two blocks, one gnome.</h2>
-        <p>The gnome bookmark is printed from two carved blocks: one for the color, one for the black lines. Each pass is lined up by hand, so no two prints come out the same.</p>
+        <h2 style="font-size:clamp(32px,4.5vw,48px);margin:8px 0 16px">Carved, inked, pulled by hand.</h2>
+        <p>Every postcard and bookmark is printed from a block I carved myself. The gnome bookmark takes two blocks, one for the color and one for the black lines, lined up by hand. No two prints come out the same.</p>
         <p>Etchings, linocuts, ceramics and illustration are moving to this site soon. Until then the newest work is on Instagram.</p>
         <div class="cta-row" style="margin-top:20px"><a class="btn ghost" href="https://www.instagram.com/ci278ci/" target="_blank" rel="noopener">See more on Instagram</a></div>
       </div>
@@ -222,9 +281,9 @@ footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: f
       <div style="margin-top:44px">
         <p class="label" style="margin-bottom:16px">Good to know</p>
         <div class="faq">
-          <div><h3>Shipping</h3><p>Free shipping in the US. Orders ship within 3–5 business days in a padded mailer.</p></div>
+          <div><h3>Shipping</h3><p>Free US shipping. Shop items ship within 1 week. Stamps ship in a small box, prints ship flat in a sturdy envelope.</p></div>
+          <div><h3>Christmas</h3><p>Order by Dec 11 for Christmas delivery in the US.</p></div>
           <div><h3>Handmade means a little different</h3><p>Ink coverage and color vary from print to print. That's the hand-printing showing.</p></div>
-          <div><h3>Ink pad colors</h3><p>Mini kits come with a random ink color. Part of the fun is opening it.</p></div>
           <div><h3>Questions</h3><p>DM me on Instagram or email me. I reply within a couple of days.</p></div>
         </div>
       </div>
@@ -235,83 +294,175 @@ footer { padding-block: 32px 48px; border-top: 1px solid var(--line); display: f
 <div class="wrap"><footer><span>© 2026 Sihao Chen · Hand-carved in the USA</span><span>sihaochen.com</span></footer></div>
 
 <script>
+/* ===== SALE =====
+   Sale prices and the promo code apply only between these two times (US Eastern).
+   After SALE_END the banner disappears and regular prices show automatically. */
+const SALE_START = new Date("2026-11-11T00:00:00-05:00");
+const SALE_END   = new Date("2026-12-11T23:59:59-05:00");
+const SALE_OFF   = 0.15;
+const PROMO_CODE = "GRANDOPENING";
+
 /* ===== PRODUCTS =====
-   To start selling: paste each Stripe payment link into "link".
-   While "link" is empty, the button sends buyers to Instagram DMs instead. */
+   price = regular price. sale: false keeps an item out of the discount.
+   link = Stripe payment link. Empty link shows a "Coming soon" state. */
 const products = [
   {
     name: "Middle Finger Mini Stamp Kit",
     img: "img/finger-stamp.jpg",
     alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
-    tag: "First batch of 20",
-    desc: "A tiny hand-carved stamp for when words are not enough.",
-    specs: ["Hand-carved stamp, about 2.5 cm", "Mini ink pad, random color", "5 blank kraft stickers"],
-    options: [{ name: "Mini kit", note: "Free US shipping", price: 18, link: "https://buy.stripe.com/8x2eVc3UB0K53bQ7neds400" }]
+    extraPh: "Photo coming: full kit",
+    tag: "Stamp kit",
+    specs: ["1 original hand-carved stamp", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
+    options: [{ name: "Mini kit", note: "About 3 × 3 cm", price: 30, link: "https://buy.stripe.com/3cIdR8ezfcsN5jYePGds405" }]
   },
   {
-    name: "AAAAA Stamp",
+    name: "AHHHHH Stamp",
     img: "img/bean-stamp.jpg",
     alt: "Hand-carved screaming face stamp next to its teal print",
-    tag: "Limited run",
-    desc: "The scream that lives in all of us, carved by hand. Looks great on letters, notebooks and receipts.",
-    specs: ["Hand-carved stamp, about 5 cm tall", "Unmounted rubber, fits any acrylic stamp block", "Ships with a test print"],
+    tag: "Stamp kit",
+    specs: ["1 original hand-carved stamp", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
+    options: [{ name: "Stamp kit", note: "About 5 cm tall", price: 45, link: "https://buy.stripe.com/aFa3cuezffEZeUyePGds406" }]
+  },
+  {
+    name: "Snake Postcard",
+    img: "img/snake-postcards.jpg",
+    alt: "Eight hand-printed snake postcards, white lines on black",
+    tag: "Postcard",
+    desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
+    specs: ["Hand-printed linocut", "Signed Print or Postcard version"],
+    options: [{ name: "Single", note: "Choose version at checkout", price: 18, link: "https://buy.stripe.com/fZu14mdvb78t5jYfTKds40a" }]
+  },
+  {
+    name: "Giant Postcards",
+    img: "img/giants-prints.jpg",
+    alt: "Hand-printed giant face postcards laid out in rows",
+    tag: "Postcard",
+    desc: "Five giant faces, each carved and printed by hand.",
+    thumbs: ["No.1", "No.2", "No.3", "No.4", "No.5"],
+    specs: ["Hand-printed linocut, square", "Signed Print or Postcard version"],
     options: [
-      { name: "Stamp", note: "Free US shipping", price: 30, link: "https://buy.stripe.com/8x200i1MteAV5jY4b2ds401" }
+      { name: "Single", note: "Choose No.1–5 at checkout", price: 14, link: "https://buy.stripe.com/fZu8wOaiZfEZ4fU7neds40c" },
+      { name: "All five", note: "No.1–5", price: 52, link: "https://buy.stripe.com/eVq7sK8aRakF6o2ePGds40b" }
     ]
   },
   {
     name: "Gnome Bookmark",
     img: "img/gnome-bookmarks.jpg",
     alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
-    tag: "Holiday edition",
+    extraPh: "Photo coming: signed back",
+    tag: "Bookmark",
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
-    specs: ["Two-block linocut, about 5 × 15 cm", "Red, red/green or green", "Order by Dec 12 for Christmas delivery"],
+    specs: ["Two-block linocut, about 5 × 15 cm", "Signed with name and logo stamp on the back"],
     options: [
-      { name: "Single", note: "Choose your color at checkout", price: 12, link: "https://buy.stripe.com/14A5kCaiZeAV7s60YQds403" },
-      { name: "Set of three", note: "One of each color", price: 30, link: "https://buy.stripe.com/bJecN43UBdwRdQu22Uds404" }
+      { name: "Single color", note: "Red or green, choose at checkout", price: 12, link: "https://buy.stripe.com/cNifZg4YF2SdfYC8rids409" },
+      { name: "Red & green", note: "Two colors", price: 16, link: "https://buy.stripe.com/5kQ00iaiZakF27M36Yds408" },
+      { name: "Set of three", note: "One of each", price: 36, link: "https://buy.stripe.com/dRmdR84YFakFaEi36Yds407" }
     ]
   },
   {
-    name: "Printed Postcards",
-    img: "",
-    tag: "Coming soon",
-    desc: "Hand-printed postcards. My linocut or etching on the front, my own postcard back printed on the reverse.",
-    specs: ["Printed by hand on both sides", "Sets of four available"],
+    name: "Blind Box Mini Prints",
+    img: "img/blind-box.jpg",
+    imgPos: "50% 85%",
+    alt: "Small red hand-printed mini prints spread on a desk",
+    tag: "Add-on",
+    desc: "A surprise hand-printed mini print or sticker. Add one to any order at checkout.",
+    specs: ["Hand-printed, about 3–5 cm", "Add-on only, ships with your order"],
+    addOnOnly: true,
     options: [
-      { name: "Linocut postcard", note: "Single", price: 8, link: "" },
-      { name: "Etching postcard", note: "Single", price: 12, link: "" },
-      { name: "Set of four", note: "Mixed designs", price: 30, link: "" }
+      { name: "One", note: "Not discounted", price: 5, sale: false },
+      { name: "Three", note: "Not discounted", price: 12, sale: false }
     ]
   }
 ];
 
+/* Recarve prices (custom, never discounted) */
+const recarves = [
+  { name: "Giant No.1", price: 100 },
+  { name: "Giant No.2", price: 140 },
+  { name: "Giant No.3", price: 200 },
+  { name: "Giant No.4", price: 200 },
+  { name: "Giant No.5", price: 200 },
+  { name: "Snake (original)", price: 250 }
+];
+
 const DM = "https://ig.me/m/ci278ci";
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-document.getElementById("products").innerHTML = products.map(p => {
-  const ready = p.options.some(o => o.link);
-  const photo = p.img
-    ? `<img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy">`
-    : `<span>Photos coming soon</span>`;
-  const opts = p.options.map(o => `
-      <div class="opt"><div><span class="name">${esc(o.name)}</span><span class="note">${esc(o.note)}</span></div><span class="price">$${o.price}</span></div>
-      ${o.link ? `<a class="btn" href="${esc(o.link)}" target="_blank" rel="noopener">Buy ${esc(o.name.toLowerCase())}</a>` : ""}`).join("");
-  return `<article class="card">
-    <div class="ph${p.img ? "" : " empty"}">${photo}<span class="tag">${esc(p.tag)}</span></div>
-    <h3>${esc(p.name)}</h3>
-    <p class="desc">${esc(p.desc)}</p>
-    <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
-    <div class="buy">${opts}
-      ${ready ? "" : `<a class="btn" href="${DM}" target="_blank" rel="noopener">Reserve by DM</a>`}
-    </div>
-  </article>`;
-}).join("");
+const money = n => "$" + (Number.isInteger(n) ? n : n.toFixed(2));
+const onSale = (now = new Date()) => now >= SALE_START && now <= SALE_END;
+
+function priceHTML(o, sale) {
+  if (sale && o.sale !== false) {
+    const s = Math.round(o.price * (1 - SALE_OFF) * 100) / 100;
+    return `<span class="price"><s>${money(o.price)}</s><span class="now">${money(s)}</span></span>`;
+  }
+  return `<span class="price"><span class="now">${money(o.price)}</span></span>`;
+}
+function buyHref(link, sale) {
+  return sale ? link + (link.includes("?") ? "&" : "?") + "prefilled_promo_code=" + PROMO_CODE : link;
+}
+
+function renderProducts() {
+  const sale = onSale();
+  document.getElementById("products").innerHTML = products.map(p => {
+    const photo = p.img
+      ? `<img src="${esc(p.img)}" alt="${esc(p.alt)}" loading="lazy"${p.imgPos ? ` style="object-position:${p.imgPos}"` : ""}>`
+      : `<div class="ph-box">Photo coming</div>`;
+    const thumbs = p.thumbs ? `<div class="thumbs">${p.thumbs.map(t => `<figure><div class="ph-box">Photo coming</div><figcaption>${esc(t)}</figcaption></figure>`).join("")}</div>` : "";
+    const extra = p.extraPh ? `<div class="ph-box" style="aspect-ratio:3/1;border-radius:3px">${esc(p.extraPh)}</div>` : "";
+    const opts = p.options.map(o => `
+      <div class="opt"><div><span class="name">${esc(o.name)}</span><span class="note">${esc(o.note)}</span></div>${priceHTML(o, sale)}</div>
+      ${p.addOnOnly ? "" : (o.link
+        ? `<a class="btn" href="${esc(buyHref(o.link, sale))}" target="_blank" rel="noopener">Buy ${esc(o.name.toLowerCase())}</a>`
+        : `<span class="btn ghost" aria-disabled="true">Coming soon</span>`)}`).join("");
+    return `<article class="card">
+      <div class="ph">${photo}<span class="tag">${esc(p.tag)}</span></div>
+      ${thumbs}${extra}
+      <h3>${esc(p.name)}</h3>
+      ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
+      <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+      <div class="buy">${opts}${p.addOnOnly ? `<p class="addon-note">Tick it on the checkout page of any item above.</p>` : ""}</div>
+    </article>`;
+  }).join("");
+}
+
+function renderWall() {
+  document.getElementById("wall").innerHTML = recarves.map(r => `
+    <div class="tile"><div class="ph-box">Photo coming<br>${esc(r.name)} block</div>
+    <div class="row"><b>${esc(r.name)}</b><span class="p">${money(r.price)}</span></div></div>`).join("");
+}
+
+function tick() {
+  const now = new Date(), banner = document.getElementById("banner");
+  if (now > SALE_END) { banner.hidden = true; return false; }
+  banner.hidden = false;
+  const target = now < SALE_START ? SALE_START : SALE_END;
+  let s = Math.max(0, Math.floor((target - now) / 1000));
+  const d = Math.floor(s / 86400); s %= 86400;
+  const h = Math.floor(s / 3600); s %= 3600;
+  const m = Math.floor(s / 60); s %= 60;
+  const t = `${d}d ${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
+  document.getElementById("banner-title").textContent = now < SALE_START
+    ? "Grand Opening Sale · 15% off all products" : "Grand Opening Sale · 15% off all products";
+  document.getElementById("banner-time").textContent = now < SALE_START ? `Starts Nov 11 · in ${t}` : `Ends Dec 11 · ${t} left`;
+  return true;
+}
+
+let wasSale = onSale();
+renderProducts();
+renderWall();
+if (tick()) {
+  const timer = setInterval(() => {
+    if (!tick()) clearInterval(timer);
+    const nowSale = onSale();
+    if (nowSale !== wasSale) { wasSale = nowSale; renderProducts(); }
+  }, 1000);
+}
 
 document.getElementById("copy").addEventListener("click", e => {
-  const btn = e.currentTarget, text = document.getElementById("email").textContent;
+  const btn = e.currentTarget, el = document.getElementById("email");
   const done = () => { btn.textContent = "Copied"; setTimeout(() => btn.textContent = "Copy email", 1600); };
-  try {
-    navigator.clipboard.writeText(text).then(done, () => { getSelection().selectAllChildren(document.getElementById("email")); });
-  } catch (_) { getSelection().selectAllChildren(document.getElementById("email")); }
+  const select = () => getSelection().selectAllChildren(el);
+  try { navigator.clipboard.writeText(el.textContent).then(done, select); } catch (_) { select(); }
 });
 </script>
 </body>
