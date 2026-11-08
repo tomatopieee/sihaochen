@@ -77,8 +77,19 @@ async function loadCatalog() {
   CAT = await r.json();
   return CAT;
 }
+// Owner preview: add ?preview=sale to any page to see the sale look (display only;
+// checkout still charges real prices). ?preview=off turns it off. Lasts for the browser tab.
+const PREVIEW_SALE = (() => {
+  try {
+    const q = new URLSearchParams(location.search).get("preview");
+    if (q === "sale") sessionStorage.setItem("sc_preview", "sale");
+    if (q === "off") sessionStorage.removeItem("sc_preview");
+    return sessionStorage.getItem("sc_preview") === "sale";
+  } catch (_) { return false; }
+})();
 function saleState(now = new Date()) {
   if (!CAT?.sale) return "none";
+  if (PREVIEW_SALE) return "on";
   const s = new Date(CAT.sale.start), e = new Date(CAT.sale.end);
   return now < s ? "before" : now <= e ? "on" : "after";
 }
@@ -245,7 +256,7 @@ function tickBanner() {
   const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600); s %= 3600; const m = Math.floor(s / 60); s %= 60;
   const t = `${d}d ${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
   $("#banner-title").textContent = `${CAT.sale.label} · ${Math.round(CAT.sale.off * 100)}% off all products`;
-  $("#banner-time").textContent = st === "before" ? `Starts Nov 11 · in ${t}` : `Ends Dec 11 · ${t} left`;
+  $("#banner-time").textContent = (st === "before" ? `Starts Nov 11 · in ${t}` : `Ends Dec 11 · ${t} left`) + (PREVIEW_SALE ? " · PREVIEW" : "");
   return true;
 }
 
