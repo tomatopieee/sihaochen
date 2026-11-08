@@ -19,13 +19,13 @@ const SHOP = [
   {
     id: "mf", section: "linocut", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
     img: "img/finger-stamp.jpg", alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
-    specs: ["1 original hand-carved stamp, about 3 × 3 cm", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
+    specs: ["1 original hand-carved stamp, about 3 × 3 cm (1.2 × 1.2 in)", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "mf-kit" }]
   },
   {
     id: "ah", section: "linocut", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
     img: "img/bean-stamp.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
-    specs: ["1 original hand-carved stamp, about 5 cm tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
+    specs: ["1 original hand-carved stamp, about 5 cm (2 in) tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Kit", sku: "ahhhhh" }]
   },
   {
@@ -414,17 +414,18 @@ function renderEtchings() {
 
 /* ===== CUSTOM PAGE: recarve existing designs ===== */
 const RECARVES = [
-  { sku: "recarve-giant-1", title: "Giant No.1", img: "" },
-  { sku: "recarve-giant-2", title: "Giant No.2", img: "" },
-  { sku: "recarve-giant-3", title: "Giant No.3", img: "" },
-  { sku: "recarve-giant-4", title: "Giant No.4", img: "" },
-  { sku: "recarve-giant-5", title: "Giant No.5", img: "" },
-  { sku: "recarve-snake", title: "Snake (original)", img: "" }
+  { sku: "recarve-giant-1", title: "Giant No.1", size: "10 × 10 cm (4 × 4 in)", img: "" },
+  { sku: "recarve-giant-2", title: "Giant No.2", size: "10 × 10 cm (4 × 4 in)", img: "" },
+  { sku: "recarve-giant-3", title: "Giant No.3", size: "10 × 10 cm (4 × 4 in)", img: "" },
+  { sku: "recarve-giant-4", title: "Giant No.4", size: "10 × 10 cm (4 × 4 in)", img: "" },
+  { sku: "recarve-giant-5", title: "Giant No.5", size: "10 × 10 cm (4 × 4 in)", img: "" },
+  { sku: "recarve-snake", title: "Snake (original)", size: "10 × 15 cm (4 × 6 in)", img: "" }
 ];
 function renderRecarves() {
   const host = $("#recarves"); if (!host) return;
   host.innerHTML = RECARVES.map(r => `<div class="tile">${r.img ? `<img src="${esc(ROOT + r.img)}" alt="${esc(r.title)} block" loading="lazy">` : `<div class="ph-box">Photo coming<br>${esc(r.title)}</div>`}
     <div class="row"><b>${esc(r.title)}</b><span class="p">${money(CAT.items[r.sku].price)}</span></div>
+    ${r.size ? `<div class="muted" style="font-size:.85em">${esc(r.size)}</div>` : ""}
     <button class="btn small" type="button" data-recarve="${r.sku}">Add to cart</button></div>`).join("");
   host.querySelectorAll("[data-recarve]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.recarve)));
 }
