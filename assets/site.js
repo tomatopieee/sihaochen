@@ -159,7 +159,7 @@ function buildChrome() {
       <button class="cart-btn" id="cart-open" type="button" aria-label="Open cart">Cart <span class="count" id="cart-count">0</span></button>
     </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
-    <footer class="site"><div class="wrap"><span>© 2026 Sihao Chen · Hand-carved in the USA</span><span><a href="${IG}" target="_blank" rel="noopener">@ci278ci</a> · ${EMAIL}</span></div></footer>
+    <footer class="site"><div class="wrap"><span>© 2026 Sihao Chen · Hand-carved in the USA</span><span><a href="${ROOT}shop/index.html#faq">Shipping &amp; Returns</a> · <a href="${IG}" target="_blank" rel="noopener">@ci278ci</a> · ${EMAIL}</span></div></footer>
     <div class="scrim" id="scrim" hidden></div>
     <aside class="drawer" id="drawer" hidden aria-label="Cart">
       <header><h2>Your cart</h2><button class="x" id="cart-close" type="button" aria-label="Close cart">×</button></header>
