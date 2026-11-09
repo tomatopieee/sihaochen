@@ -1,26 +1,22 @@
 /* Layout: a printmaker's bench. Paper page, pink carving-rubber blocks hold each product, prices stamped in red ink. */
 :root {
-  --paper: #FAF9F6;
-  --ink: #161514;
-  --ink-soft: #5B5752;
-  --rubber: #F3D3CF;
-  --rubber-deep: #E7B6B0;
-  --red: #C42F27;
-  --teal: #13707E;
-  --line: #E2DDD6;
-  --ph: #E9E5DF;
-  --scrim: rgba(22, 21, 20, .45);
+  /* Always dark (Sihao's choice, 2026-11-09). Old light colors: paper #FAF9F6, ink #161514, ink-soft #5B5752,
+     rubber #F3D3CF, rubber-deep #E7B6B0, red #C42F27, teal #13707E, line #E2DDD6, ph #E9E5DF */
+  --paper: #151413;
+  --ink: #F3F0EB;
+  --ink-soft: #ABA59D;
+  --rubber: #3A2725;
+  --rubber-deep: #563632;
+  --red: #F0675D;
+  --teal: #4FB3C1;
+  --line: #2E2B28;
+  --ph: #2A2725;
+  --scrim: rgba(0, 0, 0, .6);
   --display: "Bowlby One", "Arial Black", Impact, sans-serif;
   --body: "Karla", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  color-scheme: light;
+  color-scheme: dark;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --paper: #151413; --ink: #F3F0EB; --ink-soft: #ABA59D; --rubber: #3A2725; --rubber-deep: #563632;
-  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; --ph: #2A2725; --scrim: rgba(0,0,0,.6); color-scheme: dark } }
-:root[data-theme="dark"] {
-  --paper: #151413; --ink: #F3F0EB; --ink-soft: #ABA59D; --rubber: #3A2725; --rubber-deep: #563632;
-  --red: #F0675D; --teal: #4FB3C1; --line: #2E2B28; --ph: #2A2725; --scrim: rgba(0,0,0,.6); color-scheme: dark }
 
 * { box-sizing: border-box }
 :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px) }
@@ -46,8 +42,7 @@ header.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 12px }
 .logo { display: block; text-decoration: none; line-height: 0 }
 .logo img { height: 44px; width: auto; display: block }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .logo img { filter: drop-shadow(0 0 1px var(--ink)) drop-shadow(0 0 1px var(--ink)) } }
-:root[data-theme="dark"] .logo img { filter: drop-shadow(0 0 1px var(--ink)) drop-shadow(0 0 1px var(--ink)) }
+.logo img { filter: drop-shadow(0 0 1px var(--ink)) drop-shadow(0 0 1px var(--ink)) }
 .nav { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-weight: 700; font-size: 15px }
 .nav a { text-decoration: none }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--red) }
