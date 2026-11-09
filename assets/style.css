@@ -246,7 +246,8 @@ section[id] { scroll-margin-top: 80px }
 
 /* portfolio */
 .pf-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px }
-.pf { columns: 3 260px; column-gap: 16px }
+.pf { columns: 3; column-gap: 16px }
+@media (max-width: 760px) { .pf { columns: 2; column-gap: 10px } .pf figure { margin-bottom: 10px } }
 .pf figure { margin: 0 0 16px; break-inside: avoid; display: grid; gap: 6px }
 .pf img, .pf .ph-box { width: 100%; border-radius: 4px; display: block }
 .pf .ph-box { aspect-ratio: 4/5 }
