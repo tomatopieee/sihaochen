@@ -149,7 +149,7 @@ function cartTotals(cart = readCart()) {
 
 /* ===== CHROME: banner, header, footer, drawer ===== */
 function buildChrome() {
-  const links = [["index.html", "Portfolio", ["portfolio"]], ["shop/index.html", "Shop", ["shop", "etchings"]], ["custom/index.html", "Custom", ["custom"]]];
+  const links = [["index.html", "Portfolio", ["portfolio"]], ["shop/index.html", "Shop", ["shop", "etchings"]], ["custom/index.html", "Custom", ["custom"]], ["about/index.html", "About", ["about"]]];
   const nav = links.map(([href, label, pages]) => `<a href="${ROOT}${href}"${pages.includes(PAGE) ? ' aria-current="page"' : ""}>${label}</a>`).join("");
   document.body.insertAdjacentHTML("afterbegin", `
     <div class="banner" id="banner" hidden><div class="wrap"><b id="banner-title"></b><span id="banner-time"></span></div></div>
