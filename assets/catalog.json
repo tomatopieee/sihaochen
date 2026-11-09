@@ -5,24 +5,38 @@
     "end": "2026-12-11T23:59:59-05:00",
     "off": 0.15
   },
-  "shipping": { "freeOver": 20, "flat": 3 },
+  "shipping": {
+    "freeOver": 20,
+    "flat": 3
+  },
   "blindBox": {
     "each": 5,
     "bundleSize": 3,
     "bundlePrice": 12
   },
   "items": {
+    "mf-stamp": {
+      "name": "Middle Finger Mini Stamp",
+      "price": 23.9,
+      "salePrice": 19.9,
+      "sale": true,
+      "kind": "product",
+      "freeShip": true
+    },
     "mf-kit": {
       "name": "Middle Finger Mini Stamp Kit",
-      "price": 30,
+      "price": 28.9,
+      "salePrice": 23.9,
       "sale": true,
-      "kind": "product"
+      "kind": "product",
+      "freeShip": true
     },
     "ahhhhh": {
       "name": "AHHHHH Stamp Kit",
       "price": 45,
       "sale": true,
-      "kind": "product"
+      "kind": "product",
+      "freeShip": true
     },
     "snake-pc": {
       "name": "Snake Postcard",
@@ -109,37 +123,43 @@
       "name": "Re-carved stamp: Giant No.1",
       "price": 100,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "freeShip": true
     },
     "recarve-giant-2": {
       "name": "Re-carved stamp: Giant No.2",
       "price": 140,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "freeShip": true
     },
     "recarve-giant-3": {
       "name": "Re-carved stamp: Giant No.3",
       "price": 200,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "freeShip": true
     },
     "recarve-giant-4": {
       "name": "Re-carved stamp: Giant No.4",
       "price": 200,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "freeShip": true
     },
     "recarve-giant-5": {
       "name": "Re-carved stamp: Giant No.5",
       "price": 200,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "freeShip": true
     },
     "recarve-snake": {
       "name": "Re-carved stamp: Snake (original)",
       "price": 250,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "freeShip": true
     }
   },
   "etchings": [

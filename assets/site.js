@@ -17,10 +17,10 @@ const CART_KEY = "sc_cart_v1";
 const VERSION_IMGS = { "Signed Print": "img/signed-backs.jpg", "Postcard": "" };
 const SHOP = [
   {
-    id: "mf", section: "linocut", title: "Middle Finger Mini Stamp Kit", tag: "Stamp kit",
+    id: "mf", section: "linocut", title: "Middle Finger Mini Stamp", tag: "Stamp",
     img: "img/finger-stamp.jpg", alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
-    specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
-    variants: [{ label: "Kit", sku: "mf-kit" }]
+    specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me", "Stamps always ship free in the US"],
+    variants: [{ label: "Stamp only", sku: "mf-stamp" }, { label: "Stamp kit", sku: "mf-kit" }]
   },
   {
     id: "ah", section: "linocut", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
@@ -96,7 +96,8 @@ function saleState(now = new Date()) {
 function unitPrice(sku) {
   const it = CAT.items[sku] || uniqueItem(sku);
   if (!it) return 0;
-  return it.sale && saleState() === "on" ? Math.round(it.price * (1 - CAT.sale.off) * 100) / 100 : it.price;
+  if (!(it.sale && saleState() === "on")) return it.price;
+  return it.salePrice ?? Math.round(it.price * (1 - CAT.sale.off) * 100) / 100;
 }
 function priceHTML(sku) {
   const it = CAT.items[sku] || uniqueItem(sku);
@@ -141,7 +142,8 @@ function cartTotals(cart = readCart()) {
   sub += bb.total; full += bb.total;
   sub = Math.round(sub * 100) / 100;
   const sh = CAT.shipping || { freeOver: 0, flat: 0 };
-  const ship = sub > 0 && sub < sh.freeOver ? sh.flat : 0;
+  const stampInCart = cart.some(l => CAT.items[l.sku]?.freeShip);
+  const ship = sub > 0 && sub < sh.freeOver && !stampInCart ? sh.flat : 0;
   return { sub, ship, toFree: Math.round((sh.freeOver - sub) * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
 }
 
@@ -316,7 +318,7 @@ function renderProduct() {
         <div class="foot" data-foot></div>
         ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
         <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
-        <p class="note-line">Free US shipping over $20 · ships within 1 week</p>
+        <p class="note-line">Free US shipping on stamps and orders over $20 · ships within 1 week</p>
       </div>
     </div>
     ${hasVersion ? `<div class="pd-versions">
