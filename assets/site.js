@@ -154,7 +154,7 @@ function buildChrome() {
   document.body.insertAdjacentHTML("afterbegin", `
     <div class="banner" id="banner" hidden><div class="wrap"><b id="banner-title"></b><span id="banner-time"></span></div></div>
     <header class="site"><div class="wrap bar">
-      <a class="logo" href="${ROOT}index.html">SIHAO CHEN</a>
+      <a class="logo" href="${ROOT}index.html"><img src="${ROOT}img/logo.png" alt="Sihao Chen" width="630" height="200"></a>
       <nav class="nav" aria-label="Main">${nav}</nav>
       <button class="cart-btn" id="cart-open" type="button" aria-label="Open cart">Cart <span class="count" id="cart-count">0</span></button>
     </div></header>`);
