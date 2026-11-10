@@ -469,7 +469,11 @@ function wireCarousels(root) {
   root.querySelectorAll(".car").forEach(c => {
     const t = c.querySelector(".car-track"), dots = [...c.querySelectorAll(".car-dots span")], n = dots.length;
     const at = () => Math.round(t.scrollLeft / t.clientWidth);
-    const go = d => t.scrollTo({ left: ((at() + d + n) % n) * t.clientWidth, behavior: "smooth" });
+    const go = d => {
+      const x = ((at() + d + n) % n) * t.clientWidth, from = t.scrollLeft;
+      t.scrollTo({ left: x, behavior: "smooth" });
+      setTimeout(() => { if (t.scrollLeft === from) t.scrollLeft = x; }, 350); // if smooth scrolling did not run
+    };
     c.querySelector(".prev")?.addEventListener("click", e => { e.preventDefault(); go(-1); });
     c.querySelector(".next")?.addEventListener("click", e => { e.preventDefault(); go(1); });
     t.addEventListener("scroll", () => { const i = at(); dots.forEach((d, j) => d.classList.toggle("on", i === j)); }, { passive: true });
