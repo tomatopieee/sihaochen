@@ -18,21 +18,24 @@ const VERSION_IMGS = { "Signed Print": "img/signed-backs.jpg", "Postcard": "" };
 const SHOP = [
   {
     id: "mf", section: "linocut", title: "Middle Finger Mini Stamp", tag: "Stamp",
-    img: "img/finger-stamp.jpg", alt: "Hand-carved middle finger mini stamp with a red print on a kraft sticker",
+    img: "img/mf/1.jpg", alt: "Hand-carved middle finger mini stamp with its red print on a sticker",
+    variantImgs: { "mf-stamp": ["img/mf/1.jpg", "img/mf/2.jpg", "img/mf/3.jpg", "img/mf/4.jpg", "img/mf/5.jpg"], "mf-kit": ["img/mf/kit.jpg"] },
     specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me", "Stamps always ship free in the US"],
     variants: [{ label: "Stamp only", sku: "mf-stamp" }, { label: "Stamp kit", sku: "mf-kit" }]
   },
   {
-    id: "ah", section: "linocut", title: "AHHHHH Stamp Kit", tag: "Stamp kit",
-    img: "img/bean-stamp.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
-    specs: ["1 original hand-carved stamp, about 2 in (5 cm) tall", "1 mini ink pad (random color)", "5 blank sticker sheets", "Designed & carved by me"],
-    variants: [{ label: "Kit", sku: "ahhhhh" }]
+    id: "ah", section: "linocut", title: "AHHHHH Stamp", tag: "Stamp",
+    img: "img/ah/1.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
+    variantImgs: { "ah-stamp": ["img/ah/1.jpg", "img/ah/2.jpg", "img/ah/3.jpg"], "ahhhhh": ["img/ah/kit.jpg"] },
+    specs: ["1 original hand-carved stamp, about 2 in (5 cm) tall", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me", "Stamps always ship free in the US"],
+    variants: [{ label: "Stamp only", sku: "ah-stamp" }, { label: "Stamp kit", sku: "ahhhhh" }]
   },
   {
     id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
     img: "img/snake/cover.jpg", alt: "Hand-printed snake postcard, white lines on black",
     gallery: ["img/snake/detail-1.jpg", "img/snake/detail-2.jpg", "img/snake/detail-3.jpg"],
     versionImgs: { "Signed Print": "img/snake/signed-back.jpg", "Postcard": "img/snake/postcard-back.jpg" },
+    whole: ["img/snake/cover.jpg", "img/snake/detail-2.jpg", "img/snake/detail-3.jpg"], // shown uncropped
     desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 6 in (10 × 15 cm), standard postcard size"],
     variants: [{ label: "Single", sku: "snake-pc" }]
@@ -290,7 +293,7 @@ function tilePrice(p) {
 }
 function productTile(p) {
   return `<a class="pcard" href="${ROOT}product/index.html#${esc(p.id)}">
-    <div class="pimg">${imgTag(p.img, p.alt)}<span class="tag">${esc(p.tag)}</span></div>
+    <div class="pimg">${imgTag(p.img, p.alt, p.whole?.includes(p.img) ? "whole" : "")}<span class="tag">${esc(p.tag)}</span></div>
     <b>${esc(p.title)}</b>${tilePrice(p)}</a>`;
 }
 // Extra tile after the products: leads to the Custom page.
@@ -352,13 +355,13 @@ function setupCard(p, foot, photoEl) {
   // Photos follow the last thing picked: a version shows its back, a design shows that design.
   function showPhoto() {
     const ver = state.opts.version, des = state.opts.design;
-    let set = [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
+    let set = p.variantImgs?.[p.variants[state.v].sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
     if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
     else if (des && p.designGallery?.[des]) { set = p.designGallery[des]; tag = des; }
     const key = set.join("|") + tag;
     if (key === shown) return;
     shown = key;
-    photo.innerHTML = (set.length ? carousel(set, p.title) : `<div class="ph-box">Photo coming</div>`) + `<span class="tag">${esc(tag)}</span>`;
+    photo.innerHTML = (set.length ? carousel(set, p.title, p.whole) : `<div class="ph-box">Photo coming</div>`) + `<span class="tag">${esc(tag)}</span>`;
     wireCarousels(photo);
   }
   function draw() {
@@ -443,7 +446,7 @@ function renderEtchings() {
     document.title = "Etchings · Sihao Chen";
     host.innerHTML = `<a class="back" href="${ROOT}shop/index.html#etching">← Back to shop</a>
       <div class="sec-head"><h1>Etchings</h1><p>Every impression is inked, wiped and printed by hand, so no two are the same. Pick a design to see each print.</p></div>
-      <div class="series">${CAT.etchings.map(x => `<a class="cat etch" href="#${esc(x.id)}">${imgTag(x.prints[0]?.img || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>Edition of ${x.edition} · ${etchFrom(x)}</p></a>`).join("")}</div>`;
+      <div class="series">${CAT.etchings.map(x => `<a class="cat etch" href="#${esc(x.id)}">${imgTag(x.cover || x.prints[0]?.img || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>Edition of ${x.edition} · ${etchFrom(x)}</p></a>`).join("")}</div>`;
     return;
   }
   document.title = `${s.title} · Etchings · Sihao Chen`;
@@ -451,7 +454,7 @@ function renderEtchings() {
     <div class="sec-head"><h1>${esc(s.title)}</h1><p>${esc(s.blurb)} Edition of ${s.edition}. Tap a print to see it up close.</p></div>
     <div class="prints">${s.prints.map(q => {
       const sold = q.sold || SOLD.has(q.sku);
-      const inner = `${imgTag(q.img, `${s.title} ${q.title}`, "pic")}
+      const inner = `<div class="pic-wrap">${imgTag(q.img, `${s.title} ${q.title}`, "pic")}${sold ? `<span class="sold-big"><span>Sold</span></span>` : ""}</div>
         <div class="row"><b>${esc(q.title)}</b>${sold ? `<span class="sold-tag">Sold${q.soldPrice ? ` · ${money(q.soldPrice)}` : ""}</span>` : q.price ? `<span class="price"><span class="now">${money(q.price)}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`}</div>`;
       return q.sold ? `<div class="print sold">${inner}</div>` : `<a class="print${sold ? " sold" : ""}" href="#${esc(q.id)}">${inner}</a>`;
     }).join("")}</div>
@@ -459,9 +462,9 @@ function renderEtchings() {
 }
 
 /* ===== SWIPE GALLERY ===== */
-function carousel(imgs, alt) {
+function carousel(imgs, alt, whole = []) {
   const many = imgs.length > 1;
-  return `<div class="car"><div class="car-track">${imgs.map((src, i) => `<img src="${esc(ROOT + src)}" alt="${esc(alt)}, photo ${i + 1}" loading="${i ? "lazy" : "eager"}">`).join("")}</div>${many ? `
+  return `<div class="car"><div class="car-track">${imgs.map((src, i) => `<img src="${esc(ROOT + src)}" alt="${esc(alt)}, photo ${i + 1}" loading="${i ? "lazy" : "eager"}"${whole?.includes(src) ? ' class="whole"' : ""}>`).join("")}</div>${many ? `
     <button type="button" class="car-btn prev" aria-label="Previous photo">‹</button><button type="button" class="car-btn next" aria-label="Next photo">›</button>
     <div class="car-dots">${imgs.map((_, i) => `<span${i ? "" : ' class="on"'}></span>`).join("")}</div>` : ""}</div>`;
 }

@@ -316,3 +316,8 @@ a.print:hover b { color: var(--red) }
 .etch-info .desc { margin: 0 }
 .etch-info .btn { justify-self: start }
 .price-soon { margin: 0; font: 500 15px var(--mono); color: var(--ink-soft); letter-spacing: .04em }
+.car-track img.whole, .pd-main .car-track img.whole, .pcard .pimg img.whole { object-fit: contain }
+.pic-wrap { position: relative }
+.print.sold img { filter: none; opacity: .75 }
+.sold-big { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none }
+.sold-big span { font: 400 clamp(30px, 9vw, 48px)/1 var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--red); border: 4px solid var(--red); border-radius: 6px; padding: 6px 16px 10px; transform: rotate(-10deg); background: rgba(21, 20, 19, .7) }

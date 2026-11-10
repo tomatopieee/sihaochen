@@ -31,9 +31,16 @@
       "kind": "product",
       "freeShip": true
     },
+    "ah-stamp": {
+      "name": "AHHHHH Stamp",
+      "price": 45,
+      "sale": true,
+      "kind": "product",
+      "freeShip": true
+    },
     "ahhhhh": {
       "name": "AHHHHH Stamp Kit",
-      "price": 45,
+      "price": 49.9,
       "sale": true,
       "kind": "product",
       "freeShip": true
@@ -301,7 +308,8 @@
           ],
           "img": "img/etching/dream-10/1-cover.jpg"
         }
-      ]
+      ],
+      "cover": "img/etching/dream-7/1-cover.jpg"
     },
     {
       "id": "gun",
@@ -398,7 +406,8 @@
           ],
           "img": "img/etching/gun-6/1-cover.jpg"
         }
-      ]
+      ],
+      "cover": "img/etching/gun-1/1-cover.jpg"
     },
     {
       "id": "lab",
@@ -551,7 +560,8 @@
           ],
           "img": "img/etching/lab-11/1-cover.jpg"
         }
-      ]
+      ],
+      "cover": "img/etching/lab-7-sold.jpg"
     }
   ],
   "originals": [
