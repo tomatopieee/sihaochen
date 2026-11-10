@@ -286,3 +286,33 @@ a.pcard:hover b { color: var(--red) }
 .pd-info h1 { font-size: clamp(30px, 5vw, 44px) }
 .pd-info .foot { border-top: 0; padding-top: 0 }
 .pd-versions, .pd-more { margin-top: 40px }
+
+/* swipe gallery */
+.car { position: relative; min-width: 0 }
+.car-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 4px; background: var(--ph) }
+.car-track::-webkit-scrollbar { display: none }
+.car-track img { flex: 0 0 100%; width: 100%; aspect-ratio: 4/3; object-fit: contain; scroll-snap-align: start; display: block; border-radius: 0 }
+.car-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, .5); color: #fff; font: 400 24px/1 var(--body); cursor: pointer; display: grid; place-items: center; padding: 0 0 3px }
+.car-btn.prev { left: 8px } .car-btn.next { right: 8px }
+.car-btn:hover { background: var(--red) }
+.car-dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; gap: 6px; justify-content: center; pointer-events: none }
+.car-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, .5); box-shadow: 0 0 2px rgba(0, 0, 0, .6) }
+.car-dots span.on { background: #fff }
+.pd-main .car, .pd-main .car-track { height: 100% }
+.pd-main .car-track img { height: 100%; aspect-ratio: auto; object-fit: cover }
+.tile .car-track img { aspect-ratio: 1/1; object-fit: cover }
+.tile .car-btn { width: 30px; height: 30px; font-size: 20px }
+/* etchings */
+.cat.etch .pic, .cat.etch img { aspect-ratio: 4/3 }
+a.print { text-decoration: none; color: inherit }
+a.print:hover b { color: var(--red) }
+.print .pic, .print img { aspect-ratio: 4/3 }
+.etch-detail { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr) }
+@media (min-width: 900px) { .etch-detail { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: start } }
+.etch-media .hint { margin-top: 8px; color: var(--ink-soft) }
+.etch-info { display: grid; gap: 14px; align-content: start }
+.etch-info h1 { font-size: clamp(30px, 5vw, 44px) }
+.etch-info h1 .ed { color: var(--red) }
+.etch-info .desc { margin: 0 }
+.etch-info .btn { justify-self: start }
+.price-soon { margin: 0; font: 500 15px var(--mono); color: var(--ink-soft); letter-spacing: .04em }

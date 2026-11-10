@@ -30,17 +30,22 @@ const SHOP = [
   },
   {
     id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
-    img: "img/snake-postcards.jpg", alt: "Eight hand-printed snake postcards, white lines on black",
+    img: "img/snake/cover.jpg", alt: "Hand-printed snake postcard, white lines on black",
+    gallery: ["img/snake/detail-1.jpg", "img/snake/detail-2.jpg", "img/snake/detail-3.jpg"],
+    versionImgs: { "Signed Print": "img/snake/signed-back.jpg", "Postcard": "img/snake/postcard-back.jpg" },
     desc: "A coiled snake carved in fine white lines on black. Printed by hand, one at a time.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 6 in (10 × 15 cm), standard postcard size"],
     variants: [{ label: "Single", sku: "snake-pc" }]
   },
   {
     id: "giant", section: "linocut", title: "Giant Postcards", tag: "Postcard",
-    img: "img/giants-prints.jpg", alt: "Hand-printed giant face postcards laid out in rows",
+    img: "img/giant/cover.jpg", alt: "Hand-printed giant face postcards",
+    gallery: ["img/giant/g1.jpg", "img/giant/g2.jpg", "img/giant/g3.jpg", "img/giant/g4.jpg", "img/giant/g5.jpg"],
+    versionImgs: { "Signed Print": "img/giant/signed-back.jpg", "Postcard": "img/giant/postcard-back.jpg" },
     desc: "Five giant faces, each carved and printed by hand.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 4.5 in (10 × 11.5 cm)", "Mail it in an envelope to keep the print safe"],
-    designImgs: { "No.1": "", "No.2": "", "No.3": "", "No.4": "", "No.5": "" },
+    designImgs: { "No.1": "img/giant/g1.jpg", "No.2": "img/giant/g2.jpg", "No.3": "img/giant/g3.jpg", "No.4": "img/giant/g4.jpg", "No.5": "img/giant/g5.jpg" },
+    designGallery: { "No.1": ["img/giant/g1.jpg", "img/giant/g1-sym.jpg"], "No.2": ["img/giant/g2.jpg", "img/giant/g2-sym.jpg"], "No.3": ["img/giant/g3.jpg", "img/giant/g3-sym.jpg"], "No.4": ["img/giant/g4.jpg", "img/giant/g4-sym.jpg"], "No.5": ["img/giant/g5.jpg", "img/giant/g5-sym.jpg"] },
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
   {
@@ -291,14 +296,18 @@ function productTile(p) {
 // Extra tile after the products: leads to the Custom page.
 function customTile() {
   return `<a class="pcard" href="${ROOT}custom/index.html">
-    <div class="pimg"><img src="${ROOT}img/blocks.jpg" alt="Carved pink rubber blocks" loading="lazy"><span class="tag">Custom</span></div>
+    <div class="pimg"><img src="${ROOT}img/custom-cover.jpg" alt="Custom hand-carved stamps" loading="lazy"><span class="tag">Custom</span></div>
     <b>Custom stamp / Re-carve a design</b><span class="price"><span class="from">from</span><span class="now">$38</span></span></a>`;
 }
 function renderEtchBlocks() {
   const host = $("#etch-blocks"); if (!host) return;
   host.innerHTML = CAT.etchings.map(x => `<a class="pcard" href="${ROOT}etchings/index.html#${esc(x.id)}">
     <div class="pimg">${imgTag(x.cover || x.prints?.[0]?.img || "", x.title)}<span class="tag">Etching</span></div>
-    <b>${esc(x.title)}</b><span class="price">${x.prints.length ? `<span class="from">from</span><span class="now">${money(Math.min(...x.prints.map(p => p.price)))}</span>` : `<span class="muted" style="font-size:13px">Scans coming soon</span>`}</span></a>`).join("");
+    <b>${esc(x.title)}</b>${etchFrom(x)}</a>`).join("");
+}
+function etchFrom(x) {
+  const prices = x.prints.filter(p => p.price && !p.sold).map(p => p.price);
+  return prices.length ? `<span class="price"><span class="from">from</span><span class="now">${money(Math.min(...prices))}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`;
 }
 
 /* ===== PRODUCT PAGE ===== */
@@ -308,12 +317,11 @@ function renderProduct() {
   if (!p) { host.innerHTML = `<p class="empty">This product could not be found. <a href="${ROOT}shop/index.html">Back to shop</a></p>`; return; }
   document.title = `${p.title} · Sihao Chen`;
   const hasVersion = p.variants.some(v => CAT.items[v.sku]?.options?.version);
-  const gallery = [p.img, ...(p.gallery || [])].filter(Boolean);
+  const VI = p.versionImgs || VERSION_IMGS;
   host.innerHTML = `<a class="back" href="${ROOT}shop/index.html">← Back to shop</a>
     <div class="pd card">
       <div class="pd-media">
-        <div class="ph pd-main" data-photo>${imgTag(p.img, p.alt)}</div>
-        ${gallery.length > 1 ? `<div class="pd-strip">${gallery.map((g, i) => `<button type="button" class="thumb" data-g="${i}"><img src="${esc(ROOT + g)}" alt="${esc(p.title)} photo ${i + 1}"></button>`).join("")}</div>` : ""}
+        <div class="ph pd-main" data-photo></div>
       </div>
       <div class="pd-info">
         <p class="label">${esc(p.tag)}</p>
@@ -327,28 +335,31 @@ function renderProduct() {
     ${hasVersion ? `<div class="pd-versions">
       <h2 class="sub">Two versions, same price</h2>
       <div class="versions">
-        <div class="version">${VERSION_IMGS["Signed Print"] ? `<img src="${esc(ROOT + VERSION_IMGS["Signed Print"])}" alt="Back of a signed print with logo stamp, name and date" loading="lazy">` : `<div class="ph-box">Photo coming</div>`}
+        <div class="version">${VI["Signed Print"] ? `<img src="${esc(ROOT + VI["Signed Print"])}" alt="Back of a signed print with logo stamp, name and date" loading="lazy">` : `<div class="ph-box">Photo coming</div>`}
           <div><h3>Signed Print</h3><p>Back signed with my name, date and logo stamp. Packed in a clear sleeve. Limited stock.</p></div></div>
-        <div class="version">${VERSION_IMGS["Postcard"] ? `<img src="${esc(ROOT + VERSION_IMGS["Postcard"])}" alt="Hand-printed postcard back" loading="lazy">` : `<div class="ph-box">Photo coming<br>postcard back</div>`}
+        <div class="version">${VI["Postcard"] ? `<img src="${esc(ROOT + VI["Postcard"])}" alt="Hand-printed postcard back" loading="lazy">` : `<div class="ph-box">Photo coming<br>postcard back</div>`}
           <div><h3>Postcard</h3><p>Hand-printed postcard back, ready to write on and mail. Signed in pencil on the front.</p></div></div>
       </div></div>` : ""}
     <div class="pd-more"><h2 class="sub">You may also like</h2>
       <div class="tiles">${SHOP.filter(x => x.id !== p.id).slice(0, 4).map(productTile).join("")}</div></div>`;
-  const main = host.querySelector("[data-photo]");
-  setupCard(p, host.querySelector("[data-foot]"), main);
-  host.querySelectorAll("[data-g]").forEach(b => b.addEventListener("click", () => {
-    main.innerHTML = `<img src="${esc(ROOT + gallery[+b.dataset.g])}" alt="${esc(p.title)}">`;
-  }));
+  setupCard(p, host.querySelector("[data-foot]"), host.querySelector("[data-photo]"));
 }
 function setupCard(p, foot, photoEl) {
-  const state = { v: 0, opts: {}, qty: 1 };
+  const state = { v: 0, opts: {}, qty: 1, last: "" };
   const photo = photoEl || foot.closest(".card").querySelector("[data-photo]");
+  const VI = p.versionImgs || VERSION_IMGS;
+  let shown = null;
+  // Photos follow the last thing picked: a version shows its back, a design shows that design.
   function showPhoto() {
-    const ver = state.opts.version;
-    const src = ver && ver in VERSION_IMGS ? VERSION_IMGS[ver] : p.img;
-    const alt = ver ? `${p.title}, ${ver} back` : p.alt;
-    const label = ver && !src ? `Photo coming<br>${esc(ver)} back` : "";
-    photo.innerHTML = (src ? `<img src="${esc(ROOT + src)}" alt="${esc(alt)}">` : `<div class="ph-box">${label || "Photo coming"}</div>`) + `<span class="tag">${esc(ver || p.tag)}</span>`;
+    const ver = state.opts.version, des = state.opts.design;
+    let set = [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
+    if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
+    else if (des && p.designGallery?.[des]) { set = p.designGallery[des]; tag = des; }
+    const key = set.join("|") + tag;
+    if (key === shown) return;
+    shown = key;
+    photo.innerHTML = (set.length ? carousel(set, p.title) : `<div class="ph-box">Photo coming</div>`) + `<span class="tag">${esc(tag)}</span>`;
+    wireCarousels(photo);
   }
   function draw() {
     showPhoto();
@@ -372,7 +383,7 @@ function setupCard(p, foot, photoEl) {
       <button class="btn" type="button" data-add>Add to cart</button><p class="hint" data-hint></p>`;
     foot.innerHTML = html;
     foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; draw(); }));
-    foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; draw(); }));
+    foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; state.last = b.dataset.o; draw(); }));
     foot.querySelectorAll("[data-qd]").forEach(b => b.addEventListener("click", () => { state.qty = Math.max(1, Math.min(10, state.qty + +b.dataset.qd)); draw(); }));
     foot.querySelector("[data-add]").addEventListener("click", () => {
       const missing = optKeys.filter(k => !state.opts[k]);
@@ -401,41 +412,86 @@ async function loadSold() {
   if (!CHECKOUT_URL) return;
   try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold"); const d = await r.json(); SOLD = new Set(d.sold || []); } catch (_) {}
 }
+// #dream = one series (grid of prints), #dream-3 = one print (swipe through its photos).
 function renderEtchings() {
   const host = $("#etchings"); if (!host) return;
-  const id = location.hash.slice(1), s = CAT.etchings.find(x => x.id === id);
-  if (!s) {
-    host.innerHTML = `<div class="sec-head"><h1>Etchings</h1><p>Every impression is inked, wiped and printed by hand, so no two are the same. Pick a design to see each print.</p></div>
-      <div class="series">${CAT.etchings.map(x => `<a class="cat" href="#${esc(x.id)}">${imgTag(x.prints?.[0]?.img || x.cover || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>${x.prints.length ? `${x.prints.length} prints · from ${money(Math.min(...x.prints.map(p => p.price)))}` : "Scans coming soon"}</p></a>`).join("")}</div>`;
+  const id = location.hash.slice(1);
+  const s = CAT.etchings.find(x => x.id === id);
+  let print = null, ps = null;
+  for (const x of CAT.etchings) for (const q of x.prints) if (q.id === id && !q.sold) { print = q; ps = x; }
+  if (print) {
+    const imgs = [...(print.imgs || [print.img]), CAT.etchingBack].filter(Boolean);
+    const sold = SOLD.has(print.sku);
+    document.title = `${ps.title} ${print.title} · Sihao Chen`;
+    host.innerHTML = `<a class="back" href="#${esc(ps.id)}">← All ${esc(ps.title)} prints</a>
+      <div class="etch-detail">
+        <div class="etch-media">${carousel(imgs, `${ps.title} ${print.title}`)}<p class="hint">Swipe or use the arrows to see details and the back.</p></div>
+        <div class="etch-info">
+          <p class="label">Etching · one of one</p>
+          <h1>${esc(ps.title)} <span class="ed">${esc(print.title)}</span></h1>
+          ${sold ? `<p class="sold-tag">Sold</p>` : print.price ? `<div class="buyrow"><span class="price"><span class="now">${money(print.price)}</span></span></div><button class="btn" type="button" data-etch="${esc(print.sku)}">Add to cart</button>`
+            : `<p class="price-soon">Price coming soon</p><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci to ask</a>`}
+          <p class="desc">${esc(ps.blurb)}</p>
+          <p class="note-line">Print ${esc(print.title)} of the edition. Ships flat in a rigid envelope. Not part of the sale.</p>
+        </div>
+      </div>`;
+    wireCarousels(host);
+    host.querySelectorAll("[data-etch]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.etch)));
     return;
   }
+  if (!s) {
+    document.title = "Etchings · Sihao Chen";
+    host.innerHTML = `<a class="back" href="${ROOT}shop/index.html#etching">← Back to shop</a>
+      <div class="sec-head"><h1>Etchings</h1><p>Every impression is inked, wiped and printed by hand, so no two are the same. Pick a design to see each print.</p></div>
+      <div class="series">${CAT.etchings.map(x => `<a class="cat etch" href="#${esc(x.id)}">${imgTag(x.prints[0]?.img || "", x.title, "pic")}<h3>${esc(x.title)}</h3><p>Edition of ${x.edition} · ${etchFrom(x)}</p></a>`).join("")}</div>`;
+    return;
+  }
+  document.title = `${s.title} · Etchings · Sihao Chen`;
   host.innerHTML = `<a class="back" href="${ROOT}shop/index.html#etching">← Back to shop</a>
-    <div class="sec-head"><h1>${esc(s.title)}</h1><p>${esc(s.blurb)}</p></div>
-    ${s.prints.length ? `<div class="prints">${s.prints.map(p => {
-      const sold = SOLD.has(p.sku) || p.sold;
-      return `<div class="print${sold ? " sold" : ""}">${imgTag(p.img, `${s.title}, ${p.title || p.sku}`, "pic")}
-        <div class="row"><b>${esc(p.title || p.sku)}</b>${sold ? `<span class="sold-tag">Sold</span>` : `<span class="price"><span class="now">${money(p.price)}</span></span>`}</div>
-        ${sold ? "" : `<button class="btn small" type="button" data-etch="${esc(p.sku)}">Add to cart</button>`}</div>`;
-    }).join("")}</div>` : `<p class="muted">Scans of each print are coming soon.</p>`}
+    <div class="sec-head"><h1>${esc(s.title)}</h1><p>${esc(s.blurb)} Edition of ${s.edition}. Tap a print to see it up close.</p></div>
+    <div class="prints">${s.prints.map(q => {
+      const sold = q.sold || SOLD.has(q.sku);
+      const inner = `${imgTag(q.img, `${s.title} ${q.title}`, "pic")}
+        <div class="row"><b>${esc(q.title)}</b>${sold ? `<span class="sold-tag">Sold${q.soldPrice ? ` · ${money(q.soldPrice)}` : ""}</span>` : q.price ? `<span class="price"><span class="now">${money(q.price)}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`}</div>`;
+      return q.sold ? `<div class="print sold">${inner}</div>` : `<a class="print${sold ? " sold" : ""}" href="#${esc(q.id)}">${inner}</a>`;
+    }).join("")}</div>
     <p class="note-line">One of one. Each print is unique and ships flat in a rigid envelope. Not part of the sale.</p>`;
-  host.querySelectorAll("[data-etch]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.etch)));
+}
+
+/* ===== SWIPE GALLERY ===== */
+function carousel(imgs, alt) {
+  const many = imgs.length > 1;
+  return `<div class="car"><div class="car-track">${imgs.map((src, i) => `<img src="${esc(ROOT + src)}" alt="${esc(alt)}, photo ${i + 1}" loading="${i ? "lazy" : "eager"}">`).join("")}</div>${many ? `
+    <button type="button" class="car-btn prev" aria-label="Previous photo">‹</button><button type="button" class="car-btn next" aria-label="Next photo">›</button>
+    <div class="car-dots">${imgs.map((_, i) => `<span${i ? "" : ' class="on"'}></span>`).join("")}</div>` : ""}</div>`;
+}
+function wireCarousels(root) {
+  root.querySelectorAll(".car").forEach(c => {
+    const t = c.querySelector(".car-track"), dots = [...c.querySelectorAll(".car-dots span")], n = dots.length;
+    const at = () => Math.round(t.scrollLeft / t.clientWidth);
+    const go = d => t.scrollTo({ left: ((at() + d + n) % n) * t.clientWidth, behavior: "smooth" });
+    c.querySelector(".prev")?.addEventListener("click", e => { e.preventDefault(); go(-1); });
+    c.querySelector(".next")?.addEventListener("click", e => { e.preventDefault(); go(1); });
+    t.addEventListener("scroll", () => { const i = at(); dots.forEach((d, j) => d.classList.toggle("on", i === j)); }, { passive: true });
+  });
 }
 
 /* ===== CUSTOM PAGE: recarve existing designs ===== */
 const RECARVES = [
-  { sku: "recarve-giant-1", title: "Giant No.1", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
-  { sku: "recarve-giant-2", title: "Giant No.2", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
-  { sku: "recarve-giant-3", title: "Giant No.3", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
-  { sku: "recarve-giant-4", title: "Giant No.4", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
-  { sku: "recarve-giant-5", title: "Giant No.5", size: "4 × 4.5 in (10 × 11.5 cm)", img: "" },
-  { sku: "recarve-snake", title: "Snake (original)", size: "4 × 6 in (10 × 15 cm)", img: "" }
+  // Photos: the carved block, then its print mirrored to match the block, then the print.
+  { sku: "recarve-giant-1", title: "Giant No.1", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g1-block.jpg", "img/giant/g1-sym.jpg", "img/giant/g1.jpg"] },
+  { sku: "recarve-giant-2", title: "Giant No.2", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g2-block.jpg", "img/giant/g2-sym.jpg", "img/giant/g2.jpg"] },
+  { sku: "recarve-giant-3", title: "Giant No.3", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g3-block.jpg", "img/giant/g3-sym.jpg", "img/giant/g3.jpg"] },
+  { sku: "recarve-giant-4", title: "Giant No.4", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g4-block.jpg", "img/giant/g4-sym.jpg", "img/giant/g4.jpg"] },
+  { sku: "recarve-giant-5", title: "Giant No.5", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g5-block.jpg", "img/giant/g5-sym.jpg", "img/giant/g5.jpg"] },
 ];
 function renderRecarves() {
   const host = $("#recarves"); if (!host) return;
-  host.innerHTML = RECARVES.map(r => `<div class="tile">${r.img ? `<img src="${esc(ROOT + r.img)}" alt="${esc(r.title)} block" loading="lazy">` : `<div class="ph-box">Photo coming<br>${esc(r.title)}</div>`}
+  host.innerHTML = RECARVES.map(r => `<div class="tile">${carousel(r.imgs, r.title + " block")}
     <div class="row"><b>${esc(r.title)}</b><span class="p">${money(CAT.items[r.sku].price)}</span></div>
     ${r.size ? `<div class="muted" style="font-size:.85em">${esc(r.size)}</div>` : ""}
     <button class="btn small" type="button" data-recarve="${r.sku}">Add to cart</button></div>`).join("");
+  wireCarousels(host);
   host.querySelectorAll("[data-recarve]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.recarve)));
 }
 
