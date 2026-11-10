@@ -193,6 +193,8 @@ function renderCartCount() { const n = readCart().reduce((a, l) => a + l.qty, 0)
 function lineImg(sku) {
   const s = SHOP.find(p => p.variants.some(v => v.sku === sku));
   if (s) return s.img;
+  const r = RECARVES.find(x => x.sku === sku);
+  if (r) return r.imgs[0];
   if (sku === "bb-sticker" || sku === "bb-mini") return "img/blind-box.jpg";
   return uniqueItem(sku)?.img || "";
 }
@@ -320,12 +322,12 @@ function etchFrom(x) {
 /* ===== PRODUCT PAGE ===== */
 function renderProduct() {
   const host = $("#product"); if (!host) return;
-  const p = SHOP.find(x => x.id === location.hash.slice(1));
+  const p = findProduct(location.hash.slice(1));
   if (!p) { host.innerHTML = `<p class="empty">This product could not be found. <a href="${ROOT}shop/index.html">Back to shop</a></p>`; return; }
   document.title = `${p.title} · Sihao Chen`;
   const hasVersion = p.variants.some(v => CAT.items[v.sku]?.options?.version);
   const VI = p.versionImgs || VERSION_IMGS;
-  host.innerHTML = `<a class="back" href="${ROOT}shop/index.html">← Back to shop</a>
+  host.innerHTML = `<a class="back" href="${ROOT}${p.back ? p.back[0] : "shop/index.html"}">← Back to ${p.back ? p.back[1] : "shop"}</a>
     <div class="pd card">
       <div class="pd-media">
         <div class="ph pd-main" data-photo></div>
@@ -501,13 +503,30 @@ const RECARVES = [
   { sku: "recarve-giant-4", title: "Giant No.4", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g4-block.jpg", "img/giant/g4-sym.jpg", "img/giant/g4.jpg"] },
   { sku: "recarve-giant-5", title: "Giant No.5", size: "4 × 4.5 in (10 × 11.5 cm)", imgs: ["img/giant/g5-block.jpg", "img/giant/g5-sym.jpg", "img/giant/g5.jpg"] },
 ];
+// Each re-carve also has its own detail page: product/index.html#recarve-giant-1
+function recarveProduct(r) {
+  return {
+    id: r.sku, title: `Re-carved Stamp: ${r.title}`, tag: "Re-carve", back: ["custom/index.html#recarves", "Custom"],
+    img: r.imgs[0], gallery: r.imgs.slice(1), whole: r.imgs.filter(i => i.includes("-sym")),
+    alt: `${r.title} carved stamp block`,
+    desc: "I carve a brand-new block of this design just for you. You get the stamp itself, so you can print it as many times as you like.",
+    specs: ["Hand-carved rubber stamp, made to order", `About ${r.size}`, "Photos: the block, the print mirrored to match the block, then the print", "Made to order in 1–2 weeks · leave me a note at checkout"],
+    variants: [{ label: "Stamp", sku: r.sku }]
+  };
+}
+function findProduct(id) {
+  const r = RECARVES.find(x => x.sku === id);
+  return SHOP.find(x => x.id === id) || (r && recarveProduct(r));
+}
 function renderRecarves() {
   const host = $("#recarves"); if (!host) return;
   host.innerHTML = RECARVES.map(r => `<div class="tile">${carousel(r.imgs, r.title + " block", r.imgs.filter(i => i.includes("-sym")))}
-    <div class="row"><b>${esc(r.title)}</b><span class="p">${money(CAT.items[r.sku].price)}</span></div>
+    <div class="row"><a class="tlink" href="${ROOT}product/index.html#${r.sku}"><b>${esc(r.title)}</b></a><span class="p">${money(CAT.items[r.sku].price)}</span></div>
     ${r.size ? `<div class="muted" style="font-size:.85em">${esc(r.size)}</div>` : ""}
+    <a class="tlink more" href="${ROOT}product/index.html#${r.sku}">See details →</a>
     <button class="btn small" type="button" data-recarve="${r.sku}">Add to cart</button></div>`).join("");
   wireCarousels(host);
+  host.querySelectorAll(".tile").forEach((t, i) => t.querySelector(".car-track").addEventListener("click", () => { location.href = `${ROOT}product/index.html#${RECARVES[i].sku}`; }));
   host.querySelectorAll("[data-recarve]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.recarve)));
 }
 
