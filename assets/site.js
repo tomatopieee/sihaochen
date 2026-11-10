@@ -470,9 +470,9 @@ function wireCarousels(root) {
     const t = c.querySelector(".car-track"), dots = [...c.querySelectorAll(".car-dots span")], n = dots.length;
     const at = () => Math.round(t.scrollLeft / t.clientWidth);
     const go = d => {
-      const x = ((at() + d + n) % n) * t.clientWidth, from = t.scrollLeft;
+      const x = ((at() + d + n) % n) * t.clientWidth;
       t.scrollTo({ left: x, behavior: "smooth" });
-      setTimeout(() => { if (t.scrollLeft === from) t.scrollLeft = x; }, 350); // if smooth scrolling did not run
+      setTimeout(() => { if (Math.abs(t.scrollLeft - x) > 2) t.scrollLeft = x; }, 600); // if smooth scrolling did not finish
     };
     c.querySelector(".prev")?.addEventListener("click", e => { e.preventDefault(); go(-1); });
     c.querySelector(".next")?.addEventListener("click", e => { e.preventDefault(); go(1); });
