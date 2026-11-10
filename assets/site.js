@@ -56,8 +56,8 @@ const SHOP = [
     img: "img/gnome/1.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
     gallery: ["img/gnome/2.jpg", "img/gnome/3.jpg", "img/gnome/4.jpg", "img/gnome/5.jpg", "img/gnome/6.jpg", "img/gnome/7.jpg", "img/gnome/8.jpg"],
     // Shown once the customer taps an option (by option label).
-    pickImgs: { "Red": ["img/gnome/red.jpg"], "Green": ["img/gnome/green.jpg"], "Red & green (the middle one)": ["img/gnome/red-green.jpg"], "Set of three": ["img/gnome/1.jpg"] },
-    whole: ["img/gnome/red.jpg", "img/gnome/green.jpg", "img/gnome/red-green.jpg"],
+    pickImgs: { "Red": ["img/gnome/red-2.jpg"], "Green": ["img/gnome/green.jpg"], "Red & green (the middle one)": ["img/gnome/red-green.jpg"], "Set of three": ["img/gnome/1.jpg"] },
+    whole: ["img/gnome/red-2.jpg", "img/gnome/green.jpg", "img/gnome/red-green.jpg"],
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
     specs: ["Hand-pulled two-block linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 2 × 6 in (5 × 15 cm), twine tie", "Signed with name and logo stamp on the back"],
     variants: [
@@ -362,7 +362,7 @@ function setupCard(p, foot, photoEl) {
     const cur = p.variants[state.v];
     let set = (state.last === "variant" && p.pickImgs?.[cur.label]) || p.variantImgs?.[cur.sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
     if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
-    else if (des && p.designGallery?.[des]) { set = p.designGallery[des]; tag = des; }
+    else if (des && p.designGallery?.[des] && CAT.items[cur.sku]?.options?.design && state.last !== "variant") { set = p.designGallery[des]; tag = des; }
     const key = set.join("|") + tag;
     if (key === shown) return;
     shown = key;
