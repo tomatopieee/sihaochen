@@ -55,16 +55,16 @@ const SHOP = [
   {
     id: "gnome", section: "linocut", title: "Gnome Bookmark", tag: "Bookmark",
     img: "img/gnome/1.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
-    gallery: ["img/gnome/2.jpg", "img/gnome/3.jpg", "img/gnome/4.jpg", "img/gnome/5.jpg", "img/gnome/6.jpg", "img/gnome/7.jpg", "img/gnome/8.jpg"],
-    // Shown once the customer taps an option (by option label).
-    pickImgs: { "Red": ["img/gnome/red-2.jpg"], "Green": ["img/gnome/green.jpg"], "Red & green (the middle one)": ["img/gnome/red-green.jpg"], "Set of three": ["img/gnome/1.jpg"] },
+    gallery: ["img/gnome/5.jpg", "img/gnome/6.jpg", "img/gnome/2.jpg", "img/gnome/3.jpg", "img/gnome/4.jpg", "img/gnome/7.jpg", "img/gnome/8.jpg", "img/gnome/red-2.jpg", "img/gnome/green.jpg", "img/gnome/red-green.jpg"],
+    // Tapping an option jumps to its photo in the gallery (still swipeable).
+    pickAt: { "Red": "img/gnome/red-2.jpg", "Green": "img/gnome/green.jpg", "Red & green": "img/gnome/red-green.jpg", "Set of three": "img/gnome/1.jpg" },
     whole: ["img/gnome/red-2.jpg", "img/gnome/green.jpg", "img/gnome/red-green.jpg"],
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
     specs: ["Hand-pulled two-block linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 2 × 6 in (5 × 15 cm), twine tie", "Signed with name and logo stamp on the back"],
     variants: [
       { label: "Red", sku: "gnome-single", fixed: { color: "Red" } },
       { label: "Green", sku: "gnome-single", fixed: { color: "Green" } },
-      { label: "Red & green (the middle one)", sku: "gnome-rg" },
+      { label: "Red & green", sku: "gnome-rg" },
       { label: "Set of three", sku: "gnome-set" }
     ]
   }
@@ -360,14 +360,18 @@ function setupCard(p, foot, photoEl) {
   function showPhoto() {
     const ver = state.opts.version, des = state.opts.design;
     const cur = p.variants[state.v];
-    let set = (state.last === "variant" && p.pickImgs?.[cur.label]) || p.variantImgs?.[cur.sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
+    let set = p.variantImgs?.[cur.sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
+    const at = state.jump && p.pickAt?.[cur.label] ? Math.max(0, set.indexOf(p.pickAt[cur.label])) : -1;
+    state.jump = false;
     if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
     else if (des && p.designGallery?.[des] && CAT.items[cur.sku]?.options?.design && state.last !== "variant") { set = p.designGallery[des]; tag = des; }
     const key = set.join("|") + tag;
-    if (key === shown) return;
-    shown = key;
-    photo.innerHTML = (set.length ? carousel(set, p.title, p.whole) : `<div class="ph-box">Photo coming</div>`) + `<span class="tag">${esc(tag)}</span>`;
-    wireCarousels(photo);
+    if (key !== shown) {
+      shown = key;
+      photo.innerHTML = (set.length ? carousel(set, p.title, p.whole) : `<div class="ph-box">Photo coming</div>`) + `<span class="tag">${esc(tag)}</span>`;
+      wireCarousels(photo);
+    }
+    if (at >= 0) { const t = photo.querySelector(".car-track"); if (t) t.scrollLeft = at * t.clientWidth; }
   }
   function draw() {
     showPhoto();
@@ -390,7 +394,7 @@ function setupCard(p, foot, photoEl) {
       <span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span></div>
       <button class="btn" type="button" data-add>Add to cart</button><p class="hint" data-hint></p>`;
     foot.innerHTML = html;
-    foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; draw(); }));
+    foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; state.jump = true; draw(); }));
     foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; state.last = b.dataset.o; draw(); }));
     foot.querySelectorAll("[data-qd]").forEach(b => b.addEventListener("click", () => { state.qty = Math.max(1, Math.min(10, state.qty + +b.dataset.qd)); draw(); }));
     foot.querySelector("[data-add]").addEventListener("click", () => {
