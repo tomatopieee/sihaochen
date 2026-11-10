@@ -53,7 +53,11 @@ const SHOP = [
   },
   {
     id: "gnome", section: "linocut", title: "Gnome Bookmark", tag: "Bookmark",
-    img: "img/gnome-bookmarks.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
+    img: "img/gnome/1.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
+    gallery: ["img/gnome/2.jpg", "img/gnome/3.jpg", "img/gnome/4.jpg", "img/gnome/5.jpg", "img/gnome/6.jpg", "img/gnome/7.jpg", "img/gnome/8.jpg"],
+    // Shown once the customer taps an option (by option label).
+    pickImgs: { "Red": ["img/gnome/red.jpg"], "Green": ["img/gnome/green.jpg"], "Red & green (the middle one)": ["img/gnome/red-green.jpg"], "Set of three": ["img/gnome/1.jpg"] },
+    whole: ["img/gnome/red.jpg", "img/gnome/green.jpg", "img/gnome/red-green.jpg"],
     desc: "A grumpy little gnome printed from two carved blocks on flecked paper, tied with twine.",
     specs: ["Hand-pulled two-block linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 2 × 6 in (5 × 15 cm), twine tie", "Signed with name and logo stamp on the back"],
     variants: [
@@ -304,9 +308,9 @@ function customTile() {
 }
 function renderEtchBlocks() {
   const host = $("#etch-blocks"); if (!host) return;
-  host.innerHTML = CAT.etchings.map(x => `<a class="pcard" href="${ROOT}etchings/index.html#${esc(x.id)}">
-    <div class="pimg">${imgTag(x.cover || x.prints?.[0]?.img || "", x.title)}<span class="tag">Etching</span></div>
-    <b>${esc(x.title)}</b>${etchFrom(x)}</a>`).join("");
+  host.innerHTML = CAT.etchings.map(x => `<a class="erow" href="${ROOT}etchings/index.html#${esc(x.id)}">
+    <div class="eimg">${imgTag(x.cover || x.prints?.[0]?.img || "", x.title)}</div>
+    <div class="etxt"><span class="label">Etching · edition of ${x.edition}</span><b>${esc(x.title)}</b>${etchFrom(x)}<span class="more">See prints →</span></div></a>`).join("");
 }
 function etchFrom(x) {
   const prices = x.prints.filter(p => p.price && !p.sold).map(p => p.price);
@@ -355,7 +359,8 @@ function setupCard(p, foot, photoEl) {
   // Photos follow the last thing picked: a version shows its back, a design shows that design.
   function showPhoto() {
     const ver = state.opts.version, des = state.opts.design;
-    let set = p.variantImgs?.[p.variants[state.v].sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
+    const cur = p.variants[state.v];
+    let set = (state.last === "variant" && p.pickImgs?.[cur.label]) || p.variantImgs?.[cur.sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
     if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
     else if (des && p.designGallery?.[des]) { set = p.designGallery[des]; tag = des; }
     const key = set.join("|") + tag;
@@ -385,7 +390,7 @@ function setupCard(p, foot, photoEl) {
       <span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span></div>
       <button class="btn" type="button" data-add>Add to cart</button><p class="hint" data-hint></p>`;
     foot.innerHTML = html;
-    foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; draw(); }));
+    foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; draw(); }));
     foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; state.last = b.dataset.o; draw(); }));
     foot.querySelectorAll("[data-qd]").forEach(b => b.addEventListener("click", () => { state.qty = Math.max(1, Math.min(10, state.qty + +b.dataset.qd)); draw(); }));
     foot.querySelector("[data-add]").addEventListener("click", () => {

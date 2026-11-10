@@ -321,3 +321,14 @@ a.print:hover b { color: var(--red) }
 .print.sold img { filter: none; opacity: .75 }
 .sold-big { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none }
 .sold-big span { font: 400 clamp(30px, 9vw, 48px)/1 var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--red); border: 4px solid var(--red); border-radius: 6px; padding: 6px 16px 10px; transform: rotate(-10deg); background: rgba(21, 20, 19, .7) }
+/* shop: etching series as wide rows */
+.etch-rows { display: grid; gap: 14px }
+.erow { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 14px; align-items: center; text-decoration: none; color: inherit }
+.eimg { border-radius: 4px; overflow: hidden; background: var(--ph) }
+.eimg img, .eimg .ph-box { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block }
+.etxt { display: grid; gap: 4px; min-width: 0 }
+.etxt .label { font-size: 10px }
+.etxt b { font: 400 clamp(18px, 4.5vw, 26px)/1.1 var(--display) }
+.etxt .more { font: 500 12px var(--mono); color: var(--ink-soft); margin-top: 4px }
+.erow:hover b, .erow:hover .more { color: var(--red) }
+@media (min-width: 760px) { .etch-rows { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px } .erow { grid-template-columns: 1fr; align-items: start } }
