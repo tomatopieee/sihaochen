@@ -147,6 +147,9 @@ function cartTotals(cart = readCart()) {
   return { sub, ship, toFree: Math.round((sh.freeOver - sub) * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
 }
 
+// "Nov 14" from an ISO date in catalog.json, in New York time.
+function saleDay(iso) { return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" }); }
+
 /* ===== CHROME: banner, header, footer, drawer ===== */
 function buildChrome() {
   const links = [["index.html", "Portfolio", ["portfolio"]], ["shop/index.html", "Shop", ["shop", "etchings"]], ["custom/index.html", "Custom", ["custom"]], ["about/index.html", "About", ["about"]]];
@@ -262,7 +265,7 @@ function tickBanner() {
   const d = Math.floor(s / 86400); s %= 86400; const h = Math.floor(s / 3600); s %= 3600; const m = Math.floor(s / 60); s %= 60;
   const t = `${d}d ${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
   $("#banner-title").textContent = `${CAT.sale.label} · ${Math.round(CAT.sale.off * 100)}% off selected items`;
-  $("#banner-time").textContent = (st === "before" ? `Starts Nov 11 · in ${t}` : `Ends Dec 11 · ${t} left`) + (PREVIEW_SALE ? " · PREVIEW" : "");
+  $("#banner-time").textContent = (st === "before" ? `Starts ${saleDay(CAT.sale.start)} · in ${t}` : `Ends ${saleDay(CAT.sale.end)} · ${t} left`) + (PREVIEW_SALE ? " · PREVIEW" : "");
   return true;
 }
 
