@@ -42,7 +42,7 @@ const SHOP = [
   },
   {
     id: "giant", section: "linocut", title: "Giant Postcards", tag: "Postcard",
-    img: "img/giant/cover.jpg", alt: "Hand-printed giant face postcards",
+    img: "img/giant/cover-2.jpg", alt: "Hand-printed giant face postcards",
     gallery: ["img/giant/g1.jpg", "img/giant/g2.jpg", "img/giant/g3.jpg", "img/giant/g4.jpg", "img/giant/g5.jpg"],
     versionImgs: { "Signed Print": "img/giant/signed-back.jpg", "Postcard": "img/giant/postcard-back.jpg" },
     desc: "Five giant faces, each carved and printed by hand.",

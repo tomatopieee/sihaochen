@@ -36,14 +36,16 @@
       "price": 45,
       "sale": true,
       "kind": "product",
-      "freeShip": true
+      "freeShip": true,
+      "salePrice": 37.9
     },
     "ahhhhh": {
       "name": "AHHHHH Stamp Kit",
       "price": 49.9,
       "sale": true,
       "kind": "product",
-      "freeShip": true
+      "freeShip": true,
+      "salePrice": 41.9
     },
     "snake-pc": {
       "name": "Snake Postcard",
