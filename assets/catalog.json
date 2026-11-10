@@ -6,7 +6,7 @@
     "off": 0.15
   },
   "shipping": {
-    "freeOver": 20,
+    "freeOver": 40,
     "flat": 3
   },
   "blindBox": {
@@ -20,23 +20,20 @@
       "price": 23.9,
       "salePrice": 19.9,
       "sale": true,
-      "kind": "product",
-      "freeShip": true
+      "kind": "product"
     },
     "mf-kit": {
       "name": "Middle Finger Mini Stamp Kit",
       "price": 28.9,
       "salePrice": 23.9,
       "sale": true,
-      "kind": "product",
-      "freeShip": true
+      "kind": "product"
     },
     "ah-stamp": {
       "name": "AHHHHH Stamp",
       "price": 45,
       "sale": true,
       "kind": "product",
-      "freeShip": true,
       "salePrice": 37.9
     },
     "ahhhhh": {
@@ -44,7 +41,6 @@
       "price": 49.9,
       "sale": true,
       "kind": "product",
-      "freeShip": true,
       "salePrice": 41.9
     },
     "snake-pc": {
@@ -132,36 +128,31 @@
       "name": "Re-carved stamp: Giant No.1",
       "price": 200,
       "sale": false,
-      "kind": "custom",
-      "freeShip": true
+      "kind": "custom"
     },
     "recarve-giant-2": {
       "name": "Re-carved stamp: Giant No.2",
       "price": 100,
       "sale": false,
-      "kind": "custom",
-      "freeShip": true
+      "kind": "custom"
     },
     "recarve-giant-3": {
       "name": "Re-carved stamp: Giant No.3",
       "price": 200,
       "sale": false,
-      "kind": "custom",
-      "freeShip": true
+      "kind": "custom"
     },
     "recarve-giant-4": {
       "name": "Re-carved stamp: Giant No.4",
       "price": 140,
       "sale": false,
-      "kind": "custom",
-      "freeShip": true
+      "kind": "custom"
     },
     "recarve-giant-5": {
       "name": "Re-carved stamp: Giant No.5",
       "price": 200,
       "sale": false,
-      "kind": "custom",
-      "freeShip": true
+      "kind": "custom"
     }
   },
   "etchings": [

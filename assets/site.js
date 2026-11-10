@@ -20,14 +20,14 @@ const SHOP = [
     id: "mf", section: "linocut", title: "Middle Finger Mini Stamp", tag: "Stamp",
     img: "img/mf/1.jpg", alt: "Hand-carved middle finger mini stamp with its red print on a sticker",
     variantImgs: { "mf-stamp": ["img/mf/1.jpg", "img/mf/2.jpg", "img/mf/3.jpg", "img/mf/4.jpg", "img/mf/5.jpg"], "mf-kit": ["img/mf/kit.jpg"] },
-    specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me", "Stamps always ship free in the US"],
+    specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Stamp only", sku: "mf-stamp" }, { label: "Stamp kit", sku: "mf-kit" }]
   },
   {
     id: "ah", section: "linocut", title: "AHHHHH Stamp", tag: "Stamp",
     img: "img/ah/1.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
     variantImgs: { "ah-stamp": ["img/ah/1.jpg", "img/ah/2.jpg", "img/ah/3.jpg"], "ahhhhh": ["img/ah/kit.jpg"] },
-    specs: ["1 original hand-carved stamp, about 2 in (5 cm) tall", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me", "Stamps always ship free in the US"],
+    specs: ["1 original hand-carved stamp, about 2 in (5 cm) tall", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Stamp only", sku: "ah-stamp" }, { label: "Stamp kit", sku: "ahhhhh" }]
   },
   {
@@ -45,6 +45,7 @@ const SHOP = [
     img: "img/giant/cover-2.jpg", alt: "Hand-printed giant face postcards",
     gallery: ["img/giant/g1.jpg", "img/giant/g2.jpg", "img/giant/g3.jpg", "img/giant/g4.jpg", "img/giant/g5.jpg"],
     versionImgs: { "Signed Print": "img/giant/signed-back.jpg", "Postcard": "img/giant/postcard-back.jpg" },
+    whole: ["img/giant/g1-sym.jpg", "img/giant/g2-sym.jpg", "img/giant/g3-sym.jpg", "img/giant/g4-sym.jpg", "img/giant/g5-sym.jpg"], // mirrored pairs: show both sides
     desc: "Five giant faces, each carved and printed by hand.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 4.5 in (10 × 11.5 cm)", "Mail it in an envelope to keep the print safe"],
     designImgs: { "No.1": "img/giant/g1.jpg", "No.2": "img/giant/g2.jpg", "No.3": "img/giant/g3.jpg", "No.4": "img/giant/g4.jpg", "No.5": "img/giant/g5.jpg" },
@@ -154,8 +155,7 @@ function cartTotals(cart = readCart()) {
   sub += bb.total; full += bb.total;
   sub = Math.round(sub * 100) / 100;
   const sh = CAT.shipping || { freeOver: 0, flat: 0 };
-  const stampInCart = cart.some(l => CAT.items[l.sku]?.freeShip);
-  const ship = sub > 0 && sub < sh.freeOver && !stampInCart ? sh.flat : 0;
+  const ship = sub > 0 && sub < sh.freeOver ? sh.flat : 0;
   return { sub, ship, toFree: Math.round((sh.freeOver - sub) * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
 }
 
@@ -336,7 +336,7 @@ function renderProduct() {
         <div class="foot" data-foot></div>
         ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
         <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
-        <p class="note-line">Free US shipping on stamps and orders over $20 · ships within 1 week</p>
+        <p class="note-line">Free US shipping on orders over $40 · ships within 1 week</p>
       </div>
     </div>
     ${hasVersion ? `<div class="pd-versions">
@@ -499,7 +499,7 @@ const RECARVES = [
 ];
 function renderRecarves() {
   const host = $("#recarves"); if (!host) return;
-  host.innerHTML = RECARVES.map(r => `<div class="tile">${carousel(r.imgs, r.title + " block")}
+  host.innerHTML = RECARVES.map(r => `<div class="tile">${carousel(r.imgs, r.title + " block", r.imgs.filter(i => i.includes("-sym")))}
     <div class="row"><b>${esc(r.title)}</b><span class="p">${money(CAT.items[r.sku].price)}</span></div>
     ${r.size ? `<div class="muted" style="font-size:.85em">${esc(r.size)}</div>` : ""}
     <button class="btn small" type="button" data-recarve="${r.sku}">Add to cart</button></div>`).join("");
