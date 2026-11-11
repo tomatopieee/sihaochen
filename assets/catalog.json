@@ -579,22 +579,6 @@
   ],
   "originals": [
     {
-      "id": "painting-1",
-      "title": "Oil painting I",
-      "medium": "Oil on canvas",
-      "size": "",
-      "price": null,
-      "img": ""
-    },
-    {
-      "id": "painting-2",
-      "title": "Oil painting II",
-      "medium": "Oil on canvas",
-      "size": "",
-      "price": null,
-      "img": ""
-    },
-    {
       "id": "ceramic-1",
       "title": "Half Alive",
       "medium": "Ceramic sculpture",
