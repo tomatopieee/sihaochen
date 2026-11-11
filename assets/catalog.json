@@ -624,7 +624,6 @@
       "img/pf/f9e6d75166.jpg",
       "img/pf/5a3f2aa90c.jpg",
       "img/pf/86a4d42dd9.jpg",
-      "img/pf/f41d34140d.jpg",
       "img/pf/b223733d74.jpg",
       "img/pf/5afb1982f3.jpg",
       "img/pf/ed907f5a4f.jpg"
@@ -835,54 +834,36 @@
         ]
       }
     ],
-    "vopen": {
-      "title": "VOPEN — Brand & Marketing",
-      "role": "Brand & Marketing Lead (Volunteer), VOPEN · May 2026–present",
-      "text": "Led US market brand development for an industrial equipment manufacturer: designed and built the company website, produced a social media content strategy (TikTok), created marketing materials and product visualizations, and translated technical documentation (CN/EN).",
-      "imgs": [
-        "img/pf/73a22b21f4.jpg",
-        "img/pf/efd2da8205.jpg",
-        "img/pf/fcada03e42.jpg",
-        "img/pf/02e8865f20.jpg",
-        "img/pf/6c8c57e318.jpg",
-        "img/pf/59b0ce994a.jpg",
-        "img/pf/50cec8cec0.jpg",
-        "img/pf/20b5643c31.jpg",
-        "img/pf/dd004aabf7.jpg",
-        "img/pf/ee5c8da50b.jpg",
-        "img/pf/a01a4ee927.jpg"
-      ]
-    },
     "linocut": [
       {
-        "cat": "Linocut",
-        "img": "img/giants-prints.jpg",
-        "title": "Giants"
+        "title": "Giant Postcards",
+        "img": "img/giant/cover-2.jpg",
+        "link": "product/index.html#giant"
       },
       {
-        "cat": "Linocut",
-        "img": "img/snake-postcards.jpg",
-        "title": "Snake"
+        "title": "Snake Postcard",
+        "img": "img/snake/cover.jpg",
+        "link": "product/index.html#snake"
       },
       {
-        "cat": "Linocut",
-        "img": "img/blocks.jpg",
-        "title": "Carved blocks"
+        "title": "Gnome Bookmark",
+        "img": "img/gnome/1.jpg",
+        "link": "product/index.html#gnome"
       },
       {
-        "cat": "Linocut",
-        "img": "img/gnome-bookmarks.jpg",
-        "title": "Gnome"
+        "title": "Middle Finger Mini Stamp",
+        "img": "img/mf/1.jpg",
+        "link": "product/index.html#mf"
       },
       {
-        "cat": "Linocut",
-        "img": "img/bean-stamp.jpg",
-        "title": "AHHHHH"
+        "title": "AHHHHH Stamp",
+        "img": "img/ah/1.jpg",
+        "link": "product/index.html#ah"
       },
       {
-        "cat": "Linocut",
-        "img": "img/finger-stamp.jpg",
-        "title": "Middle finger"
+        "title": "Custom stamps",
+        "img": "img/custom-cover.jpg",
+        "link": "custom/index.html"
       }
     ]
   },

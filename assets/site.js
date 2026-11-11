@@ -531,9 +531,9 @@ function renderRecarves() {
 }
 
 /* ===== PORTFOLIO (home) =====
-   #arts (default) · #projects · #ceramics · #linocut · #etching · #vopen
+   #arts (default) · #projects · #ceramics · #linocut · #etching
    #p-<project id> = one project page · #c-<ceramic id> = one ceramic piece */
-const PF_TABS = [["arts", "Arts"], ["projects", "Projects"], ["ceramics", "Ceramics"], ["linocut", "Linocut"], ["etching", "Etching"], ["vopen", "VOPEN"]];
+const PF_TABS = [["arts", "Arts"], ["projects", "Projects"], ["ceramics", "Ceramics"], ["linocut", "Linocut"], ["etching", "Etching"]];
 function pfImg(src, alt, cls = "") { return `<img src="${esc(ROOT + src)}" alt="${esc(alt)}" loading="lazy"${cls ? ` class="${cls}"` : ""}>`; }
 function renderPortfolio() {
   const P = CAT.portfolio, tabs = $("#pf-tabs"), grid = $("#pf"), hello = $("#pf-hello");
@@ -561,14 +561,9 @@ function renderPortfolio() {
   if (tab === "arts") grid.innerHTML = P.arts.map(src => `<figure>${pfImg(src, "Artwork by Sihao Chen")}</figure>`).join("");
   if (tab === "projects") grid.innerHTML = P.projects.map(x => card(`#p-${x.id}`, x.imgs[0], x.title, x.kind)).join("");
   if (tab === "ceramics") grid.innerHTML = P.ceramics.map(x => card(`#c-${x.id}`, x.imgs[0], x.title, "")).join("");
-  if (tab === "linocut") grid.innerHTML = P.linocut.map(w => `<figure>${pfImg(w.img, w.title)}<figcaption>${esc(w.title)}</figcaption></figure>`).join("");
-  if (tab === "etching") grid.innerHTML = CAT.etchings.flatMap(s => s.prints.filter(q => q.img && !q.sold).map(q => card(`${ROOT}etchings/index.html#${q.id}`, q.img, `${s.title} ${q.title}`, ""))).join("");
-  if (tab === "vopen") {
-    const v = P.vopen;
-    grid.className = "pf-detail";
-    grid.innerHTML = `<h1>${esc(v.title)}</h1><p class="label">${esc(v.role)}</p><p class="pf-text">${esc(v.text)}</p>
-      <div class="pf">${v.imgs.map(src => `<figure>${pfImg(src, "VOPEN brand work")}</figure>`).join("")}</div>`;
-  }
+  if (tab === "linocut") grid.innerHTML = P.linocut.map(w => card(ROOT + w.link, w.img, w.title, "")).join("");
+  if (tab === "etching") grid.innerHTML = CAT.etchings.flatMap(s => s.prints.filter(q => q.img).map(q => card(`${ROOT}etchings/index.html#${q.sold ? s.id : q.id}`, q.img, `${s.title} ${q.title}`, q.sold ? "Sold" : ""))).join("");
+
 }
 
 /* ===== ORIGINALS PAGE ===== */
