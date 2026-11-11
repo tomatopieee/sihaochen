@@ -406,7 +406,7 @@ function setupCard(p, foot, photoEl) {
       return;
     }
     html += `<div class="buyrow">${priceHTML(v.sku)}
-      <span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span></div>
+      ${it.kind === "unique" ? "" : `<span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span>`}</div>
       <button class="btn" type="button" data-add>Add to cart</button><p class="hint" data-hint></p>`;
     foot.innerHTML = html;
     foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; state.jump = true; draw(); }));
