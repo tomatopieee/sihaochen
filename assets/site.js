@@ -315,7 +315,7 @@ function productTile(p) {
 function customTile() {
   return `<a class="pcard" href="${ROOT}custom/index.html">
     <div class="pimg"><img src="${ROOT}img/custom-cover.jpg" alt="Custom hand-carved stamps" loading="lazy"><span class="tag">Custom</span></div>
-    <b>Custom stamp / Re-carve a design</b><span class="price"><span class="from">from</span><span class="now">$38</span></span></a>`;
+    <b>Custom stamp / Re-carve a design</b><span class="price"><span class="from">from</span><span class="now">$40</span></span></a>`;
 }
 function renderEtchBlocks() {
   const host = $("#etch-blocks"); if (!host) return;
