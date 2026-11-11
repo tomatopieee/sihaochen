@@ -164,7 +164,7 @@
   "etchings": [
     {
       "id": "gun",
-      "title": "Gun",
+      "title": "Magic Gun",
       "blurb": "Each impression is inked, wiped and printed by hand, so every print in the edition is a little different.",
       "edition": 6,
       "prints": [
@@ -262,7 +262,7 @@
     },
     {
       "id": "lab",
-      "title": "Lab",
+      "title": "The Lab",
       "blurb": "Each impression is inked, wiped and printed by hand, so every print in the edition is a little different.",
       "edition": 11,
       "prints": [
@@ -416,7 +416,7 @@
     },
     {
       "id": "dream",
-      "title": "Dream Creature",
+      "title": "The Dream Creature",
       "blurb": "Each impression is inked, wiped and printed by hand, so every print in the edition is a little different.",
       "edition": 10,
       "prints": [

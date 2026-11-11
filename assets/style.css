@@ -364,3 +364,10 @@ a.print:hover b { color: var(--red) }
 .pf-list .sub .muted { font: 500 13px var(--mono); color: var(--ink-soft) }
 .pf-stack img { width: 100%; height: auto; border-radius: 4px; display: block }
 .pf-stack.two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
+/* portfolio: Projects tab = three big cards */
+.pf-projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px }
+.pf-projects figure { margin: 0; display: grid; gap: 10px }
+.pf-projects img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 6px; display: block }
+.pf-projects figcaption { font: 500 14px var(--mono); color: var(--ink-soft) }
+.pf-projects figcaption b { font: 400 clamp(20px, 2.4vw, 28px)/1.1 var(--display); display: block; margin-bottom: 4px }
+@media (max-width: 760px) { .pf-projects { grid-template-columns: 1fr; gap: 28px } .pf-projects img { aspect-ratio: 4/3 } }
