@@ -842,8 +842,28 @@
     ],
     "linocut": [
       {
-        "title": "Giant Postcards",
-        "img": "img/giant/cover-2.jpg",
+        "title": "Giant No.1",
+        "img": "img/giant/g1.jpg",
+        "link": "product/index.html#giant"
+      },
+      {
+        "title": "Giant No.2",
+        "img": "img/giant/g2.jpg",
+        "link": "product/index.html#giant"
+      },
+      {
+        "title": "Giant No.3",
+        "img": "img/giant/g3.jpg",
+        "link": "product/index.html#giant"
+      },
+      {
+        "title": "Giant No.4",
+        "img": "img/giant/g4.jpg",
+        "link": "product/index.html#giant"
+      },
+      {
+        "title": "Giant No.5",
+        "img": "img/giant/g5.jpg",
         "link": "product/index.html#giant"
       },
       {
@@ -852,8 +872,18 @@
         "link": "product/index.html#snake"
       },
       {
-        "title": "Gnome Bookmark",
-        "img": "img/gnome/1.jpg",
+        "title": "Gnome Bookmark, red",
+        "img": "img/gnome/red-2.jpg",
+        "link": "product/index.html#gnome"
+      },
+      {
+        "title": "Gnome Bookmark, green",
+        "img": "img/gnome/green.jpg",
+        "link": "product/index.html#gnome"
+      },
+      {
+        "title": "Gnome Bookmark, red & green",
+        "img": "img/gnome/red-green.jpg",
         "link": "product/index.html#gnome"
       },
       {
@@ -865,11 +895,6 @@
         "title": "AHHHHH Stamp",
         "img": "img/ah/1.jpg",
         "link": "product/index.html#ah"
-      },
-      {
-        "title": "Custom stamps",
-        "img": "img/custom-cover.jpg",
-        "link": "custom/index.html"
       }
     ],
     "etchingExtra": {
