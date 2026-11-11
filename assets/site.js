@@ -238,6 +238,7 @@ function renderDrawer() {
     <div class="sum"><span>Shipping (US)</span><span>${t.ship ? money(t.ship) : "Free"}</span></div>
     ${t.ship ? `<p class="hint" style="margin:0">Add ${money(t.toFree)} more for free US shipping</p>` : ""}
     <div class="sum total"><span>Total</span><span>${money(t.sub + t.ship)}</span></div>
+    <p class="hint" style="margin:0;color:var(--ink-soft)">New Jersey orders: sales tax is added at checkout.</p>
     <button class="btn" id="checkout" type="button"${ready ? "" : " disabled"}>${ready ? "Checkout" : "Checkout opens soon"}</button>
     <p class="hint" id="checkout-msg"></p>` : "";
   body.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.q; setQty(i, readCart()[i].qty + +b.dataset.d); }));
