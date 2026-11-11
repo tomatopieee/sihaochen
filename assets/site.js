@@ -74,7 +74,7 @@ const SHOP = [
     img: "img/pf/9a23ed7fa7.jpg", alt: "Ceramic head sculpture, half dead coral and half human face",
     gallery: ["img/pf/71d42f0e87.jpg", "img/pf/0556c00195.jpg", "img/pf/adae84a4ae.jpg", "img/pf/3167beeae7.jpg"],
     desc: "This ceramic project depicts a hybrid head\u2014half dead coral, half human face. The coral side is cracked and hollow, while the human side is realistic and expressive, full of life. This contrast serves as a visual metaphor for the environmental crisis we face. As coral reefs die, it's not just nature that suffers\u2014it\u2019s a reflection of our own vulnerability. Through this work, I hope to raise awareness about the urgency of protecting our oceans and the ecosystems that sustain us.",
-    specs: ["Original ceramic sculpture, one of one", "Hand-built and glazed by me", "Ships carefully packed, or pick up in New Jersey", "Not part of the sale"],
+    specs: ["Original ceramic sculpture, one of one", "Hand-built and glazed by me", "About 9.5 × 9.5 in, 12.5 in tall (24 × 24 × 32 cm)", "The opening on top holds flowers, so it also works as a vase", "Free insured shipping in the US, carefully packed, or pick up in New Jersey", "Not part of the sale"],
     variants: [{ label: "One of one", sku: "half-alive" }]
   }
 ];
@@ -575,7 +575,14 @@ function renderPortfolio() {
   if (tab === "projects") grid.innerHTML = P.projects.map(x => card(`#p-${x.id}`, x.imgs[0], x.title, x.kind)).join("");
   if (tab === "ceramics") grid.innerHTML = P.ceramics.map(x => card(`#c-${x.id}`, x.imgs[0], x.title, "")).join("");
   if (tab === "linocut") grid.innerHTML = P.linocut.map(w => card(ROOT + w.link, w.img, w.title, "")).join("");
-  if (tab === "etching") grid.innerHTML = CAT.etchings.flatMap(s => s.prints.filter(q => q.img).map(q => card(`${ROOT}etchings/index.html#${q.sold ? s.id : q.id}`, q.img, `${s.title} ${q.title}`, q.sold ? "Sold" : ""))).join("");
+  if (tab === "etching") {
+    // One print per row: Gun, Lab, Dream Creature (catalog order), then display-only pieces.
+    const X = P.etchingExtra;
+    grid.className = "pf-list";
+    grid.innerHTML = CAT.etchings.map(s => `<h2 class="sub">${esc(s.title)} <span class="muted">· edition of ${s.edition}</span></h2>` +
+      s.prints.filter(q => q.img).map(q => card(`${ROOT}etchings/index.html#${q.sold ? s.id : q.id}`, q.img, `${s.title} ${q.title}`, q.sold ? "Sold" : "")).join("")).join("") +
+      (X ? `<h2 class="sub">${esc(X.title)} <span class="muted">· ${esc(X.note)}</span></h2>` + X.imgs.map(src => `<figure>${pfImg(src, X.title)}</figure>`).join("") : "");
+  }
 
 }
 

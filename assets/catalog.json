@@ -156,160 +156,12 @@
     },
     "half-alive": {
       "name": "Half Alive, ceramic sculpture",
-      "price": null,
+      "price": 650,
       "sale": false,
       "kind": "unique"
     }
   },
   "etchings": [
-    {
-      "id": "dream",
-      "title": "Dream Creature",
-      "blurb": "Each impression is inked, wiped and printed by hand, so every print in the edition is a little different.",
-      "edition": 10,
-      "prints": [
-        {
-          "id": "dream-1",
-          "sku": "etch-dream-1",
-          "title": "1/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-1/1-cover.jpg",
-            "img/etching/dream-1/2.jpg",
-            "img/etching/dream-1/3.jpg",
-            "img/etching/dream-1/4.jpg",
-            "img/etching/dream-1/5.jpg"
-          ],
-          "img": "img/etching/dream-1/1-cover.jpg"
-        },
-        {
-          "id": "dream-2",
-          "sku": "etch-dream-2",
-          "title": "2/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-2/1-cover.jpg",
-            "img/etching/dream-2/2.jpg",
-            "img/etching/dream-2/3.jpg",
-            "img/etching/dream-2/4.jpg",
-            "img/etching/dream-2/5.jpg"
-          ],
-          "img": "img/etching/dream-2/1-cover.jpg"
-        },
-        {
-          "id": "dream-3",
-          "sku": "etch-dream-3",
-          "title": "3/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-3/1-cover.jpg",
-            "img/etching/dream-3/2.jpg",
-            "img/etching/dream-3/3.jpg",
-            "img/etching/dream-3/4.jpg"
-          ],
-          "img": "img/etching/dream-3/1-cover.jpg"
-        },
-        {
-          "id": "dream-4",
-          "sku": "etch-dream-4",
-          "title": "4/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-4/1-cover.jpg",
-            "img/etching/dream-4/2.jpg",
-            "img/etching/dream-4/3.jpg",
-            "img/etching/dream-4/4.jpg",
-            "img/etching/dream-4/5.jpg"
-          ],
-          "img": "img/etching/dream-4/1-cover.jpg"
-        },
-        {
-          "id": "dream-5",
-          "sku": "etch-dream-5",
-          "title": "5/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-5/1-cover.jpg",
-            "img/etching/dream-5/2.jpg",
-            "img/etching/dream-5/3.jpg",
-            "img/etching/dream-5/4.jpg",
-            "img/etching/dream-5/5.jpg"
-          ],
-          "img": "img/etching/dream-5/1-cover.jpg"
-        },
-        {
-          "id": "dream-6",
-          "sku": "etch-dream-6",
-          "title": "6/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-6/1-cover.jpg",
-            "img/etching/dream-6/2.jpg",
-            "img/etching/dream-6/3.jpg",
-            "img/etching/dream-6/4.jpg",
-            "img/etching/dream-6/5.jpg"
-          ],
-          "img": "img/etching/dream-6/1-cover.jpg"
-        },
-        {
-          "id": "dream-7",
-          "sku": "etch-dream-7",
-          "title": "7/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-7/1-cover.jpg",
-            "img/etching/dream-7/2.jpg",
-            "img/etching/dream-7/3.jpg",
-            "img/etching/dream-7/4.jpg",
-            "img/etching/dream-7/5.jpg"
-          ],
-          "img": "img/etching/dream-7/1-cover.jpg"
-        },
-        {
-          "id": "dream-8",
-          "sku": "etch-dream-8",
-          "title": "8/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-8/1-cover.jpg",
-            "img/etching/dream-8/2.jpg",
-            "img/etching/dream-8/3.jpg",
-            "img/etching/dream-8/4.jpg",
-            "img/etching/dream-8/5.jpg"
-          ],
-          "img": "img/etching/dream-8/1-cover.jpg"
-        },
-        {
-          "id": "dream-9",
-          "sku": "etch-dream-9",
-          "title": "9/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-9/1-cover.jpg",
-            "img/etching/dream-9/2.jpg",
-            "img/etching/dream-9/3.jpg",
-            "img/etching/dream-9/4.jpg",
-            "img/etching/dream-9/5.jpg"
-          ],
-          "img": "img/etching/dream-9/1-cover.jpg"
-        },
-        {
-          "id": "dream-10",
-          "sku": "etch-dream-10",
-          "title": "10/10",
-          "price": null,
-          "imgs": [
-            "img/etching/dream-10/1-cover.jpg",
-            "img/etching/dream-10/2.jpg",
-            "img/etching/dream-10/3.jpg",
-            "img/etching/dream-10/4.jpg",
-            "img/etching/dream-10/5.jpg"
-          ],
-          "img": "img/etching/dream-10/1-cover.jpg"
-        }
-      ],
-      "cover": "img/etching/dream-7/1-cover.jpg"
-    },
     {
       "id": "gun",
       "title": "Gun",
@@ -561,6 +413,154 @@
         }
       ],
       "cover": "img/etching/lab-7-sold.jpg"
+    },
+    {
+      "id": "dream",
+      "title": "Dream Creature",
+      "blurb": "Each impression is inked, wiped and printed by hand, so every print in the edition is a little different.",
+      "edition": 10,
+      "prints": [
+        {
+          "id": "dream-1",
+          "sku": "etch-dream-1",
+          "title": "1/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-1/1-cover.jpg",
+            "img/etching/dream-1/2.jpg",
+            "img/etching/dream-1/3.jpg",
+            "img/etching/dream-1/4.jpg",
+            "img/etching/dream-1/5.jpg"
+          ],
+          "img": "img/etching/dream-1/1-cover.jpg"
+        },
+        {
+          "id": "dream-2",
+          "sku": "etch-dream-2",
+          "title": "2/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-2/1-cover.jpg",
+            "img/etching/dream-2/2.jpg",
+            "img/etching/dream-2/3.jpg",
+            "img/etching/dream-2/4.jpg",
+            "img/etching/dream-2/5.jpg"
+          ],
+          "img": "img/etching/dream-2/1-cover.jpg"
+        },
+        {
+          "id": "dream-3",
+          "sku": "etch-dream-3",
+          "title": "3/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-3/1-cover.jpg",
+            "img/etching/dream-3/2.jpg",
+            "img/etching/dream-3/3.jpg",
+            "img/etching/dream-3/4.jpg"
+          ],
+          "img": "img/etching/dream-3/1-cover.jpg"
+        },
+        {
+          "id": "dream-4",
+          "sku": "etch-dream-4",
+          "title": "4/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-4/1-cover.jpg",
+            "img/etching/dream-4/2.jpg",
+            "img/etching/dream-4/3.jpg",
+            "img/etching/dream-4/4.jpg",
+            "img/etching/dream-4/5.jpg"
+          ],
+          "img": "img/etching/dream-4/1-cover.jpg"
+        },
+        {
+          "id": "dream-5",
+          "sku": "etch-dream-5",
+          "title": "5/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-5/1-cover.jpg",
+            "img/etching/dream-5/2.jpg",
+            "img/etching/dream-5/3.jpg",
+            "img/etching/dream-5/4.jpg",
+            "img/etching/dream-5/5.jpg"
+          ],
+          "img": "img/etching/dream-5/1-cover.jpg"
+        },
+        {
+          "id": "dream-6",
+          "sku": "etch-dream-6",
+          "title": "6/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-6/1-cover.jpg",
+            "img/etching/dream-6/2.jpg",
+            "img/etching/dream-6/3.jpg",
+            "img/etching/dream-6/4.jpg",
+            "img/etching/dream-6/5.jpg"
+          ],
+          "img": "img/etching/dream-6/1-cover.jpg"
+        },
+        {
+          "id": "dream-7",
+          "sku": "etch-dream-7",
+          "title": "7/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-7/1-cover.jpg",
+            "img/etching/dream-7/2.jpg",
+            "img/etching/dream-7/3.jpg",
+            "img/etching/dream-7/4.jpg",
+            "img/etching/dream-7/5.jpg"
+          ],
+          "img": "img/etching/dream-7/1-cover.jpg"
+        },
+        {
+          "id": "dream-8",
+          "sku": "etch-dream-8",
+          "title": "8/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-8/1-cover.jpg",
+            "img/etching/dream-8/2.jpg",
+            "img/etching/dream-8/3.jpg",
+            "img/etching/dream-8/4.jpg",
+            "img/etching/dream-8/5.jpg"
+          ],
+          "img": "img/etching/dream-8/1-cover.jpg"
+        },
+        {
+          "id": "dream-9",
+          "sku": "etch-dream-9",
+          "title": "9/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-9/1-cover.jpg",
+            "img/etching/dream-9/2.jpg",
+            "img/etching/dream-9/3.jpg",
+            "img/etching/dream-9/4.jpg",
+            "img/etching/dream-9/5.jpg"
+          ],
+          "img": "img/etching/dream-9/1-cover.jpg"
+        },
+        {
+          "id": "dream-10",
+          "sku": "etch-dream-10",
+          "title": "10/10",
+          "price": null,
+          "imgs": [
+            "img/etching/dream-10/1-cover.jpg",
+            "img/etching/dream-10/2.jpg",
+            "img/etching/dream-10/3.jpg",
+            "img/etching/dream-10/4.jpg",
+            "img/etching/dream-10/5.jpg"
+          ],
+          "img": "img/etching/dream-10/1-cover.jpg"
+        }
+      ],
+      "cover": "img/etching/dream-7/1-cover.jpg"
     }
   ],
   "originals": [
@@ -585,7 +585,7 @@
       "title": "Half Alive",
       "medium": "Ceramic sculpture",
       "size": "",
-      "price": null,
+      "price": 650,
       "img": "img/pf/9a23ed7fa7.jpg",
       "link": "product/index.html#half-alive"
     }
@@ -871,7 +871,16 @@
         "img": "img/custom-cover.jpg",
         "link": "custom/index.html"
       }
-    ]
+    ],
+    "etchingExtra": {
+      "title": "Congrats!",
+      "note": "Not for sale",
+      "imgs": [
+        "img/pf/cdd9acdd81.jpg",
+        "img/pf/ca30ee2aff.jpg",
+        "img/pf/ed907f5a4f.jpg"
+      ]
+    }
   },
   "etchingBack": "img/etching/back.jpg"
 }
