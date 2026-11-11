@@ -387,3 +387,9 @@ a.print:hover b { color: var(--red) }
 .stock-left b { font: 400 20px var(--display); color: var(--ink); margin-right: 4px }
 .stock-left.low b { color: var(--red) }
 .row-btns { display: flex; flex-wrap: wrap; gap: 10px }
+.notify { display: flex; flex-wrap: wrap; gap: 8px }
+.notify input { flex: 1 1 200px; min-width: 0; font: 400 16px var(--body); padding: 12px 14px; border-radius: 999px; border: 2px solid var(--line); background: var(--paper); color: var(--ink) }
+.addons { display: grid; gap: 6px }
+.addons .label { font-size: 11px }
+.addons .chips { display: flex; flex-wrap: wrap; gap: 6px }
+.addons .chip { font-size: 13px; padding: 6px 10px }

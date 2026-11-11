@@ -908,14 +908,18 @@
     }
   },
   "etchingBack": "img/etching/back.jpg",
-  "stock": {
-    "mf": {
-      "qty": 30,
-      "label": "Middle Finger stamps"
+  "production": {
+    "rate": 7,
+    "daysPerWeek": 4,
+    "bufferDays": 2,
+    "maxDays": 30,
+    "units": {
+      "mf": 1,
+      "ah": 1.5
     },
-    "ah": {
-      "qty": 25,
-      "label": "AHHHHH stamps"
+    "labels": {
+      "mf": "Middle Finger",
+      "ah": "AHHHHH"
     }
   }
 }

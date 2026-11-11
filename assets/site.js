@@ -208,6 +208,20 @@ function lineImg(sku) {
   if (sku === "bb-sticker" || sku === "bb-mini") return "img/blind-box.jpg";
   return uniqueItem(sku)?.img || "";
 }
+// Small extras that help reach free shipping: one-tap blind box, links for items with options.
+function addOns(cart) {
+  const have = new Set(cart.map(l => l.sku));
+  const picks = [
+    { sku: "bb-mini", label: "Mystery Mini Print", add: true },
+    { sku: "giant-pc", label: "Giant Postcard", href: "product/index.html#giant" },
+    { sku: "gnome-single", label: "Gnome Bookmark", href: "product/index.html#gnome" },
+    { sku: "snake-pc", label: "Snake Postcard", href: "product/index.html#snake" }
+  ].filter(x => CAT.items[x.sku] && !have.has(x.sku)).slice(0, 3);
+  if (!picks.length) return "";
+  return `<div class="addons"><span class="label">Popular add-ons</span><div class="chips">${picks.map(x => x.add
+    ? `<button type="button" class="chip" data-add-blind="${x.sku}">${esc(x.label)} <span class="p">${money(unitPrice(x.sku))}</span> +</button>`
+    : `<a class="chip" style="text-decoration:none" href="${ROOT + x.href}">${esc(x.label)} <span class="p">${money(unitPrice(x.sku))}</span> →</a>`).join("")}</div></div>`;
+}
 function renderDrawer() {
   const body = $("#cart-body"), foot = $("#cart-foot");
   if (!body || !CAT) return;
@@ -246,13 +260,13 @@ function renderDrawer() {
   foot.innerHTML = cart.length ? `
     ${t.save > 0 ? `<div class="sum save"><span>You save</span><span>−${money(t.save)}</span></div>` : ""}
     <div class="sum"><span>Shipping (US)</span><span>${t.ship ? money(t.ship) : "Free"}</span></div>
-    ${t.ship ? `<p class="hint" style="margin:0">Add ${money(t.toFree)} more for free US shipping</p>` : ""}
+    ${t.ship ? `<p class="hint" style="margin:0">Add ${money(t.toFree)} more for free US shipping</p>${addOns(cart)}` : ""}
     <div class="sum total"><span>Total</span><span>${money(t.sub + t.ship)}</span></div>
     <button class="btn" id="checkout" type="button"${ready ? "" : " disabled"}>${ready ? "Checkout" : "Checkout opens soon"}</button>
     <p class="hint" id="checkout-msg"></p>` : "";
   body.querySelectorAll("[data-q]").forEach(b => b.addEventListener("click", () => { const i = +b.dataset.q; setQty(i, readCart()[i].qty + +b.dataset.d); }));
   body.querySelectorAll("[data-rm]").forEach(b => b.addEventListener("click", () => setQty(+b.dataset.rm, 0)));
-  body.querySelectorAll("[data-add-blind]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.addBlind)));
+  [body, foot].forEach(el => el.querySelectorAll("[data-add-blind]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.addBlind))));
   $("#checkout")?.addEventListener("click", checkout);
 }
 async function checkout() {
@@ -303,7 +317,7 @@ function renderShop() {
 }
 // Small tile for the 2-column grid: photo, name, price. Taps open the product page.
 function tilePrice(p) {
-  if (p.variants.every(v => stockLeft(v.sku) === 0)) return `<span class="sold-tag">Sold out</span>`;
+  if (p.variants.every(v => shipFor(v.sku) && !shipFor(v.sku).open)) return `<span class="sold-tag">Sold out</span>`;
   if (p.variants.length === 1) return priceHTML(p.variants[0].sku);
   const min = Math.min(...p.variants.map(v => unitPrice(v.sku)));
   return `<span class="price"><span class="from">from</span><span class="now">${money(min)}</span></span>`;
@@ -364,6 +378,20 @@ function renderProduct() {
       <div class="tiles">${SHOP.filter(x => x.id !== p.id && x.section === "linocut").slice(0, 4).map(productTile).join("")}</div></div>`;
   setupCard(p, host.querySelector("[data-foot]"), host.querySelector("[data-photo]"));
 }
+// Waitlist form shown when stamps are paused: saves the email with the checkout server.
+function wireNotify(root, product) {
+  const f = root.querySelector("[data-notify]"), msg = root.querySelector("[data-notify-msg]");
+  f.addEventListener("submit", async e => {
+    e.preventDefault();
+    const btn = f.querySelector("button"); btn.disabled = true; msg.textContent = "";
+    try {
+      const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/waitlist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: f.querySelector("input").value, product }) });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || "");
+      f.outerHTML = `<p class="stock-left"><b>You're on the list!</b> I'll email you when they're back.</p>`;
+    } catch (err) { msg.textContent = err.message || "Something went wrong. Please DM @ci278ci."; btn.disabled = false; }
+  });
+}
 function setupCard(p, foot, photoEl) {
   const state = { v: 0, opts: {}, qty: 1, last: "" };
   const photo = photoEl || foot.closest(".card").querySelector("[data-photo]");
@@ -407,22 +435,22 @@ function setupCard(p, foot, photoEl) {
       foot.innerHTML = html + `<p class="sold-tag" style="font-size:16px">Sold</p><p class="muted" style="margin:0">This piece has found a home. DM @ci278ci if you'd like something similar.</p>`;
       return;
     }
-    const left = stockLeft(v.sku);
-    if (left === 0) {
-      const ask = `mailto:${EMAIL}?subject=${encodeURIComponent("Next batch: " + p.title)}&body=${encodeURIComponent("Hi Sihao, please let me know when the next batch of " + p.title + " is ready!")}`;
-      foot.innerHTML = html + `<p class="stock-left low"><b>Sold out</b> · this batch is gone</p>
-        <p class="muted" style="margin:0">Every stamp is carved by hand, so they come in small batches. Want one from the next batch? Let me know and I'll tell you as soon as it's ready.</p>
-        <div class="row-btns"><a class="btn" href="${ask}">Email me when it's back</a><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci</a></div>`;
+    const ship = shipFor(v.sku), left = null;
+    if (ship && !ship.open) {
+      foot.innerHTML = html + `<p class="stock-left low"><b>Sold out</b> · my carving queue is full</p>
+        <p class="muted" style="margin:0">Every stamp is carved by hand after you order. Leave your email and you'll be the first to know when they're back.</p>
+        <form class="notify" data-notify><input type="email" required placeholder="you@email.com" aria-label="Your email" autocomplete="email"><button class="btn" type="submit">Notify me</button></form>
+        <p class="hint" data-notify-msg></p>`;
+      wireNotify(foot, p.title);
       return;
     }
-    if (left !== null) state.qty = Math.min(state.qty, left);
     if (it.price == null) {
       foot.innerHTML = html + `<p class="price-soon">Price coming soon</p><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci to ask</a>`;
       return;
     }
     html += `<div class="buyrow">${priceHTML(v.sku)}
       ${it.kind === "unique" ? "" : `<span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span>`}</div>
-      <button class="btn" type="button" data-add>Add to cart</button>${left !== null ? `<p class="stock-left${left <= 5 ? " low" : ""}"><b>${left <= 5 ? `Only ${left} left` : `${left} left`}</b> in this batch · hand-carved in small batches</p>` : ""}<p class="hint" data-hint></p>`;
+      <button class="btn" type="button" data-add>Add to cart</button>${ship ? `<p class="stock-left"><b>Ships within ${ship.weeks} week${ship.weeks > 1 ? "s" : ""}</b> · made to order</p><p class="muted" style="margin:0;font-size:14px">Each stamp is carved by hand after you order. I'll email you when it ships.</p>` : ""}<p class="hint" data-hint></p>`;
     foot.innerHTML = html;
     foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; state.jump = true; draw(); }));
     foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; state.last = b.dataset.o; draw(); }));
@@ -449,14 +477,14 @@ function renderBlindStrip() {
 }
 
 /* ===== ETCHINGS PAGE ===== */
-let SOLD = new Set(), TAKEN = {};
-// Stamps left in the current hand-carved batch (null = not limited).
-function stockLeft(sku) { const it = CAT.items[sku], st = it?.stockGroup && CAT.stock?.[it.stockGroup]; return st ? Math.max(0, st.qty - (TAKEN[it.stockGroup] || 0)) : null; }
+let SOLD = new Set(), TAKEN = {}, SHIP = {};
+// Made-to-order stamps: {weeks, open} from the checkout server (null = not made to order).
+function shipFor(sku) { const g = CAT.items[sku]?.stockGroup; return g ? (SHIP[g] || { weeks: 1, open: true }) : null; }
 async function loadSold() {
   if (!CHECKOUT_URL) return;
   // Never hold the page more than 3 seconds if the checkout server is slow.
   const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 3000);
-  try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold", { signal: ctl.signal }); const d = await r.json(); SOLD = new Set(d.sold || []); TAKEN = d.taken || {}; } catch (_) {}
+  try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold", { signal: ctl.signal }); const d = await r.json(); SOLD = new Set(d.sold || []); TAKEN = d.taken || {}; SHIP = d.ship || {}; } catch (_) {}
   clearTimeout(t);
 }
 // #dream = one series (grid of prints), #dream-3 = one print (swipe through its photos).
