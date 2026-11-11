@@ -164,7 +164,8 @@ function cartTotals(cart = readCart()) {
   sub += bb.total; full += bb.total;
   sub = Math.round(sub * 100) / 100;
   const sh = CAT.shipping || { freeOver: 0, flat: 0 };
-  const ship = sub > 0 && sub < sh.freeOver ? sh.flat : 0;
+  const boxed = cart.some(l => CAT.items[l.sku]?.box);
+  const ship = sub > 0 && sub < sh.freeOver ? (boxed && sh.box ? sh.box : sh.flat) : 0;
   return { sub, ship, toFree: Math.round((sh.freeOver - sub) * 100) / 100, save: Math.round((full - sub) * 100) / 100, bb };
 }
 
@@ -302,6 +303,7 @@ function renderShop() {
 }
 // Small tile for the 2-column grid: photo, name, price. Taps open the product page.
 function tilePrice(p) {
+  if (p.variants.every(v => stockLeft(v.sku) === 0)) return `<span class="sold-tag">Sold out</span>`;
   if (p.variants.length === 1) return priceHTML(p.variants[0].sku);
   const min = Math.min(...p.variants.map(v => unitPrice(v.sku)));
   return `<span class="price"><span class="from">from</span><span class="now">${money(min)}</span></span>`;
@@ -405,17 +407,23 @@ function setupCard(p, foot, photoEl) {
       foot.innerHTML = html + `<p class="sold-tag" style="font-size:16px">Sold</p><p class="muted" style="margin:0">This piece has found a home. DM @ci278ci if you'd like something similar.</p>`;
       return;
     }
+    const left = stockLeft(v.sku);
+    if (left === 0) {
+      foot.innerHTML = html + `<p class="sold-tag" style="font-size:16px">Sold out</p><p class="muted" style="margin:0">Every stamp is carved by hand, so they come in small batches. DM @ci278ci to hear when the next batch is ready.</p>`;
+      return;
+    }
+    if (left !== null) state.qty = Math.min(state.qty, left);
     if (it.price == null) {
       foot.innerHTML = html + `<p class="price-soon">Price coming soon</p><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci to ask</a>`;
       return;
     }
     html += `<div class="buyrow">${priceHTML(v.sku)}
       ${it.kind === "unique" ? "" : `<span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span>`}</div>
-      <button class="btn" type="button" data-add>Add to cart</button><p class="hint" data-hint></p>`;
+      <button class="btn" type="button" data-add>Add to cart</button>${left !== null && left <= 5 ? `<p class="hint" style="margin:0">Only ${left} left in this batch</p>` : left !== null ? `<p class="muted" style="margin:0;font-size:14px">Hand-carved in small batches · ${left} left</p>` : ""}<p class="hint" data-hint></p>`;
     foot.innerHTML = html;
     foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; state.jump = true; draw(); }));
     foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; state.last = b.dataset.o; draw(); }));
-    foot.querySelectorAll("[data-qd]").forEach(b => b.addEventListener("click", () => { state.qty = Math.max(1, Math.min(10, state.qty + +b.dataset.qd)); draw(); }));
+    foot.querySelectorAll("[data-qd]").forEach(b => b.addEventListener("click", () => { state.qty = Math.max(1, Math.min(left ?? 10, 10, state.qty + +b.dataset.qd)); draw(); }));
     foot.querySelector("[data-add]").addEventListener("click", () => {
       const missing = optKeys.filter(k => !state.opts[k]);
       if (missing.length) { foot.querySelector("[data-hint]").textContent = "Please choose " + missing.map(k => (OPTION_LABEL[k] || k).toLowerCase()).join(" and ") + " first."; return; }
@@ -438,12 +446,14 @@ function renderBlindStrip() {
 }
 
 /* ===== ETCHINGS PAGE ===== */
-let SOLD = new Set();
+let SOLD = new Set(), TAKEN = {};
+// Stamps left in the current hand-carved batch (null = not limited).
+function stockLeft(sku) { const it = CAT.items[sku], st = it?.stockGroup && CAT.stock?.[it.stockGroup]; return st ? Math.max(0, st.qty - (TAKEN[it.stockGroup] || 0)) : null; }
 async function loadSold() {
   if (!CHECKOUT_URL) return;
   // Never hold the page more than 3 seconds if the checkout server is slow.
   const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 3000);
-  try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold", { signal: ctl.signal }); const d = await r.json(); SOLD = new Set(d.sold || []); } catch (_) {}
+  try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold", { signal: ctl.signal }); const d = await r.json(); SOLD = new Set(d.sold || []); TAKEN = d.taken || {}; } catch (_) {}
   clearTimeout(t);
 }
 // #dream = one series (grid of prints), #dream-3 = one print (swipe through its photos).

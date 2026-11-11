@@ -7,7 +7,8 @@
   },
   "shipping": {
     "freeOver": 40,
-    "flat": 3
+    "flat": 3,
+    "box": 6
   },
   "blindBox": {
     "each": 5,
@@ -20,28 +21,36 @@
       "price": 23.9,
       "salePrice": 19.9,
       "sale": true,
-      "kind": "product"
+      "kind": "product",
+      "box": true,
+      "stockGroup": "mf"
     },
     "mf-kit": {
       "name": "Middle Finger Mini Stamp Kit",
       "price": 28.9,
       "salePrice": 23.9,
       "sale": true,
-      "kind": "product"
+      "kind": "product",
+      "box": true,
+      "stockGroup": "mf"
     },
     "ah-stamp": {
       "name": "AHHHHH Stamp",
       "price": 45,
       "sale": true,
       "kind": "product",
-      "salePrice": 37.9
+      "salePrice": 37.9,
+      "box": true,
+      "stockGroup": "ah"
     },
     "ahhhhh": {
       "name": "AHHHHH Stamp Kit",
       "price": 49.9,
       "sale": true,
       "kind": "product",
-      "salePrice": 41.9
+      "salePrice": 41.9,
+      "box": true,
+      "stockGroup": "ah"
     },
     "snake-pc": {
       "name": "Snake Postcard",
@@ -128,37 +137,43 @@
       "name": "Re-carved stamp: Giant No.1",
       "price": 200,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "box": true
     },
     "recarve-giant-2": {
       "name": "Re-carved stamp: Giant No.2",
       "price": 100,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "box": true
     },
     "recarve-giant-3": {
       "name": "Re-carved stamp: Giant No.3",
       "price": 200,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "box": true
     },
     "recarve-giant-4": {
       "name": "Re-carved stamp: Giant No.4",
       "price": 140,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "box": true
     },
     "recarve-giant-5": {
       "name": "Re-carved stamp: Giant No.5",
       "price": 200,
       "sale": false,
-      "kind": "custom"
+      "kind": "custom",
+      "box": true
     },
     "half-alive": {
       "name": "Half Alive, ceramic sculpture",
       "price": 650,
       "sale": false,
-      "kind": "unique"
+      "kind": "unique",
+      "box": true
     }
   },
   "etchings": [
@@ -908,5 +923,15 @@
       ]
     }
   },
-  "etchingBack": "img/etching/back.jpg"
+  "etchingBack": "img/etching/back.jpg",
+  "stock": {
+    "mf": {
+      "qty": 15,
+      "label": "Middle Finger stamps"
+    },
+    "ah": {
+      "qty": 10,
+      "label": "AHHHHH stamps"
+    }
+  }
 }
