@@ -586,7 +586,8 @@
       "size": "",
       "price": 650,
       "img": "img/pf/9a23ed7fa7.jpg",
-      "link": "product/index.html#half-alive"
+      "link": "product/index.html#half-alive",
+      "sku": "half-alive"
     }
   ],
   "portfolio": {

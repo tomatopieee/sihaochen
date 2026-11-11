@@ -324,7 +324,7 @@ function renderEtchBlocks() {
     <div class="etxt"><span class="label">Etching · edition of ${x.edition}</span><b>${esc(x.title)}</b>${etchFrom(x)}<span class="more">See prints →</span></div></a>`).join("");
 }
 function etchFrom(x) {
-  const prices = x.prints.filter(p => p.price && !p.sold).map(p => p.price);
+  const prices = x.prints.filter(p => p.price && !p.sold && !SOLD.has(p.sku)).map(p => p.price);
   return prices.length ? `<span class="price"><span class="from">from</span><span class="now">${money(Math.min(...prices))}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`;
 }
 
@@ -401,6 +401,10 @@ function setupCard(p, foot, photoEl) {
           `<button type="button" class="chip" data-o="${k}" data-val="${esc(val)}" aria-pressed="${state.opts[k] === val}">${esc(val)}</button>`).join("")}</div></div>`;
       }
     }
+    if (it.kind === "unique" && SOLD.has(v.sku)) {
+      foot.innerHTML = html + `<p class="sold-tag" style="font-size:16px">Sold</p><p class="muted" style="margin:0">This piece has found a home. DM @ci278ci if you'd like something similar.</p>`;
+      return;
+    }
     if (it.price == null) {
       foot.innerHTML = html + `<p class="price-soon">Price coming soon</p><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci to ask</a>`;
       return;
@@ -437,7 +441,10 @@ function renderBlindStrip() {
 let SOLD = new Set();
 async function loadSold() {
   if (!CHECKOUT_URL) return;
-  try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold"); const d = await r.json(); SOLD = new Set(d.sold || []); } catch (_) {}
+  // Never hold the page more than 3 seconds if the checkout server is slow.
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 3000);
+  try { const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/sold", { signal: ctl.signal }); const d = await r.json(); SOLD = new Set(d.sold || []); } catch (_) {}
+  clearTimeout(t);
 }
 // #dream = one series (grid of prints), #dream-3 = one print (swipe through its photos).
 function renderEtchings() {
@@ -580,7 +587,7 @@ function renderPortfolio() {
     const X = P.etchingExtra;
     grid.className = "pf-list";
     grid.innerHTML = CAT.etchings.map(s => `<h2 class="sub">${esc(s.title)} <span class="muted">· edition of ${s.edition}</span></h2>` +
-      s.prints.filter(q => q.img).map(q => card(`${ROOT}etchings/index.html#${q.sold ? s.id : q.id}`, q.img, `${s.title} ${q.title}`, q.sold ? "Sold" : "")).join("")).join("") +
+      s.prints.filter(q => q.img).map(q => card(`${ROOT}etchings/index.html#${q.sold ? s.id : q.id}`, q.img, `${s.title} ${q.title}`, q.sold || SOLD.has(q.sku) ? "Sold" : "")).join("")).join("") +
       (X ? `<h2 class="sub">${esc(X.title)} <span class="muted">· ${esc(X.note)}</span></h2>` + X.imgs.map(src => `<figure>${pfImg(src, X.title)}</figure>`).join("") : "");
   }
 
@@ -593,8 +600,8 @@ function renderOriginals() {
     ${o.link ? `<a class="pimg" href="${esc(ROOT + o.link)}">` : `<div class="pimg">`}${imgTag(o.img, o.title)}<span class="tag">One of one</span>${o.link ? "</a>" : "</div>"}
     ${o.link ? `<a href="${esc(ROOT + o.link)}" style="color:inherit;text-decoration:none"><b>${esc(o.title)}</b></a>` : `<b>${esc(o.title)}</b>`}
     <span class="meta">${esc(o.medium)}${o.size ? " · " + esc(o.size) : ""}</span>
-    ${o.price ? `<span class="price"><span class="now">${money(o.price)}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`}
-    <a class="btn small ghost" href="${DM}" target="_blank" rel="noopener">Inquire</a>
+    ${o.sku && SOLD.has(o.sku) ? `<span class="sold-tag">Sold</span>` : o.price ? `<span class="price"><span class="now">${money(o.price)}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`}
+    ${o.sku && SOLD.has(o.sku) ? "" : `<a class="btn small ghost" href="${DM}" target="_blank" rel="noopener">Inquire</a>`}
   </div>`).join("");
 }
 
@@ -614,8 +621,9 @@ function wireCopy() {
   try { await loadCatalog(); } catch (e) { console.error("catalog", e); return; }
   if (new URLSearchParams(location.search).get("paid") === "1") { writeCart([]); toast("Thank you! Your order is in."); history.replaceState(null, "", location.pathname); }
   renderCartCount();
+  if (["shop", "etchings", "product", "portfolio"].includes(PAGE)) await loadSold();
   if (PAGE === "shop") renderShop();
-  if (PAGE === "etchings") { await loadSold(); renderEtchings(); addEventListener("hashchange", () => { renderEtchings(); scrollTo(0, 0); }); }
+  if (PAGE === "etchings") { renderEtchings(); addEventListener("hashchange", () => { renderEtchings(); scrollTo(0, 0); }); }
   if (PAGE === "originals") renderOriginals();
   if (PAGE === "custom") renderRecarves();
   if (PAGE === "product") { renderProduct(); addEventListener("hashchange", () => { renderProduct(); scrollTo(0, 0); }); }
