@@ -382,3 +382,8 @@ a.print:hover b { color: var(--red) }
   .pf-projects > a:not(:first-child) img { aspect-ratio: 16/9 }
 }
 @media (max-width: 760px) { .pf-projects { grid-template-columns: 1fr; gap: 28px } .pf-projects img { aspect-ratio: 4/3 } }
+/* stamp batches: how many are left */
+.stock-left { margin: 0; font: 500 16px/1.4 var(--body); color: var(--ink-soft) }
+.stock-left b { font: 400 20px var(--display); color: var(--ink); margin-right: 4px }
+.stock-left.low b { color: var(--red) }
+.row-btns { display: flex; flex-wrap: wrap; gap: 10px }

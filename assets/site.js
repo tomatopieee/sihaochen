@@ -409,7 +409,10 @@ function setupCard(p, foot, photoEl) {
     }
     const left = stockLeft(v.sku);
     if (left === 0) {
-      foot.innerHTML = html + `<p class="sold-tag" style="font-size:16px">Sold out</p><p class="muted" style="margin:0">Every stamp is carved by hand, so they come in small batches. DM @ci278ci to hear when the next batch is ready.</p>`;
+      const ask = `mailto:${EMAIL}?subject=${encodeURIComponent("Next batch: " + p.title)}&body=${encodeURIComponent("Hi Sihao, please let me know when the next batch of " + p.title + " is ready!")}`;
+      foot.innerHTML = html + `<p class="stock-left low"><b>Sold out</b> · this batch is gone</p>
+        <p class="muted" style="margin:0">Every stamp is carved by hand, so they come in small batches. Want one from the next batch? Let me know and I'll tell you as soon as it's ready.</p>
+        <div class="row-btns"><a class="btn" href="${ask}">Email me when it's back</a><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci</a></div>`;
       return;
     }
     if (left !== null) state.qty = Math.min(state.qty, left);
@@ -419,7 +422,7 @@ function setupCard(p, foot, photoEl) {
     }
     html += `<div class="buyrow">${priceHTML(v.sku)}
       ${it.kind === "unique" ? "" : `<span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span>`}</div>
-      <button class="btn" type="button" data-add>Add to cart</button>${left !== null && left <= 5 ? `<p class="hint" style="margin:0">Only ${left} left in this batch</p>` : left !== null ? `<p class="muted" style="margin:0;font-size:14px">Hand-carved in small batches · ${left} left</p>` : ""}<p class="hint" data-hint></p>`;
+      <button class="btn" type="button" data-add>Add to cart</button>${left !== null ? `<p class="stock-left${left <= 5 ? " low" : ""}"><b>${left <= 5 ? `Only ${left} left` : `${left} left`}</b> in this batch · hand-carved in small batches</p>` : ""}<p class="hint" data-hint></p>`;
     foot.innerHTML = html;
     foot.querySelectorAll("[data-v]").forEach(b => b.addEventListener("click", () => { state.v = +b.dataset.v; state.last = "variant"; state.jump = true; draw(); }));
     foot.querySelectorAll("[data-o]").forEach(b => b.addEventListener("click", () => { state.opts[b.dataset.o] = b.dataset.val; state.last = b.dataset.o; draw(); }));
