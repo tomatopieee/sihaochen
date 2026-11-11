@@ -926,11 +926,11 @@
   "etchingBack": "img/etching/back.jpg",
   "stock": {
     "mf": {
-      "qty": 15,
+      "qty": 30,
       "label": "Middle Finger stamps"
     },
     "ah": {
-      "qty": 10,
+      "qty": 25,
       "label": "AHHHHH stamps"
     }
   }
