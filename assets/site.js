@@ -67,6 +67,15 @@ const SHOP = [
       { label: "Red & green", sku: "gnome-rg" },
       { label: "Set of three", sku: "gnome-set" }
     ]
+  },
+  {
+    id: "half-alive", section: "others", title: "Half Alive", tag: "Ceramic",
+    back: ["shop/index.html#others", "shop"],
+    img: "img/pf/9a23ed7fa7.jpg", alt: "Ceramic head sculpture, half dead coral and half human face",
+    gallery: ["img/pf/71d42f0e87.jpg", "img/pf/0556c00195.jpg", "img/pf/adae84a4ae.jpg", "img/pf/3167beeae7.jpg"],
+    desc: "This ceramic project depicts a hybrid head\u2014half dead coral, half human face. The coral side is cracked and hollow, while the human side is realistic and expressive, full of life. This contrast serves as a visual metaphor for the environmental crisis we face. As coral reefs die, it's not just nature that suffers\u2014it\u2019s a reflection of our own vulnerability. Through this work, I hope to raise awareness about the urgency of protecting our oceans and the ecosystems that sustain us.",
+    specs: ["Original ceramic sculpture, one of one", "Hand-built and glazed by me", "Ships carefully packed, or pick up in New Jersey", "Not part of the sale"],
+    variants: [{ label: "One of one", sku: "half-alive" }]
   }
 ];
 const BLIND = [
@@ -350,7 +359,7 @@ function renderProduct() {
           <div><h3>Postcard</h3><p>Hand-printed postcard back, ready to write on and mail. Signed in pencil on the front.</p></div></div>
       </div></div>` : ""}
     <div class="pd-more"><h2 class="sub">You may also like</h2>
-      <div class="tiles">${SHOP.filter(x => x.id !== p.id).slice(0, 4).map(productTile).join("")}</div></div>`;
+      <div class="tiles">${SHOP.filter(x => x.id !== p.id && x.section === "linocut").slice(0, 4).map(productTile).join("")}</div></div>`;
   setupCard(p, host.querySelector("[data-foot]"), host.querySelector("[data-photo]"));
 }
 function setupCard(p, foot, photoEl) {
@@ -391,6 +400,10 @@ function setupCard(p, foot, photoEl) {
         html += `<div class="pick"><span>${OPTION_LABEL[k] || k}: <b>${esc(state.opts[k] || "pick one")}</b></span><div class="chips">${vals.map(val =>
           `<button type="button" class="chip" data-o="${k}" data-val="${esc(val)}" aria-pressed="${state.opts[k] === val}">${esc(val)}</button>`).join("")}</div></div>`;
       }
+    }
+    if (it.price == null) {
+      foot.innerHTML = html + `<p class="price-soon">Price coming soon</p><a class="btn ghost" href="${DM}" target="_blank" rel="noopener">DM @ci278ci to ask</a>`;
+      return;
     }
     html += `<div class="buyrow">${priceHTML(v.sku)}
       <span class="qty"><button type="button" data-qd="-1" aria-label="Less">−</button><output>${state.qty}</output><button type="button" data-qd="1" aria-label="More">+</button></span></div>

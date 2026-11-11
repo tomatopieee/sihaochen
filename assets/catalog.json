@@ -153,6 +153,12 @@
       "price": 200,
       "sale": false,
       "kind": "custom"
+    },
+    "half-alive": {
+      "name": "Half Alive, ceramic sculpture",
+      "price": null,
+      "sale": false,
+      "kind": "unique"
     }
   },
   "etchings": [
@@ -581,7 +587,7 @@
       "size": "",
       "price": null,
       "img": "img/pf/9a23ed7fa7.jpg",
-      "link": "index.html#c-half-alive"
+      "link": "product/index.html#half-alive"
     }
   ],
   "portfolio": {
