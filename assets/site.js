@@ -46,7 +46,7 @@ const SHOP = [
     gallery: ["img/giant/g1.jpg", "img/giant/g2.jpg", "img/giant/g3.jpg", "img/giant/g4.jpg", "img/giant/g5.jpg"],
     versionImgs: { "Signed Print": "img/giant/signed-back.jpg", "Postcard": "img/giant/postcard-back.jpg" },
     whole: ["img/giant/g1-sym.jpg", "img/giant/g2-sym.jpg", "img/giant/g3-sym.jpg", "img/giant/g4-sym.jpg", "img/giant/g5-sym.jpg"], // mirrored pairs: show both sides
-    desc: "Five giant faces, each carved and printed by hand.",
+    desc: "Five giant faces, each carved and printed by hand. The full series will be nine faces, and I'm still carving the rest. Follow @ci278ci to see the new ones first.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 4.5 in (10 × 11.5 cm)", "Mail it in an envelope to keep the print safe"],
     designImgs: { "No.1": "img/giant/g1.jpg", "No.2": "img/giant/g2.jpg", "No.3": "img/giant/g3.jpg", "No.4": "img/giant/g4.jpg", "No.5": "img/giant/g5.jpg" },
     designGallery: { "No.1": ["img/giant/g1.jpg", "img/giant/g1-sym.jpg"], "No.2": ["img/giant/g2.jpg", "img/giant/g2-sym.jpg"], "No.3": ["img/giant/g3.jpg", "img/giant/g3-sym.jpg"], "No.4": ["img/giant/g4.jpg", "img/giant/g4-sym.jpg"], "No.5": ["img/giant/g5.jpg", "img/giant/g5-sym.jpg"] },
