@@ -192,6 +192,7 @@ td small { display: block; color: var(--ink-soft); font-size: 14px }
 
 /* about + footer */
 .about p { max-width: 60ch }
+.about-photo { width: 100%; max-width: 640px; aspect-ratio: 4/3; object-fit: cover; border-radius: 6px; display: block; margin-bottom: 24px }
 .contact { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px }
 .email { font: 500 16px var(--mono); user-select: all; padding: 12px 14px; border: 1px solid var(--line); border-radius: 4px; overflow-wrap: anywhere }
 .faq { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px 32px }
@@ -364,6 +365,8 @@ a.print:hover b { color: var(--red) }
 .pf-list .sub .muted { font: 500 13px var(--mono); color: var(--ink-soft) }
 .pf-stack img { width: 100%; height: auto; border-radius: 4px; display: block }
 .pf-stack.two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
+.pf-stack.two-desk { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px }
+@media (max-width: 760px) { .pf-stack.two-desk { grid-template-columns: 1fr } }
 /* portfolio: Projects tab = three big cards */
 .pf-projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px }
 .pf-projects figure { margin: 0; display: grid; gap: 10px }

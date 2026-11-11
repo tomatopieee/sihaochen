@@ -164,7 +164,7 @@
   "etchings": [
     {
       "id": "gun",
-      "title": "Magic Gun",
+      "title": "The Magic Gun",
       "blurb": "Each impression is inked, wiped and printed by hand, so every print in the edition is a little different.",
       "edition": 6,
       "prints": [
@@ -668,7 +668,8 @@
           "img/pf/b34b78e486.jpg",
           "img/pf/226b2cb4ee.jpg",
           "img/pf/7c2bcb495a.jpg"
-        ]
+        ],
+        "cols": 2
       },
       {
         "id": "a-kind-of-reality",

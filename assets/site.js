@@ -566,7 +566,7 @@ function renderPortfolio() {
       <h1>${esc(x.title)}</h1>${x.kind ? `<p class="label">${esc(x.kind)}</p>` : ""}
       ${x.meta ? `<dl class="pf-meta">${x.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>` : ""}
       ${x.text ? x.text.split("\n").filter(Boolean).map(t => `<p class="pf-text">${esc(t)}</p>`).join("") : ""}
-      <div class="pf-stack${cer ? " two" : ""}">${x.imgs.map((src, i) => pfImg(src, `${x.title}, image ${i + 1}`)).join("")}</div>
+      <div class="pf-stack${cer ? " two" : x.cols === 2 ? " two-desk" : ""}">${x.imgs.map((src, i) => pfImg(src, `${x.title}, image ${i + 1}`)).join("")}</div>
       <a class="back" href="#${back[0]}" style="margin-top:24px">← ${back[1]}</a>`;
     return;
   }
