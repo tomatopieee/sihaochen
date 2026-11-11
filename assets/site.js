@@ -530,23 +530,53 @@ function renderRecarves() {
   host.querySelectorAll("[data-recarve]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.recarve)));
 }
 
-/* ===== PORTFOLIO (home) ===== */
+/* ===== PORTFOLIO (home) =====
+   #arts (default) · #projects · #ceramics · #linocut · #etching · #vopen
+   #p-<project id> = one project page · #c-<ceramic id> = one ceramic piece */
+const PF_TABS = [["arts", "Arts"], ["projects", "Projects"], ["ceramics", "Ceramics"], ["linocut", "Linocut"], ["etching", "Etching"], ["vopen", "VOPEN"]];
+function pfImg(src, alt, cls = "") { return `<img src="${esc(ROOT + src)}" alt="${esc(alt)}" loading="lazy"${cls ? ` class="${cls}"` : ""}>`; }
 function renderPortfolio() {
-  const tabs = $("#pf-tabs"), grid = $("#pf"); if (!tabs || !grid || !CAT.portfolio) return;
-  const cats = ["All", ...CAT.portfolio.categories];
-  const current = decodeURIComponent(location.hash.slice(1)) || "All";
-  const active = cats.includes(current) ? current : "All";
-  tabs.innerHTML = cats.map(c => `<a class="chip" href="#${encodeURIComponent(c)}" aria-pressed="${c === active}" style="text-decoration:none">${esc(c)}</a>`).join("");
-  const works = CAT.portfolio.works.filter(w => active === "All" || w.cat === active);
-  grid.innerHTML = works.map(w => `<figure>${w.img ? `<img src="${esc(ROOT + w.img)}" alt="${esc(w.title || w.cat)}" loading="lazy">` : `<div class="ph-box">Photo coming<br>${esc(w.cat)}</div>`}${w.title ? `<figcaption>${esc(w.title)}</figcaption>` : ""}</figure>`).join("");
+  const P = CAT.portfolio, tabs = $("#pf-tabs"), grid = $("#pf"), hello = $("#pf-hello");
+  if (!tabs || !grid || !P) return;
+  let id = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+  if (id === "tarot") id = "p-under-the-gaze"; // older link
+  const proj = id.startsWith("p-") && P.projects.find(x => x.id === id.slice(2));
+  const cer = id.startsWith("c-") && P.ceramics.find(x => x.id === id.slice(2));
+  const tab = proj ? "projects" : cer ? "ceramics" : (PF_TABS.some(t => t[0] === id) ? id : "arts");
+  if (hello) hello.innerHTML = `<div class="pf-cats">${P.avatars.map(a => pfImg(a, "Cat illustration")).join("")}</div><p class="pf-hi">${esc(P.greeting)}</p>`;
+  tabs.innerHTML = PF_TABS.map(([k, label]) => `<a class="chip" href="#${k}" aria-pressed="${k === tab}" style="text-decoration:none">${label}</a>`).join("");
+  grid.className = "pf";
+  if (proj || cer) {
+    const x = proj || cer, back = proj ? ["projects", "All projects"] : ["ceramics", "All ceramics"];
+    grid.className = "pf-detail";
+    grid.innerHTML = `<a class="back" href="#${back[0]}">← ${back[1]}</a>
+      <h1>${esc(x.title)}</h1>${x.kind ? `<p class="label">${esc(x.kind)}</p>` : ""}
+      ${x.meta ? `<dl class="pf-meta">${x.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>` : ""}
+      ${x.text ? x.text.split("\n").filter(Boolean).map(t => `<p class="pf-text">${esc(t)}</p>`).join("") : ""}
+      <div class="pf-stack${cer ? " two" : ""}">${x.imgs.map((src, i) => pfImg(src, `${x.title}, image ${i + 1}`)).join("")}</div>
+      <a class="back" href="#${back[0]}" style="margin-top:24px">← ${back[1]}</a>`;
+    return;
+  }
+  const card = (href, src, title, sub) => `<a class="pf-card" href="${href}"><figure>${pfImg(src, title)}<figcaption><b>${esc(title)}</b>${sub ? ` · ${esc(sub)}` : ""}</figcaption></figure></a>`;
+  if (tab === "arts") grid.innerHTML = P.arts.map(src => `<figure>${pfImg(src, "Artwork by Sihao Chen")}</figure>`).join("");
+  if (tab === "projects") grid.innerHTML = P.projects.map(x => card(`#p-${x.id}`, x.imgs[0], x.title, x.kind)).join("");
+  if (tab === "ceramics") grid.innerHTML = P.ceramics.map(x => card(`#c-${x.id}`, x.imgs[0], x.title, "")).join("");
+  if (tab === "linocut") grid.innerHTML = P.linocut.map(w => `<figure>${pfImg(w.img, w.title)}<figcaption>${esc(w.title)}</figcaption></figure>`).join("");
+  if (tab === "etching") grid.innerHTML = CAT.etchings.flatMap(s => s.prints.filter(q => q.img && !q.sold).map(q => card(`${ROOT}etchings/index.html#${q.id}`, q.img, `${s.title} ${q.title}`, ""))).join("");
+  if (tab === "vopen") {
+    const v = P.vopen;
+    grid.className = "pf-detail";
+    grid.innerHTML = `<h1>${esc(v.title)}</h1><p class="label">${esc(v.role)}</p><p class="pf-text">${esc(v.text)}</p>
+      <div class="pf">${v.imgs.map(src => `<figure>${pfImg(src, "VOPEN brand work")}</figure>`).join("")}</div>`;
+  }
 }
 
 /* ===== ORIGINALS PAGE ===== */
 function renderOriginals() {
   const host = $("#products-others"); if (!host) return;
   host.innerHTML = CAT.originals.map(o => `<div class="pcard">
-    <div class="pimg">${imgTag(o.img, o.title)}<span class="tag">One of one</span></div>
-    <b>${esc(o.title)}</b>
+    ${o.link ? `<a class="pimg" href="${esc(ROOT + o.link)}">` : `<div class="pimg">`}${imgTag(o.img, o.title)}<span class="tag">One of one</span>${o.link ? "</a>" : "</div>"}
+    ${o.link ? `<a href="${esc(ROOT + o.link)}" style="color:inherit;text-decoration:none"><b>${esc(o.title)}</b></a>` : `<b>${esc(o.title)}</b>`}
     <span class="meta">${esc(o.medium)}${o.size ? " · " + esc(o.size) : ""}</span>
     ${o.price ? `<span class="price"><span class="now">${money(o.price)}</span></span>` : `<span class="muted" style="font-size:13px">Price coming soon</span>`}
     <a class="btn small ghost" href="${DM}" target="_blank" rel="noopener">Inquire</a>
@@ -574,7 +604,7 @@ function wireCopy() {
   if (PAGE === "originals") renderOriginals();
   if (PAGE === "custom") renderRecarves();
   if (PAGE === "product") { renderProduct(); addEventListener("hashchange", () => { renderProduct(); scrollTo(0, 0); }); }
-  if (PAGE === "portfolio") { renderPortfolio(); addEventListener("hashchange", renderPortfolio); }
+  if (PAGE === "portfolio") { renderPortfolio(); addEventListener("hashchange", () => { renderPortfolio(); const t = $("#pf-tabs"); if (t && location.hash) t.scrollIntoView({ block: "start" }); }); }
   let wasSale = saleState();
   if (tickBanner()) {
     const t = setInterval(() => {

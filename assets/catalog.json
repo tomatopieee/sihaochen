@@ -576,23 +576,284 @@
     },
     {
       "id": "ceramic-1",
-      "title": "Ceramic piece",
-      "medium": "Glazed stoneware",
+      "title": "Half Alive",
+      "medium": "Ceramic sculpture",
       "size": "",
       "price": null,
-      "img": ""
+      "img": "img/pf/9a23ed7fa7.jpg",
+      "link": "index.html#c-half-alive"
     }
   ],
   "portfolio": {
-    "categories": [
-      "Linocut",
-      "Etching",
-      "Painting",
-      "Ceramics",
-      "Illustration",
-      "VOPEN"
+    "greeting": "welcome to my world!",
+    "avatars": [
+      "img/pf/917e49fe47.jpg",
+      "img/pf/3829fb92e5.jpg",
+      "img/pf/8c7698a31c.jpg"
     ],
-    "works": [
+    "arts": [
+      "img/pf/decceaf810.jpg",
+      "img/pf/2e5ddaddb0.jpg",
+      "img/pf/7f1c788714.jpg",
+      "img/pf/125fc7446b.jpg",
+      "img/pf/9a8bcacca0.jpg",
+      "img/pf/6a6b0d12a3.jpg",
+      "img/pf/1582df4014.jpg",
+      "img/pf/f150b6cb7f.jpg",
+      "img/pf/dde5d5ee34.jpg",
+      "img/pf/92175ebf3d.jpg",
+      "img/pf/6c2745bae8.jpg",
+      "img/pf/a78a49dd03.jpg",
+      "img/pf/226b2cb4ee.jpg",
+      "img/pf/b34b78e486.jpg",
+      "img/pf/6e4e82e518.jpg",
+      "img/pf/50b468fae5.jpg",
+      "img/pf/cdd9acdd81.jpg",
+      "img/pf/ca30ee2aff.jpg",
+      "img/pf/7ff3de6ce1.jpg",
+      "img/pf/75e5ed6314.jpg",
+      "img/pf/85699be348.jpg",
+      "img/pf/fcb7f84523.jpg",
+      "img/pf/d51e166cc5.jpg",
+      "img/pf/5348439206.jpg",
+      "img/pf/58b7833dfd.jpg",
+      "img/pf/b61468ddc7.jpg",
+      "img/pf/a422600e99.jpg",
+      "img/pf/e636630c03.jpg",
+      "img/pf/6f8dd86309.jpg",
+      "img/pf/f9e6d75166.jpg",
+      "img/pf/5a3f2aa90c.jpg",
+      "img/pf/86a4d42dd9.jpg",
+      "img/pf/f41d34140d.jpg",
+      "img/pf/b223733d74.jpg",
+      "img/pf/5afb1982f3.jpg",
+      "img/pf/ed907f5a4f.jpg"
+    ],
+    "projects": [
+      {
+        "id": "under-the-gaze",
+        "title": "Under the Gaze",
+        "kind": "Tarot project",
+        "meta": [
+          [
+            "Media",
+            "Digital illustration"
+          ],
+          [
+            "Date",
+            "2025–2026"
+          ]
+        ],
+        "text": "This book functions as a form of remembrance, carrying shared memories between my sister and me, along with layers of symbolism embedded within the images. Rather than presenting the subject in a heavy or overwhelming way, I chose to focus on visual expression, allowing the emotions to exist in a quieter, more restrained manner—moving toward a sense of healing and positivity.\nBy constructing my own imagined world, these memories are reassembled and transformed into a subtle yet persistent presence. It feels as if she has entered my inner world, continuing to exist in a different form.",
+        "imgs": [
+          "img/pf/decceaf810.jpg",
+          "img/pf/6a6b0d12a3.jpg",
+          "img/pf/f150b6cb7f.jpg",
+          "img/pf/7f1c788714.jpg",
+          "img/pf/1582df4014.jpg",
+          "img/pf/9a8bcacca0.jpg",
+          "img/pf/2e5ddaddb0.jpg",
+          "img/pf/dde5d5ee34.jpg",
+          "img/pf/92175ebf3d.jpg",
+          "img/pf/6e4e82e518.jpg",
+          "img/pf/6c2745bae8.jpg",
+          "img/pf/edc0737023.jpg",
+          "img/pf/125fc7446b.jpg",
+          "img/pf/a78a49dd03.jpg",
+          "img/pf/b34b78e486.jpg",
+          "img/pf/226b2cb4ee.jpg",
+          "img/pf/7c2bcb495a.jpg"
+        ]
+      },
+      {
+        "id": "a-kind-of-reality",
+        "title": "A Kind of Reality",
+        "kind": "Book project",
+        "meta": [
+          [
+            "Date",
+            "April 2025"
+          ],
+          [
+            "Place",
+            "New York"
+          ]
+        ],
+        "text": "\"A Kind of Reality\" Illustration Series | Visual Reinterpretation of Yu Hua's Novel\nThis is a parable about violence, cycles, and indifference.\nBased on Yu Hua's novel A Kind of Reality, I've reconstructed this bone-chilling family tragedy through illustrations—from the oppressive silence at the breakfast table, to a child's ignorant cruelty, and finally to the meticulously calculated revenge of the adult world.",
+        "imgs": [
+          "img/pf/e56ab89399.jpg",
+          "img/pf/d99f5bec10.jpg",
+          "img/pf/f7ba013a19.jpg",
+          "img/pf/05c0e93d8a.jpg",
+          "img/pf/b61468ddc7.jpg",
+          "img/pf/6f8dd86309.jpg",
+          "img/pf/a422600e99.jpg",
+          "img/pf/f4f574d3db.jpg",
+          "img/pf/2e55f3e032.jpg",
+          "img/pf/1452952b11.jpg",
+          "img/pf/9ad62c8ada.jpg",
+          "img/pf/4711497ce6.jpg",
+          "img/pf/3364905902.jpg"
+        ]
+      },
+      {
+        "id": "the-circus",
+        "title": "The Circus",
+        "kind": "Illustration series",
+        "meta": [
+          [
+            "Date",
+            "2021"
+          ]
+        ],
+        "text": "\"The Circus\" Series Illustrations | A Black Fairy Tale of Role Reversal\nWhen the spectator in the cage becomes the spectacle—\nThis series depicts the alienation of a little girl in an animal-ruled circus: from a terrified awakening, to being forced to learn \"animal etiquette,\" until she finally becomes part of the grotesque performance. Through this absurd role reversal, we might come to realize: When humans force animals to perform, who is really taming whom?",
+        "imgs": [
+          "img/pf/a1aa6ac35f.jpg",
+          "img/pf/92fef389d7.jpg",
+          "img/pf/8ed9029242.jpg",
+          "img/pf/fa0b0ce2ad.jpg",
+          "img/pf/1d12ac379c.jpg",
+          "img/pf/9ea6549098.jpg",
+          "img/pf/cc21e6a319.jpg",
+          "img/pf/258ae960f6.jpg",
+          "img/pf/193de03ae5.jpg",
+          "img/pf/915109eede.jpg",
+          "img/pf/2497ff6a2e.jpg",
+          "img/pf/4d15da0d13.jpg",
+          "img/pf/2ac2972b5b.jpg",
+          "img/pf/6bcc586845.jpg",
+          "img/pf/4ca604eef5.jpg",
+          "img/pf/2f974be52e.jpg",
+          "img/pf/57677cff48.jpg",
+          "img/pf/d4b689cc4d.jpg"
+        ]
+      }
+    ],
+    "ceramics": [
+      {
+        "id": "candies",
+        "title": "Ceramic Candies",
+        "text": "",
+        "imgs": [
+          "img/pf/b78c8e1ab3.jpg",
+          "img/pf/29c6f76a67.jpg"
+        ]
+      },
+      {
+        "id": "goodnight-sheep",
+        "title": "Goodnight, Little Sheep",
+        "text": "This vase was created as part of a ceramics project. On the front is the image of a sheep, with textured wool details and a hidden kitten nestled within. The back shows a single teardrop falling down. The body of the vase is composed of red and blue, symbolizing the contrast and blend of emotions, and is filled with many small illustrations that reflect my deep longing for my sister. The sheep represents her, as the last character of her name is pronounced like “yang” (sheep) in Chinese. That side of the vase also includes symbols of death and mourning, such as the red spider lily and the small cat—once my roommate’s pet, who passed away unexpectedly. Through this piece, I hoped to express both the pain of loss and the tender details that live on in memory.",
+        "imgs": [
+          "img/pf/2e2b6f4441.jpg",
+          "img/pf/45981bb782.jpg",
+          "img/pf/a6950dead5.jpg",
+          "img/pf/81be2c9b85.jpg",
+          "img/pf/479a596e7c.jpg"
+        ]
+      },
+      {
+        "id": "half-alive",
+        "title": "Half Alive",
+        "text": "This ceramic project depicts a hybrid head—half dead coral, half human face. The coral side is cracked and hollow, while the human side is realistic and expressive, full of life. This contrast serves as a visual metaphor for the environmental crisis we face. As coral reefs die, it's not just nature that suffers—it’s a reflection of our own vulnerability. Through this work, I hope to raise awareness about the urgency of protecting our oceans and the ecosystems that sustain us.",
+        "imgs": [
+          "img/pf/9a23ed7fa7.jpg",
+          "img/pf/71d42f0e87.jpg",
+          "img/pf/0556c00195.jpg",
+          "img/pf/adae84a4ae.jpg",
+          "img/pf/3167beeae7.jpg"
+        ]
+      },
+      {
+        "id": "stacked-realms-teapot",
+        "title": "Stacked Realms Teapot",
+        "text": "This is a ceramic work that combines Chinese sculpture art and personal elements. The shape of the teapot is stacked with classic Chinese cultural symbols such as Buddha and dragon, forming a unique visual narrative. The work not only shows the weight of Chinese sculptural art, but also incorporates contemporary personal expression - a cat with big eyes on the body of the pot (a nod to my mentor's style) and my self-portrait, where tradition and the individual, history and the contemporary meet on the same object. The work is both a tribute to the tradition of Eastern sculpture and an experiment in exploring the connection between self-identity and culture.",
+        "imgs": [
+          "img/pf/195b4b77f9.jpg",
+          "img/pf/e3e9635834.jpg",
+          "img/pf/8befe98ddd.jpg",
+          "img/pf/dc43a871ee.jpg",
+          "img/pf/a5877b788b.jpg",
+          "img/pf/ded5bb9aeb.jpg",
+          "img/pf/c5b12cc477.jpg",
+          "img/pf/e64b5e5f46.jpg",
+          "img/pf/3143376e12.jpg"
+        ]
+      },
+      {
+        "id": "mugs-lips",
+        "title": "Functional Mugs – Lips",
+        "text": "",
+        "imgs": [
+          "img/pf/0a11d83155.jpg",
+          "img/pf/9748910cd9.jpg",
+          "img/pf/b658f11802.jpg",
+          "img/pf/d3f09b7a7e.jpg",
+          "img/pf/df3cf99951.jpg",
+          "img/pf/9d0c7c7414.jpg"
+        ]
+      },
+      {
+        "id": "face-mug-twins",
+        "title": "Face Mug – The Twins",
+        "text": "",
+        "imgs": [
+          "img/pf/ef330a80b5.jpg",
+          "img/pf/4108f2c06c.jpg",
+          "img/pf/bb97086b56.jpg",
+          "img/pf/267e1576d2.jpg",
+          "img/pf/7ccad32452.jpg"
+        ]
+      },
+      {
+        "id": "mugs-eye",
+        "title": "Functional Mugs – The Eye",
+        "text": "",
+        "imgs": [
+          "img/pf/e8d48fcf81.jpg",
+          "img/pf/3ee104b149.jpg",
+          "img/pf/e5b168cea3.jpg",
+          "img/pf/290a961e47.jpg",
+          "img/pf/020dc3f9d3.jpg"
+        ]
+      },
+      {
+        "id": "in-progress",
+        "title": "In Progress",
+        "text": "",
+        "imgs": [
+          "img/pf/ca46fbbc7d.jpg",
+          "img/pf/2157c2f664.jpg",
+          "img/pf/206ccb48c9.jpg",
+          "img/pf/dee80a22f3.jpg",
+          "img/pf/f90adedab3.jpg",
+          "img/pf/9be960cc06.jpg",
+          "img/pf/10bef06de1.jpg",
+          "img/pf/726c8418a9.jpg",
+          "img/pf/84ba337b41.jpg",
+          "img/pf/307f65ec39.jpg",
+          "img/pf/41f7304b5c.jpg"
+        ]
+      }
+    ],
+    "vopen": {
+      "title": "VOPEN — Brand & Marketing",
+      "role": "Brand & Marketing Lead (Volunteer), VOPEN · May 2026–present",
+      "text": "Led US market brand development for an industrial equipment manufacturer: designed and built the company website, produced a social media content strategy (TikTok), created marketing materials and product visualizations, and translated technical documentation (CN/EN).",
+      "imgs": [
+        "img/pf/73a22b21f4.jpg",
+        "img/pf/efd2da8205.jpg",
+        "img/pf/fcada03e42.jpg",
+        "img/pf/02e8865f20.jpg",
+        "img/pf/6c8c57e318.jpg",
+        "img/pf/59b0ce994a.jpg",
+        "img/pf/50cec8cec0.jpg",
+        "img/pf/20b5643c31.jpg",
+        "img/pf/dd004aabf7.jpg",
+        "img/pf/ee5c8da50b.jpg",
+        "img/pf/a01a4ee927.jpg"
+      ]
+    },
+    "linocut": [
       {
         "cat": "Linocut",
         "img": "img/giants-prints.jpg",
@@ -622,31 +883,6 @@
         "cat": "Linocut",
         "img": "img/finger-stamp.jpg",
         "title": "Middle finger"
-      },
-      {
-        "cat": "Etching",
-        "img": "",
-        "title": ""
-      },
-      {
-        "cat": "Painting",
-        "img": "",
-        "title": ""
-      },
-      {
-        "cat": "Ceramics",
-        "img": "",
-        "title": ""
-      },
-      {
-        "cat": "Illustration",
-        "img": "",
-        "title": ""
-      },
-      {
-        "cat": "VOPEN",
-        "img": "",
-        "title": ""
       }
     ]
   },
