@@ -373,4 +373,12 @@ a.print:hover b { color: var(--red) }
 .pf-projects img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 6px; display: block }
 .pf-projects figcaption { font: 500 14px var(--mono); color: var(--ink-soft) }
 .pf-projects figcaption b { font: 400 clamp(20px, 2.4vw, 28px)/1.1 var(--display); display: block; margin-bottom: 4px }
+@media (min-width: 761px) {
+  /* computers: tall Under the Gaze on the left, the two wide projects stacked on the right */
+  .pf-projects { grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); gap: 24px 28px }
+  .pf-projects > a:first-child { grid-row: 1 / span 2; height: 100% }
+  .pf-projects > a:first-child figure { height: 100%; grid-template-rows: minmax(0, 1fr) auto }
+  .pf-projects > a:first-child img { height: 100%; aspect-ratio: auto; object-position: top }
+  .pf-projects > a:not(:first-child) img { aspect-ratio: 16/9 }
+}
 @media (max-width: 760px) { .pf-projects { grid-template-columns: 1fr; gap: 28px } .pf-projects img { aspect-ratio: 4/3 } }
