@@ -355,8 +355,7 @@
           "title": "7/11",
           "price": null,
           "img": "img/etching/lab-7-sold.jpg",
-          "sold": true,
-          "soldPrice": 95
+          "sold": true
         },
         {
           "id": "lab-8",
