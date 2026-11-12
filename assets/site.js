@@ -10,6 +10,19 @@ const EMAIL = "sihaochenart@gmail.com";
 
 const ROOT = document.body.dataset.root || "./";
 const PAGE = document.body.dataset.page || "";
+
+/* ===== VISIT COUNTS (anonymous) =====
+   Counts page views, add-to-cart and checkout clicks for Sihao's studio report.
+   Only a random browser id is stored (no names, emails or IPs). Sihao's own browser is skipped
+   after she opens the studio page once (it sets sc_notrack). */
+const VID = (() => { try { let v = localStorage.getItem("sc_vid"); if (!v) { v = Math.random().toString(36).slice(2, 12); localStorage.setItem("sc_vid", v); } return v; } catch (_) { return ""; } })();
+function track(k) {
+  try { if (localStorage.getItem("sc_notrack")) return; } catch (_) {}
+  const body = JSON.stringify({ k, p: location.pathname.replace(/index\.html$/, "") + location.hash, v: VID });
+  const u = CHECKOUT_URL.replace(/\/$/, "") + "/t";
+  try { if (navigator.sendBeacon && navigator.sendBeacon(u, new Blob([body], { type: "text/plain" }))) return; } catch (_) {}
+  fetch(u, { method: "POST", body, keepalive: true }).catch(() => {});
+}
 const CART_KEY = "sc_cart_v1";
 
 /* ===== SHOP DISPLAY (what each card shows; prices come from catalog) ===== */
@@ -142,6 +155,7 @@ function readCart() { try { return JSON.parse(localStorage.getItem(CART_KEY)) ||
 function writeCart(c) { try { localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch (_) {} renderCartCount(); renderDrawer(); }
 const lineKey = (sku, opts) => sku + "|" + JSON.stringify(opts || {});
 function addToCart(sku, opts = {}, qty = 1) {
+  track("cart");
   const c = readCart(), key = lineKey(sku, opts);
   const kind = (CAT.items[sku] || uniqueItem(sku))?.kind;
   const ex = c.find(l => lineKey(l.sku, l.opts) === key);
@@ -282,6 +296,7 @@ function renderDrawer() {
 async function checkout() {
   const btn = $("#checkout"), msg = $("#checkout-msg");
   btn.disabled = true; btn.textContent = "Opening checkout…"; msg.textContent = "";
+  track("checkout");
   try {
     const r = await fetch(CHECKOUT_URL.replace(/\/$/, "") + "/checkout", {
       method: "POST", headers: { "Content-Type": "application/json" },
@@ -370,6 +385,7 @@ function renderProduct() {
       <div class="pd-info">
         <p class="label">${esc(p.tag)}</p>
         <h1>${esc(p.title)}</h1>
+        <p class="hm-badge">100% handmade</p>
         <div class="foot" data-foot></div>
         ${p.desc ? `<p class="desc">${esc(p.desc)}</p>` : ""}
         <ul class="specs">${p.specs.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
@@ -694,6 +710,8 @@ function wireCopy() {
 
 /* ===== BOOT ===== */
 (async function boot() {
+  track("view");
+  if (["product", "etchings", "portfolio"].includes(PAGE)) addEventListener("hashchange", () => track("view"));
   buildChrome();
   wireCopy();
   try { await loadCatalog(); } catch (e) { console.error("catalog", e); return; }

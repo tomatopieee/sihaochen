@@ -397,3 +397,6 @@ a.print:hover b { color: var(--red) }
 .pd-main .car-track video { aspect-ratio: auto }
 .car-play { display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, .55); color: #fff; font: 400 26px/1 var(--body); padding-left: 5px; cursor: pointer; z-index: 2 }
 .car.tap-play .car-play { display: grid; place-items: center }
+.handmade-line { margin: 4px 0 10px; font-size: 17px; max-width: 60ch }
+.handmade-line b { color: var(--red) }
+.hm-badge { display: inline-block; margin: -4px 0 4px; font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 7px 10px; border-radius: 999px; border: 1.5px solid var(--red); color: var(--red); justify-self: start; width: fit-content }
