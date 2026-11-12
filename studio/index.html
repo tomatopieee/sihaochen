@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="Studio">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="../assets/style.css?v=1794513143">
+<link rel="stylesheet" href="../assets/style.css?v=1794513305">
 <style>
   body { min-height: 100vh }
   .st { max-width: 560px; margin: 0 auto; padding: 18px max(16px, env(safe-area-inset-right, 0px)) 60px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 18px }
@@ -52,7 +52,12 @@
 <script>
 /* Sihao's private counter. Tap "+1 carved" after carving each stamp; the shop's ship times follow. */
 const API = "https://sihaochen-checkout.sihaochen599.workers.dev/studio";
-const KEY = decodeURIComponent(location.hash.slice(1));
+// The key comes from the private link (#key). Once opened with it, this device remembers it,
+// so the page also opens from a home screen icon or a link that lost the #key part.
+const KEY = (() => {
+  const h = decodeURIComponent(location.hash.slice(1));
+  try { if (h) localStorage.setItem("studio_key", h); return h || localStorage.getItem("studio_key") || ""; } catch (_) { return h; }
+})();
 try { if (KEY) localStorage.setItem("sc_notrack", "1"); } catch (_) {} // don't count Sihao's own visits
 const NAMES = { mf: "Middle Finger", ah: "AHHHHH" };
 const app = document.getElementById("app"), toast = document.getElementById("toast");
@@ -125,7 +130,10 @@ async function tap(btn, g, delta) {
 }
 (async () => {
   if (!KEY) { app.innerHTML = `<h1>Studio</h1><p class="err">Open this page with your private link.</p>`; return; }
-  try { render(await call()); } catch (e) { app.innerHTML = `<h1>Studio</h1><p class="err">${esc(e.message)}</p>`; }
+  try { render(await call()); } catch (e) {
+    if (/wrong link/i.test(e.message)) try { localStorage.removeItem("studio_key"); } catch (_) {}
+    app.innerHTML = `<h1>Studio</h1><p class="err">${esc(e.message)}</p>`;
+  }
 })();
 </script>
 </body>
