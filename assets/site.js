@@ -319,8 +319,35 @@ function toast(t) {
 }
 
 /* ===== SALE BANNER ===== */
+// Confetti: bursts when the countdown reaches 0 while the page is open (then reloads to show sale prices),
+// and once per browser on the first visit during the sale.
+function confetti(ms = 4500) {
+  const c = document.createElement("canvas"), x = c.getContext("2d"), W = innerWidth, H = innerHeight, dpr = devicePixelRatio || 1;
+  c.width = W * dpr; c.height = H * dpr; x.scale(dpr, dpr);
+  c.style.cssText = "position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999";
+  document.body.appendChild(c);
+  const cols = ["#E8402F", "#F3C623", "#2A9D8F", "#F28CB1", "#3D5AFE", "#ffffff"];
+  const ps = Array.from({ length: 160 }, (_, i) => ({ x: i % 2 ? W * .1 : W * .9, y: H * .9, vx: (i % 2 ? 1 : -1) * (2 + Math.random() * 7), vy: -(9 + Math.random() * 9),
+    r: Math.random() * 6, w: 6 + Math.random() * 6, h: 4 + Math.random() * 6, c: cols[i % cols.length], s: (Math.random() - .5) * .3 }));
+  const t0 = performance.now();
+  (function f(t) {
+    x.clearRect(0, 0, W, H);
+    ps.forEach(p => { p.vy += .28; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.s;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r * 2))); x.restore(); });
+    if (t - t0 < ms) requestAnimationFrame(f); else c.remove();
+  })(t0);
+}
+let bannerWas = null;
 function tickBanner() {
   const st = saleState(), b = $("#banner");
+  if (bannerWas === "before" && st === "on") {
+    try { localStorage.setItem("sc_confetti", "1"); } catch (_) {}
+    confetti(); setTimeout(() => location.reload(), 4600);
+  } else if (bannerWas === null && st === "on") {
+    let seen = true; try { seen = !!localStorage.getItem("sc_confetti"); localStorage.setItem("sc_confetti", "1"); } catch (_) {}
+    if (!seen) setTimeout(() => confetti(), 400);
+  }
+  bannerWas = st;
   if (!b) return false;
   if (st === "none" || st === "after") { b.hidden = true; return false; }
   b.hidden = false;
