@@ -395,3 +395,5 @@ a.print:hover b { color: var(--red) }
 .addons .chip { font-size: 13px; padding: 6px 10px }
 .car-track video { flex: 0 0 100%; width: 100%; height: 100%; aspect-ratio: 4/3; object-fit: contain; scroll-snap-align: start; display: block; background: #151413 }
 .pd-main .car-track video { aspect-ratio: auto }
+.car-play { display: none; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; border: 0; background: rgba(0, 0, 0, .55); color: #fff; font: 400 26px/1 var(--body); padding-left: 5px; cursor: pointer; z-index: 2 }
+.car.tap-play .car-play { display: grid; place-items: center }

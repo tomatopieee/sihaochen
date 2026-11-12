@@ -550,7 +550,28 @@ function carousel(imgs, alt, whole = []) {
     <button type="button" class="car-btn prev" aria-label="Previous photo">‹</button><button type="button" class="car-btn next" aria-label="Next photo">›</button>
     <div class="car-dots">${imgs.map((_, i) => `<span${i ? "" : ' class="on"'}></span>`).join("")}</div>` : ""}</div>`;
 }
+// Phones: make sure reveal videos really start (muted + inline). If the phone blocks autoplay
+// (e.g. iPhone Low Power Mode), show a play button and start on the first touch anywhere.
+function startVideos(root) {
+  root.querySelectorAll(".car video").forEach(v => {
+    v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute("webkit-playsinline", "");
+    const car = v.closest(".car");
+    v.addEventListener("playing", () => car.classList.remove("tap-play"));
+    const go = () => v.play()?.catch(() => car.classList.add("tap-play"));
+    go();
+    if (!car.querySelector(".car-play")) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "car-play"; b.setAttribute("aria-label", "Play video"); b.textContent = "▶";
+      b.addEventListener("click", e => { e.preventDefault(); v.play()?.catch(() => {}); });
+      car.appendChild(b);
+    }
+    const once = () => { if (v.paused) v.play()?.catch(() => {}); };
+    document.addEventListener("touchstart", once, { once: true, passive: true });
+    document.addEventListener("click", once, { once: true });
+  });
+}
 function wireCarousels(root) {
+  startVideos(root);
   root.querySelectorAll(".car").forEach(c => {
     const t = c.querySelector(".car-track"), dots = [...c.querySelectorAll(".car-dots span")], n = dots.length;
     const at = () => Math.round(t.scrollLeft / t.clientWidth);
