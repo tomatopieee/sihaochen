@@ -657,7 +657,7 @@ function renderPortfolio() {
   }
   const card = (href, src, title, sub) => `<a class="pf-card" href="${href}"><figure>${pfImg(src, title)}<figcaption><b>${esc(title)}</b>${sub ? ` · ${esc(sub)}` : ""}</figcaption></figure></a>`;
   if (tab === "arts") grid.innerHTML = P.arts.map(src => `<figure>${pfImg(src, "Artwork by Sihao Chen")}</figure>`).join("");
-  if (tab === "projects") { grid.className = "pf-projects"; grid.innerHTML = P.projects.map(x => card(`#p-${x.id}`, x.imgs[0], x.title, x.kind)).join(""); }
+  if (tab === "projects") { grid.className = "pf-projects"; grid.innerHTML = P.projects.map(x => card(`#p-${x.id}`, x.cover || x.imgs[0], x.title, x.kind)).join(""); }
   if (tab === "ceramics") grid.innerHTML = P.ceramics.map(x => card(`#c-${x.id}`, x.imgs[0], x.title, "")).join("");
   if (tab === "linocut") grid.innerHTML = P.linocut.map(w => card(ROOT + w.link, w.img, w.title, "")).join("");
   if (tab === "etching") {

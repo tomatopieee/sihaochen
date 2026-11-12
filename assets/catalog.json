@@ -650,6 +650,7 @@
         ],
         "text": "This book functions as a form of remembrance, carrying shared memories between my sister and me, along with layers of symbolism embedded within the images. Rather than presenting the subject in a heavy or overwhelming way, I chose to focus on visual expression, allowing the emotions to exist in a quieter, more restrained manner—moving toward a sense of healing and positivity.\nBy constructing my own imagined world, these memories are reassembled and transformed into a subtle yet persistent presence. It feels as if she has entered my inner world, continuing to exist in a different form.",
         "imgs": [
+          "img/pf/tarot-letter.jpg",
           "img/pf/decceaf810.jpg",
           "img/pf/6a6b0d12a3.jpg",
           "img/pf/f150b6cb7f.jpg",
@@ -668,7 +669,8 @@
           "img/pf/226b2cb4ee.jpg",
           "img/pf/7c2bcb495a.jpg"
         ],
-        "cols": 2
+        "cols": 2,
+        "cover": "img/pf/decceaf810.jpg"
       },
       {
         "id": "a-kind-of-reality",
