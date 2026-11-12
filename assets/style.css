@@ -393,3 +393,5 @@ a.print:hover b { color: var(--red) }
 .addons .label { font-size: 11px }
 .addons .chips { display: flex; flex-wrap: wrap; gap: 6px }
 .addons .chip { font-size: 13px; padding: 6px 10px }
+.car-track video { flex: 0 0 100%; width: 100%; height: 100%; aspect-ratio: 4/3; object-fit: contain; scroll-snap-align: start; display: block; background: #151413 }
+.pd-main .car-track video { aspect-ratio: auto }

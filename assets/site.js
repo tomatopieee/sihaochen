@@ -19,6 +19,7 @@ const SHOP = [
   {
     id: "mf", section: "linocut", title: "Middle Finger Mini Stamp", tag: "Stamp",
     img: "img/mf/1.jpg", alt: "Hand-carved middle finger mini stamp with its red print on a sticker",
+    video: "img/video/mf.mp4", // reveal clip, shown first on the product page
     variantImgs: { "mf-stamp": ["img/mf/1.jpg", "img/mf/2.jpg", "img/mf/3.jpg", "img/mf/4.jpg", "img/mf/5.jpg"], "mf-kit": ["img/mf/kit.jpg"] },
     specs: ["1 original hand-carved stamp, about 1.2 × 1.2 in (3 × 3 cm)", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Stamp only", sku: "mf-stamp" }, { label: "Stamp kit", sku: "mf-kit" }]
@@ -33,6 +34,7 @@ const SHOP = [
   {
     id: "snake", section: "linocut", title: "Snake Postcard", tag: "Postcard",
     img: "img/snake/cover.jpg", alt: "Hand-printed snake postcard, white lines on black",
+    video: "img/video/snake.mp4",
     gallery: ["img/snake/detail-1.jpg", "img/snake/detail-2.jpg", "img/snake/detail-3.jpg"],
     versionImgs: { "Signed Print": "img/snake/signed-back.jpg", "Postcard": "img/snake/postcard-back.jpg" },
     whole: ["img/snake/cover.jpg", "img/snake/detail-2.jpg", "img/snake/detail-3.jpg"], // shown uncropped
@@ -49,12 +51,15 @@ const SHOP = [
     desc: "Five giant faces, each carved and printed by hand. The full series will be nine faces, and I'm still carving the rest. Follow @ci278ci to see the new ones first.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 4.5 in (10 × 11.5 cm)", "Mail it in an envelope to keep the print safe"],
     designImgs: { "No.1": "img/giant/g1.jpg", "No.2": "img/giant/g2.jpg", "No.3": "img/giant/g3.jpg", "No.4": "img/giant/g4.jpg", "No.5": "img/giant/g5.jpg" },
+    video: "img/video/g1.mp4",
+    designVideo: { "No.1": "img/video/g1.mp4", "No.2": "img/video/g2.mp4", "No.3": "img/video/g3.mp4", "No.4": "img/video/g4.mp4", "No.5": "img/video/g5.mp4" },
     designGallery: { "No.1": ["img/giant/g1.jpg", "img/giant/g1-sym.jpg"], "No.2": ["img/giant/g2.jpg", "img/giant/g2-sym.jpg"], "No.3": ["img/giant/g3.jpg", "img/giant/g3-sym.jpg"], "No.4": ["img/giant/g4.jpg", "img/giant/g4-sym.jpg"], "No.5": ["img/giant/g5.jpg", "img/giant/g5-sym.jpg"] },
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
   {
     id: "gnome", section: "linocut", title: "Gnome Bookmark", tag: "Bookmark",
     img: "img/gnome/1.jpg", alt: "Three hand-printed gnome bookmarks in red, red and green, and green, with twine ties",
+    video: "img/video/gnome.mp4",
     gallery: ["img/gnome/5.jpg", "img/gnome/6.jpg", "img/gnome/2.jpg", "img/gnome/3.jpg", "img/gnome/4.jpg", "img/gnome/7.jpg", "img/gnome/8.jpg", "img/gnome/red-2.jpg", "img/gnome/green.jpg", "img/gnome/red-green.jpg"],
     // Tapping an option jumps to its photo in the gallery (still swipeable).
     pickAt: { "Red": "img/gnome/red-2.jpg", "Green": "img/gnome/green.jpg", "Red & green": "img/gnome/red-green.jpg", "Set of three": "img/gnome/1.jpg" },
@@ -406,6 +411,9 @@ function setupCard(p, foot, photoEl) {
     state.jump = false;
     if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
     else if (des && p.designGallery?.[des] && CAT.items[cur.sku]?.options?.design && state.last !== "variant") { set = p.designGallery[des]; tag = des; }
+    // Reveal video goes first (the chosen design's own clip when there is one). Not on the kit photos.
+    const vid = state.last === "version" ? null : (des && set === p.designGallery?.[des] ? p.designVideo?.[des] : p.video);
+    if (vid && !(p.variantImgs?.[cur.sku] && cur.sku.endsWith("kit"))) set = [vid, ...set];
     const key = set.join("|") + tag;
     if (key !== shown) {
       shown = key;
@@ -536,7 +544,9 @@ function renderEtchings() {
 /* ===== SWIPE GALLERY ===== */
 function carousel(imgs, alt, whole = []) {
   const many = imgs.length > 1;
-  return `<div class="car"><div class="car-track">${imgs.map((src, i) => `<img src="${esc(ROOT + src)}" alt="${esc(alt)}, photo ${i + 1}" loading="${i ? "lazy" : "eager"}"${whole?.includes(src) ? ' class="whole"' : ""}>`).join("")}</div>${many ? `
+  return `<div class="car"><div class="car-track">${imgs.map((src, i) => src.endsWith(".mp4")
+    ? `<video src="${esc(ROOT + src)}" poster="${esc(ROOT + src.replace(/\.mp4$/, ".jpg"))}" autoplay muted loop playsinline preload="${i ? "none" : "auto"}" aria-label="${esc(alt)}, making-of video"></video>`
+    : `<img src="${esc(ROOT + src)}" alt="${esc(alt)}, photo ${i + 1}" loading="${i ? "lazy" : "eager"}"${whole?.includes(src) ? ' class="whole"' : ""}>`).join("")}</div>${many ? `
     <button type="button" class="car-btn prev" aria-label="Previous photo">‹</button><button type="button" class="car-btn next" aria-label="Next photo">›</button>
     <div class="car-dots">${imgs.map((_, i) => `<span${i ? "" : ' class="on"'}></span>`).join("")}</div>` : ""}</div>`;
 }
