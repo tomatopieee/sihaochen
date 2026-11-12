@@ -51,8 +51,7 @@ const SHOP = [
     desc: "Five giant faces, each carved and printed by hand. The full series will be nine faces, and I'm still carving the rest. Follow @ci278ci to see the new ones first.",
     specs: ["Hand-pulled linocut, printed one at a time by hand", "Each print varies slightly", "Cardstock with shimmering gold flecks", "About 4 × 4.5 in (10 × 11.5 cm)", "Mail it in an envelope to keep the print safe"],
     designImgs: { "No.1": "img/giant/g1.jpg", "No.2": "img/giant/g2.jpg", "No.3": "img/giant/g3.jpg", "No.4": "img/giant/g4.jpg", "No.5": "img/giant/g5.jpg" },
-    video: "img/video/g1.mp4",
-    designVideo: { "No.1": "img/video/g1.mp4", "No.2": "img/video/g2.mp4", "No.3": "img/video/g3.mp4", "No.4": "img/video/g4.mp4", "No.5": "img/video/g5.mp4" },
+    designVideo: { "No.1": "img/video/g1.mp4", "No.2": "img/video/g2-v2.mp4", "No.3": "img/video/g3.mp4", "No.4": "img/video/g4.mp4", "No.5": "img/video/g5.mp4" },
     designGallery: { "No.1": ["img/giant/g1.jpg", "img/giant/g1-sym.jpg"], "No.2": ["img/giant/g2.jpg", "img/giant/g2-sym.jpg"], "No.3": ["img/giant/g3.jpg", "img/giant/g3-sym.jpg"], "No.4": ["img/giant/g4.jpg", "img/giant/g4-sym.jpg"], "No.5": ["img/giant/g5.jpg", "img/giant/g5-sym.jpg"] },
     variants: [{ label: "Single", sku: "giant-pc" }, { label: "All five", sku: "giant-set" }]
   },
@@ -407,13 +406,14 @@ function setupCard(p, foot, photoEl) {
     const ver = state.opts.version, des = state.opts.design;
     const cur = p.variants[state.v];
     let set = p.variantImgs?.[cur.sku] || [p.img, ...(p.gallery || [])].filter(Boolean), tag = p.tag;
-    const at = state.jump && p.pickAt?.[cur.label] ? Math.max(0, set.indexOf(p.pickAt[cur.label])) : -1;
-    state.jump = false;
     if (state.last === "version" && ver && VI[ver]) { set = [VI[ver]]; tag = ver; }
     else if (des && p.designGallery?.[des] && CAT.items[cur.sku]?.options?.design && state.last !== "variant") { set = p.designGallery[des]; tag = des; }
     // Reveal video goes first (the chosen design's own clip when there is one). Not on the kit photos.
     const vid = state.last === "version" ? null : (des && set === p.designGallery?.[des] ? p.designVideo?.[des] : p.video);
     if (vid && !(p.variantImgs?.[cur.sku] && cur.sku.endsWith("kit"))) set = [vid, ...set];
+    // Tapping an option (e.g. Red) jumps to its photo; found after the video is added so the position is right.
+    const at = state.jump && p.pickAt?.[cur.label] ? Math.max(0, set.indexOf(p.pickAt[cur.label])) : -1;
+    state.jump = false;
     const key = set.join("|") + tag;
     if (key !== shown) {
       shown = key;
