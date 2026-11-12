@@ -40,6 +40,7 @@ const SHOP = [
   {
     id: "ah", section: "linocut", title: "AHHHHH Stamp", tag: "Stamp",
     img: "img/ah/1.jpg", alt: "Hand-carved screaming face stamp next to its teal print",
+    video: "img/video/ah.mp4",
     variantImgs: { "ah-stamp": ["img/ah/1.jpg", "img/ah/2.jpg", "img/ah/3.jpg"], "ahhhhh": ["img/ah/kit.jpg"] },
     specs: ["1 original hand-carved stamp, about 2 in (5 cm) tall", "Kit adds 1 mini ink pad (random color) + 5 blank sticker sheets", "Designed & carved by me"],
     variants: [{ label: "Stamp only", sku: "ah-stamp" }, { label: "Stamp kit", sku: "ahhhhh" }]
@@ -432,7 +433,7 @@ function setupCard(p, foot, photoEl) {
     else if (des && p.designGallery?.[des] && CAT.items[cur.sku]?.options?.design && state.last !== "variant") { set = p.designGallery[des]; tag = des; }
     // Reveal video goes first (the chosen design's own clip when there is one). Not on the kit photos.
     const vid = state.last === "version" ? null : (des && set === p.designGallery?.[des] ? p.designVideo?.[des] : p.video);
-    if (vid && !(p.variantImgs?.[cur.sku] && cur.sku.endsWith("kit"))) set = [vid, ...set];
+    if (vid && !(p.variantImgs?.[cur.sku] && (cur.sku.endsWith("kit") || /kit/i.test(cur.label || "")))) set = [vid, ...set];
     // Tapping an option (e.g. Red) jumps to its photo; found after the video is added so the position is right.
     const at = state.jump && p.pickAt?.[cur.label] ? Math.max(0, set.indexOf(p.pickAt[cur.label])) : -1;
     state.jump = false;
