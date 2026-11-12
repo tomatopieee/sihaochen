@@ -198,6 +198,12 @@ function buildChrome() {
   $("#cart-open").addEventListener("click", openDrawer);
   $("#cart-close").addEventListener("click", closeDrawer);
   $("#scrim").addEventListener("click", closeDrawer);
+  // Tapping a product link in the cart (e.g. an add-on) closes the cart and shows that page right away.
+  $("#drawer").addEventListener("click", e => {
+    const a = e.target.closest("a[href]"); if (!a || a.target === "_blank") return;
+    closeDrawer();
+    if (a.href === location.href) { e.preventDefault(); scrollTo(0, 0); }
+  });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
 }
 function openDrawer() { renderDrawer(); $("#drawer").hidden = false; $("#scrim").hidden = false; }
